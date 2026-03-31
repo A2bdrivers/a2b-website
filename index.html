@@ -1,0 +1,3002 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>A2B Services | Artiestenvervoer & Festivallogistiek</title>
+  <meta name="description" content="Premium artiestenvervoer voor Europa's grootste muziekfestivals. End-to-end logistiek zodat organisatoren zich kunnen focussen op het evenement.">
+  <meta property="og:title" content="A2B Services | Artiestenvervoer & Festivallogistiek">
+  <meta property="og:description" content="Premium artiestenvervoer voor Europa's grootste muziekfestivals.">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚘</text></svg>">
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:wght@400;500;600;700;800;900&family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg-primary: #080f0b;
+      --bg-secondary: #0d1a12;
+      --bg-card: #111f16;
+      --bg-card-hover: #162a1d;
+      --text-primary: #f0f0ee;
+      --text-secondary: #9ca897;
+      --text-muted: #5e6e5a;
+      --gold: #c9a84c;
+      --gold-light: #ddc06a;
+      --gold-dark: #a88b3a;
+      --gold-glow: rgba(201, 168, 76, 0.15);
+      --gold-glow-strong: rgba(201, 168, 76, 0.3);
+      --green: #2d6a4f;
+      --green-light: #40916c;
+      --green-dark: #1b4332;
+      --border: rgba(201, 168, 76, 0.1);
+      --border-hover: rgba(201, 168, 76, 0.25);
+      --font-heading: 'Bodoni Moda', Georgia, serif;
+      --font-body: 'Jost', -apple-system, sans-serif;
+      --text-xs: clamp(0.75rem, 1vw, 0.875rem);
+      --text-sm: clamp(0.875rem, 1.2vw, 1rem);
+      --text-base: clamp(1rem, 1.3vw, 1.125rem);
+      --text-lg: clamp(1.125rem, 1.6vw, 1.25rem);
+      --text-xl: clamp(1.25rem, 2vw, 1.5rem);
+      --text-2xl: clamp(1.5rem, 2.5vw, 2rem);
+      --text-3xl: clamp(2rem, 3.5vw, 3rem);
+      --text-4xl: clamp(2.5rem, 5vw, 4rem);
+      --text-hero: clamp(3rem, 7vw, 5.5rem);
+      --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px;
+      --space-6: 24px; --space-8: 32px; --space-10: 40px; --space-12: 48px;
+      --space-16: 64px; --space-20: 80px; --space-24: 96px; --space-32: 128px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    img { max-width: 100%; display: block; }
+    a { text-decoration: none; color: inherit; }
+    button { cursor: pointer; border: none; background: none; font-family: inherit; }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 var(--space-6);
+    }
+
+    /* Noise overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      pointer-events: none;
+      opacity: 0.03;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    }
+
+    /* ===== SCROLL PROGRESS BAR ===== */
+    .scroll-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--green), var(--gold), var(--gold-light));
+      z-index: 10001;
+      width: 0%;
+      transition: width 0.1s linear;
+    }
+
+    /* ===== CURSOR GLOW ===== */
+    .cursor-glow {
+      position: fixed;
+      width: 400px;
+      height: 400px;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 1;
+      background: radial-gradient(circle, rgba(201, 168, 76, 0.06) 0%, transparent 70%);
+      transform: translate(-50%, -50%);
+      transition: opacity 0.3s;
+      opacity: 0;
+    }
+    .cursor-glow.active { opacity: 1; }
+
+    /* ===== NAVIGATION ===== */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      padding: 20px 0;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .navbar.scrolled {
+      background: rgba(8, 15, 11, 0.92);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .navbar-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+    }
+    .nav-logo {
+      display: inline-flex;
+      align-items: center;
+    }
+    .nav-logo img {
+      height: 160px;
+      width: auto;
+      object-fit: contain;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .nav-logo:hover img { opacity: 0.85; }
+    .navbar.scrolled .nav-logo img { height: 96px; }
+    .footer-logo img {
+      height: 64px;
+      width: auto;
+      object-fit: contain;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex: 1;
+      margin-left: var(--space-8);
+    }
+    .nav-links-center {
+      display: flex;
+      align-items: center;
+      gap: var(--space-6);
+    }
+    .nav-links-right {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+    }
+    .nav-link {
+      color: var(--text-secondary);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      transition: color 0.3s;
+      position: relative;
+      white-space: nowrap;
+    }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: var(--gold);
+      transition: width 0.3s;
+    }
+    .nav-link:hover { color: var(--text-primary); }
+    .nav-link:hover::after { width: 100%; }
+    .btn-nav {
+      padding: 9px 20px;
+      background: var(--gold);
+      color: var(--bg-primary);
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      white-space: nowrap;
+      transition: all 0.3s;
+    }
+    .btn-nav:hover {
+      background: var(--gold-light);
+      transform: translateY(-1px);
+      box-shadow: 0 8px 30px var(--gold-glow-strong);
+    }
+    .lang-switcher {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin-left: var(--space-2);
+    }
+    .lang-btn {
+      background: none;
+      border: 2px solid transparent;
+      border-radius: 4px;
+      padding: 1px;
+      cursor: pointer;
+      font-size: 18px;
+      line-height: 1;
+      opacity: 0.5;
+      transition: opacity 0.2s, border-color 0.2s;
+    }
+    .lang-btn:hover { opacity: 0.85; }
+    .lang-btn.active { opacity: 1; border-color: var(--gold); }
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 6px;
+      padding: 4px;
+      z-index: 1001;
+    }
+    .nav-hamburger span {
+      width: 28px;
+      height: 2px;
+      background: var(--text-primary);
+      transition: all 0.3s;
+      display: block;
+    }
+    .nav-hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(6px, 6px); }
+    .nav-hamburger.active span:nth-child(2) { opacity: 0; }
+    .nav-hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(6px, -6px); }
+
+    @media (max-width: 768px) {
+      .nav-hamburger { display: flex; }
+      .nav-links {
+        position: fixed;
+        inset: 0;
+        background: rgba(8, 15, 11, 0.98);
+        backdrop-filter: blur(30px);
+        flex-direction: column;
+        justify-content: center;
+        margin-left: 0;
+        gap: var(--space-6);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.4s;
+      }
+      .nav-links.open { opacity: 1; pointer-events: all; }
+      .nav-links-center { flex-direction: column; gap: var(--space-8); }
+      .nav-links-right { flex-direction: column; gap: var(--space-4); }
+      .nav-link { font-size: var(--text-xl); }
+      .btn-nav { font-size: var(--text-lg); padding: 14px 36px; }
+    }
+
+    /* ===== HERO ===== */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      padding: var(--space-32) 0 var(--space-20);
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+    /* Hero car background image — real A2B Defender */
+    .hero-bg-image {
+      position: absolute;
+      inset: 0;
+      background: url('../Content/a2b-hero-web.jpg') center center / cover no-repeat;
+      opacity: 0.25;
+      filter: saturate(0.4) brightness(0.7);
+    }
+    .hero-bg::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 80% 60% at 50% 30%, rgba(45, 106, 79, 0.15) 0%, transparent 70%),
+                  radial-gradient(ellipse 60% 50% at 80% 60%, rgba(201, 168, 76, 0.08) 0%, transparent 60%);
+      z-index: 1;
+    }
+    .hero-bg::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 300px;
+      background: linear-gradient(to top, var(--bg-primary), transparent);
+      z-index: 1;
+    }
+    .hero-orb {
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      filter: blur(120px);
+      opacity: 0.12;
+      animation: orbFloat 20s ease-in-out infinite;
+      z-index: 1;
+    }
+    .hero-orb-1 { background: var(--green); top: -10%; right: -10%; }
+    .hero-orb-2 { background: var(--gold); bottom: 10%; left: -15%; animation-delay: -10s; width: 400px; height: 400px; }
+    @keyframes orbFloat {
+      0%, 100% { transform: translate(0, 0); }
+      33% { transform: translate(30px, -20px); }
+      66% { transform: translate(-20px, 30px); }
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 800px;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: 6px 16px;
+      border: 1px solid var(--border-hover);
+      border-radius: 100px;
+      font-size: var(--text-xs);
+      font-weight: 500;
+      color: var(--gold);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: var(--space-8);
+    }
+    .hero-badge-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--gold);
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+    .hero h1 {
+      font-family: var(--font-heading);
+      font-size: var(--text-hero);
+      font-weight: 700;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      margin-bottom: var(--space-6);
+    }
+    .hero h1 .gold {
+      background: linear-gradient(135deg, var(--gold), var(--gold-light), var(--gold));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-sub {
+      font-size: var(--text-xl);
+      color: var(--text-secondary);
+      max-width: 560px;
+      line-height: 1.6;
+      margin-bottom: var(--space-10);
+      font-weight: 300;
+    }
+    .hero-ctas {
+      display: flex;
+      gap: var(--space-4);
+      flex-wrap: wrap;
+    }
+    /* Magnetic button wrapper */
+    .magnetic-wrap {
+      display: inline-block;
+      position: relative;
+    }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: 16px 36px;
+      background: var(--gold);
+      color: var(--bg-primary);
+      font-size: var(--text-base);
+      font-weight: 600;
+      border-radius: 8px;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      letter-spacing: 0.01em;
+      position: relative;
+      overflow: hidden;
+    }
+    .btn-primary::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, transparent 40%, rgba(255,255,255,0.2) 50%, transparent 60%);
+      transform: translateX(-100%);
+      transition: transform 0.6s;
+    }
+    .btn-primary:hover::before { transform: translateX(100%); }
+    .btn-primary:hover {
+      background: var(--gold-light);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 40px var(--gold-glow-strong);
+    }
+    .btn-primary:active { transform: translateY(0); }
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: 16px 36px;
+      background: transparent;
+      color: var(--text-primary);
+      font-size: var(--text-base);
+      font-weight: 500;
+      border-radius: 8px;
+      border: 1px solid var(--border-hover);
+      transition: all 0.3s;
+    }
+    .btn-secondary:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+      background: var(--gold-glow);
+    }
+
+    .hero-proof {
+      margin-top: var(--space-16);
+      display: flex;
+      gap: var(--space-12);
+      flex-wrap: wrap;
+    }
+    .hero-stat { display: flex; flex-direction: column; }
+    .hero-stat-number {
+      font-family: var(--font-heading);
+      font-size: var(--text-3xl);
+      font-weight: 700;
+      color: var(--gold);
+      line-height: 1;
+    }
+    .hero-stat-label {
+      font-size: var(--text-sm);
+      color: var(--text-muted);
+      margin-top: var(--space-1);
+    }
+
+    /* ===== TRUSTED BY / MARQUEE ===== */
+    .trusted {
+      padding: var(--space-24) 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      overflow: hidden;
+      background: linear-gradient(180deg, rgba(201,168,76,0.05) 0%, transparent 60%);
+      position: relative;
+    }
+    .trusted-label {
+      text-align: center;
+      font-size: var(--text-base);
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+      color: var(--gold);
+      opacity: 0.8;
+      margin-bottom: var(--space-16);
+      font-weight: 500;
+    }
+    /* Fade edges */
+    .trusted::before,
+    .trusted::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 200px;
+      z-index: 2;
+      pointer-events: none;
+    }
+    .trusted::before {
+      left: 0;
+      background: linear-gradient(to right, var(--bg-primary), transparent);
+    }
+    .trusted::after {
+      right: 0;
+      background: linear-gradient(to left, var(--bg-primary), transparent);
+    }
+    .marquee {
+      display: flex;
+      width: max-content;
+      animation: marquee 20s linear infinite;
+    }
+    .marquee:hover { animation-play-state: paused; }
+    .marquee-group {
+      display: flex;
+      align-items: center;
+      gap: var(--space-24);
+      padding: 0 var(--space-12);
+    }
+    .marquee-item {
+      display: flex;
+      align-items: center;
+      flex-shrink: 0;
+      opacity: 0.65;
+      transition: opacity 0.4s, transform 0.4s;
+    }
+    .marquee-item:hover { opacity: 1; transform: scale(1.08); }
+    .marquee-item img {
+      height: 90px;
+      width: auto;
+      max-width: 200px;
+      object-fit: contain;
+      display: block;
+      transition: filter 0.4s;
+    }
+    /* Only dark logos get inverted to white */
+    .marquee-item img.logo-dark {
+      filter: brightness(0) invert(1);
+    }
+    .marquee-item:hover img.logo-dark {
+      filter: brightness(0) invert(1) opacity(1);
+    }
+    .marquee-divider {
+      width: 1px;
+      height: 56px;
+      background: linear-gradient(to bottom, transparent, rgba(201,168,76,0.35), transparent);
+      flex-shrink: 0;
+    }
+    @keyframes marquee {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* ===== SECTION SHARED ===== */
+    .section { padding: var(--space-24) 0; }
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      font-size: var(--text-xs);
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--gold);
+      font-weight: 500;
+      margin-bottom: var(--space-4);
+    }
+    .section-label-line { width: 24px; height: 1px; background: var(--gold); }
+    .section-title {
+      font-family: var(--font-heading);
+      font-size: var(--text-4xl);
+      font-weight: 700;
+      line-height: 1.1;
+      margin-bottom: var(--space-4);
+    }
+    .section-subtitle {
+      font-size: var(--text-lg);
+      color: var(--text-secondary);
+      max-width: 600px;
+      line-height: 1.6;
+      font-weight: 300;
+    }
+    .section-header { margin-bottom: var(--space-16); }
+    .section-header-center {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* ===== PROBLEM SECTION ===== */
+    .problem {
+      background: var(--bg-secondary);
+      position: relative;
+    }
+    .problem-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-6);
+      margin-top: var(--space-12);
+    }
+    .problem-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-top: 3px solid rgba(220, 60, 60, 0.5);
+      border-radius: 12px;
+      padding: var(--space-8);
+      transition: transform 0.3s, border-color 0.3s;
+    }
+    .problem-card:hover {
+      transform: translateY(-4px);
+      border-top-color: #dc3c3c;
+    }
+    .problem-card-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(220, 60, 60, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: var(--space-4);
+    }
+    .problem-card-icon svg { width: 18px; height: 18px; stroke: #dc3c3c; }
+    .problem-card h4 { font-weight: 600; margin-bottom: var(--space-2); font-size: var(--text-base); }
+    .problem-card p { color: var(--text-secondary); font-size: var(--text-sm); line-height: 1.6; }
+    .problem-solution {
+      display: flex;
+      align-items: center;
+      gap: var(--space-6);
+      margin-top: var(--space-12);
+      justify-content: center;
+    }
+    .problem-solution-line {
+      flex: 1;
+      max-width: 120px;
+      height: 1px;
+      background: var(--gold);
+      opacity: 0.4;
+    }
+    .problem-solution-text {
+      font-family: var(--font-heading);
+      font-size: var(--text-lg);
+      font-style: italic;
+      color: var(--gold);
+      text-align: center;
+    }
+    @media (max-width: 768px) {
+      .problem-cards { grid-template-columns: 1fr; }
+      .problem-solution-line { max-width: 40px; }
+    }
+
+    /* ===== FLEET SHOWCASE (NEW) ===== */
+    .fleet {
+      padding: var(--space-24) 0;
+      overflow: hidden;
+    }
+    .fleet-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-4);
+    }
+    .fleet-col {
+      display: flex;
+      flex-direction: column;
+    }
+    .fleet-item {
+      position: relative;
+      border-radius: 16px;
+      overflow: hidden;
+      cursor: pointer;
+      height: 420px;
+    }
+    .fleet-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center center;
+      display: block;
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), filter 0.6s;
+      filter: saturate(0.85) brightness(0.9);
+    }
+    .fleet-item:hover img {
+      transform: scale(1.04);
+      filter: saturate(1) brightness(1);
+    }
+    .fleet-item::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(8, 15, 11, 0.7) 0%, transparent 50%);
+      pointer-events: none;
+    }
+    .fleet-item-label {
+      text-align: center;
+      margin-top: var(--space-3);
+      font-family: var(--font-heading);
+      font-size: var(--text-sm);
+      font-weight: 600;
+      color: var(--text-primary);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .fleet-item-label span {
+      display: block;
+      font-family: var(--font-body);
+      font-size: var(--text-xs);
+      font-weight: 400;
+      color: var(--text-muted);
+      text-transform: none;
+      letter-spacing: 0;
+      margin-top: 2px;
+    }
+    .fleet-item:first-child {
+      grid-row: auto;
+    }
+    .fleet-item .fleet-gold-border {
+      position: absolute;
+      inset: 0;
+      border: 2px solid transparent;
+      border-radius: 16px;
+      transition: border-color 0.4s;
+      pointer-events: none;
+      z-index: 3;
+    }
+    .fleet-item:hover .fleet-gold-border {
+      border-color: var(--gold);
+      box-shadow: inset 0 0 30px var(--gold-glow);
+    }
+
+    @media (max-width: 768px) {
+      .fleet-grid {
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(3, 280px);
+      }
+    }
+
+    /* ===== SERVICES ===== */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-6);
+    }
+    .service-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+    }
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      opacity: 0;
+      transition: opacity 0.4s;
+      z-index: 2;
+    }
+    .service-card:hover {
+      border-color: var(--border-hover);
+      transform: translateY(-6px);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+    }
+    .service-card:hover::before { opacity: 1; }
+    .service-card-image {
+      width: 100%;
+      height: 200px;
+      overflow: hidden;
+      position: relative;
+    }
+    .service-card-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+      filter: saturate(0.6) brightness(0.7);
+    }
+    .service-card:hover .service-card-image img {
+      transform: scale(1.1);
+      filter: saturate(0.8) brightness(0.8);
+    }
+    .service-card-image::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 80px;
+      background: linear-gradient(to top, var(--bg-card), transparent);
+    }
+    .service-card-body {
+      padding: var(--space-6) var(--space-6) var(--space-8);
+    }
+    .service-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: var(--gold-glow);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: var(--space-4);
+      margin-top: -36px;
+      position: relative;
+      z-index: 1;
+    }
+    .service-icon svg {
+      width: 24px;
+      height: 24px;
+      stroke: var(--gold);
+      fill: none;
+      stroke-width: 1.5;
+    }
+    .service-card h3 {
+      font-family: var(--font-heading);
+      font-size: var(--text-xl);
+      font-weight: 600;
+      margin-bottom: var(--space-3);
+    }
+    .service-card p {
+      color: var(--text-secondary);
+      font-size: var(--text-sm);
+      line-height: 1.6;
+    }
+    .service-tag {
+      display: inline-block;
+      margin-top: var(--space-4);
+      padding: 4px 12px;
+      border-radius: 100px;
+      font-size: var(--text-xs);
+      font-weight: 500;
+      color: var(--gold);
+      border: 1px solid var(--border);
+      letter-spacing: 0.04em;
+    }
+    @media (max-width: 900px) {
+      .services-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ===== HOW IT WORKS ===== */
+    .how { background: var(--bg-secondary); }
+
+    /* Dienst-selector tabs */
+    .how-selector {
+      display: flex;
+      gap: var(--space-3);
+      margin-bottom: var(--space-16);
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .how-tab {
+      padding: 10px 28px;
+      border-radius: 100px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text-secondary);
+      font-family: var(--font-body);
+      font-size: var(--text-sm);
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      letter-spacing: 0.02em;
+    }
+    .how-tab:hover {
+      border-color: var(--border-hover);
+      color: var(--text-primary);
+    }
+    .how-tab.active {
+      background: var(--gold);
+      border-color: var(--gold);
+      color: var(--bg-primary);
+      font-weight: 600;
+    }
+
+    /* Stap-panelen */
+    .how-panel { display: none; }
+    .how-panel.active { display: block; }
+
+    .how-steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--space-6);
+      position: relative;
+    }
+    .how-steps::before {
+      content: '';
+      position: absolute;
+      top: 36px;
+      left: 10%;
+      right: 10%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border-hover), var(--border-hover), transparent);
+    }
+    .how-step {
+      text-align: center;
+      position: relative;
+      cursor: default;
+    }
+    .how-number {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: var(--bg-card);
+      border: 2px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto var(--space-6);
+      font-family: var(--font-heading);
+      font-size: var(--text-2xl);
+      font-weight: 700;
+      color: var(--gold);
+      position: relative;
+      z-index: 1;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .how-step:hover .how-number {
+      border-color: var(--gold);
+      box-shadow: 0 0 40px var(--gold-glow-strong);
+      transform: scale(1.1);
+    }
+    .how-step h3 {
+      font-family: var(--font-heading);
+      font-size: var(--text-lg);
+      font-weight: 600;
+      margin-bottom: var(--space-2);
+    }
+    .how-step p {
+      color: var(--text-secondary);
+      font-size: var(--text-sm);
+      line-height: 1.5;
+      max-width: 220px;
+      margin: 0 auto;
+    }
+    @media (max-width: 900px) {
+      .how-steps { grid-template-columns: 1fr 1fr; gap: var(--space-10); }
+      .how-steps::before { display: none; }
+    }
+    @media (max-width: 500px) {
+      .how-steps { grid-template-columns: 1fr; }
+    }
+
+    /* ===== PARALLAX IMAGE BREAK ===== */
+    .parallax-break {
+      height: 50vh;
+      min-height: 350px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .parallax-break-img {
+      position: absolute;
+      inset: -20%;
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      filter: saturate(0.5) brightness(0.5);
+    }
+    @media (max-width: 768px) {
+      .parallax-break-img { background-attachment: scroll; }
+    }
+    .parallax-break-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, var(--bg-primary), rgba(8,15,11,0.3), var(--bg-primary));
+    }
+    .parallax-break-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      max-width: 700px;
+      padding: 0 var(--space-6);
+    }
+    .parallax-break-content h2 {
+      font-family: var(--font-heading);
+      font-size: var(--text-3xl);
+      font-weight: 700;
+      margin-bottom: var(--space-3);
+    }
+    .parallax-break-content p {
+      color: var(--text-secondary);
+      font-size: var(--text-lg);
+      font-weight: 300;
+    }
+
+    /* ===== STATS ===== */
+    .stats {
+      padding: var(--space-20) 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--space-8);
+      text-align: center;
+    }
+    .stat-item {
+      padding: var(--space-6);
+      transition: transform 0.3s;
+    }
+    .stat-item:hover { transform: translateY(-4px); }
+    .stat-number {
+      font-family: var(--font-heading);
+      font-size: var(--text-4xl);
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.1;
+    }
+    .stat-label {
+      font-size: var(--text-sm);
+      color: var(--text-muted);
+      margin-top: var(--space-2);
+      line-height: 1.4;
+    }
+    @media (max-width: 768px) {
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    /* ===== WHY A2B ===== */
+    .why-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-16);
+    }
+    .why-features {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-6);
+    }
+    @media (max-width: 600px) {
+      .why-features { grid-template-columns: 1fr; }
+    }
+    .why-feature {
+      display: flex;
+      gap: var(--space-4);
+      align-items: flex-start;
+      padding: var(--space-4);
+      border-radius: 12px;
+      transition: all 0.3s;
+      cursor: default;
+    }
+    .why-feature:hover {
+      background: var(--gold-glow);
+      transform: translateX(8px);
+    }
+    .why-feature-icon {
+      flex-shrink: 0;
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: var(--gold-glow);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s;
+    }
+    .why-feature:hover .why-feature-icon {
+      background: var(--gold);
+      border-color: var(--gold);
+    }
+    .why-feature:hover .why-feature-icon svg {
+      stroke: var(--bg-primary);
+    }
+    .why-feature-icon svg {
+      width: 20px;
+      height: 20px;
+      stroke: var(--gold);
+      fill: none;
+      stroke-width: 1.5;
+      transition: stroke 0.3s;
+    }
+    .why-feature h4 { font-weight: 600; margin-bottom: 2px; }
+    .why-feature p { color: var(--text-secondary); font-size: var(--text-sm); line-height: 1.5; }
+
+    /* Why visual — car image card */
+    .why-visual {
+      position: relative;
+      border-radius: 20px;
+      overflow: hidden;
+      aspect-ratio: 4/5;
+    }
+    .why-visual img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: saturate(0.6) brightness(0.7);
+      transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .why-visual:hover img {
+      filter: saturate(0.9) brightness(0.8);
+      transform: scale(1.05);
+    }
+    .why-visual::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(8,15,11,0.8) 0%, transparent 40%, rgba(8,15,11,0.2) 100%);
+    }
+    .why-visual-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: var(--space-8);
+      z-index: 2;
+    }
+    .why-visual-overlay h3 {
+      font-family: var(--font-heading);
+      font-size: var(--text-2xl);
+      font-weight: 700;
+      margin-bottom: var(--space-4);
+    }
+    .why-checklist {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+    }
+    .why-checklist li {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      font-size: var(--text-sm);
+      color: var(--text-secondary);
+    }
+    .why-checklist li svg {
+      width: 16px;
+      height: 16px;
+      stroke: var(--gold);
+      fill: none;
+      stroke-width: 2;
+      flex-shrink: 0;
+    }
+    .why-visual-border {
+      position: absolute;
+      inset: 0;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      pointer-events: none;
+      z-index: 3;
+      transition: border-color 0.3s;
+    }
+    .why-visual:hover .why-visual-border {
+      border-color: var(--gold);
+    }
+    @media (max-width: 768px) {
+      .why-grid { grid-template-columns: 1fr; }
+      .why-visual { aspect-ratio: 16/9; }
+    }
+
+    /* ===== TESTIMONIALS ===== */
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-6);
+    }
+    .testimonial-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: var(--space-8);
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+    }
+    .testimonial-card:hover {
+      border-color: var(--border-hover);
+      transform: translateY(-4px);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+    }
+    .testimonial-stars {
+      display: flex;
+      gap: 2px;
+      margin-bottom: var(--space-4);
+    }
+    .testimonial-stars svg { width: 16px; height: 16px; fill: var(--gold); }
+    .testimonial-card blockquote {
+      font-size: var(--text-base);
+      line-height: 1.7;
+      color: var(--text-secondary);
+      margin-bottom: var(--space-6);
+      font-style: italic;
+    }
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+    }
+    .testimonial-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--green-dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-heading);
+      font-weight: 700;
+      color: var(--gold);
+      font-size: var(--text-sm);
+    }
+    .testimonial-name { font-weight: 600; font-size: var(--text-sm); }
+    .testimonial-role { font-size: var(--text-xs); color: var(--text-muted); }
+    @media (max-width: 768px) {
+      .testimonials-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ===== CTA SECTION ===== */
+    .cta-section {
+      padding: var(--space-24) 0;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-bg {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(45, 106, 79, 0.1) 0%, transparent 70%),
+                  radial-gradient(ellipse 50% 40% at 50% 80%, var(--gold-glow) 0%, transparent 60%);
+    }
+    /* CTA background car image */
+    .cta-bg-image {
+      position: absolute;
+      inset: 0;
+      background: url('../Content/a2b-hero-web.jpg') center center / cover no-repeat;
+      opacity: 0.08;
+      filter: saturate(0);
+    }
+    .cta-content { position: relative; z-index: 1; }
+    .cta-section .section-title {
+      max-width: 700px;
+      margin: 0 auto var(--space-4);
+    }
+    .cta-section .section-subtitle {
+      max-width: 500px;
+      margin: 0 auto var(--space-10);
+    }
+    .cta-buttons {
+      display: flex;
+      gap: var(--space-4);
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    /* ===== FAQ ===== */
+    .faq { background: var(--bg-secondary); }
+    .faq-list {
+      max-width: 740px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+    }
+    .faq-item {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: all 0.3s;
+    }
+    .faq-item:hover,
+    .faq-item.open { border-color: var(--border-hover); }
+    .faq-item.open { background: var(--bg-card); }
+    .faq-question {
+      width: 100%;
+      padding: var(--space-6);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: var(--text-base);
+      font-weight: 500;
+      color: var(--text-primary);
+      text-align: left;
+      cursor: pointer;
+      transition: color 0.3s;
+    }
+    .faq-question:hover { color: var(--gold); }
+    .faq-chevron {
+      width: 20px;
+      height: 20px;
+      stroke: var(--text-muted);
+      flex-shrink: 0;
+      transition: all 0.3s;
+    }
+    .faq-item.open .faq-chevron { transform: rotate(180deg); stroke: var(--gold); }
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .faq-answer-inner {
+      padding: 0 var(--space-6) var(--space-6);
+      color: var(--text-secondary);
+      font-size: var(--text-sm);
+      line-height: 1.7;
+    }
+
+    /* ===== BLOG ===== */
+    .blog-carousel-wrap {
+      position: relative;
+      overflow: hidden;
+      margin-top: var(--space-12);
+    }
+    .blog-carousel {
+      display: flex;
+      gap: var(--space-6);
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .blog-card {
+      flex: 0 0 calc((100% - 2 * var(--space-6)) / 3);
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.3s, border-color 0.3s;
+    }
+    .blog-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--gold);
+    }
+    .blog-card-body {
+      padding: var(--space-6);
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .blog-card-tag {
+      display: inline-block;
+      font-size: var(--text-xs);
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: var(--space-3);
+    }
+    .blog-card-title {
+      font-family: var(--font-heading);
+      font-size: var(--text-xl);
+      font-weight: 700;
+      line-height: 1.3;
+      margin-bottom: var(--space-3);
+    }
+    .blog-card-excerpt {
+      font-size: var(--text-sm);
+      color: var(--text-secondary);
+      line-height: 1.7;
+      flex: 1;
+    }
+    .blog-card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: var(--space-5);
+      padding-top: var(--space-4);
+      border-top: 1px solid var(--border);
+    }
+    .blog-card-date {
+      font-size: var(--text-xs);
+      color: var(--text-muted);
+    }
+    .blog-card-link {
+      font-size: var(--text-xs);
+      font-weight: 600;
+      color: var(--gold);
+      letter-spacing: 0.04em;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      transition: gap 0.2s;
+    }
+    .blog-card-link:hover { gap: 8px; }
+    .blog-nav {
+      display: flex;
+      justify-content: center;
+      gap: var(--space-3);
+      margin-top: var(--space-8);
+    }
+    .blog-nav-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .blog-nav-btn:hover {
+      border-color: var(--gold);
+      background: rgba(201,168,76,0.08);
+    }
+    .blog-nav-btn svg { width: 18px; height: 18px; }
+
+    /* ===== FOOTER ===== */
+    .footer {
+      padding: var(--space-16) 0 var(--space-8);
+      border-top: 1px solid var(--border);
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: var(--space-12);
+      margin-bottom: var(--space-12);
+    }
+    .footer-brand .nav-logo { margin-bottom: var(--space-4); display: inline-block; }
+    .footer-brand p {
+      color: var(--text-muted);
+      font-size: var(--text-sm);
+      line-height: 1.6;
+      max-width: 280px;
+    }
+    .footer-col h4 {
+      font-size: var(--text-sm);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      margin-bottom: var(--space-4);
+    }
+    .footer-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+    }
+    .footer-links a {
+      color: var(--text-secondary);
+      font-size: var(--text-sm);
+      transition: color 0.3s;
+    }
+    .footer-links a:hover { color: var(--gold); }
+    .footer-bottom {
+      padding-top: var(--space-8);
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: var(--space-4);
+    }
+    .footer-bottom p { color: var(--text-muted); font-size: var(--text-xs); }
+    .footer-socials { display: flex; gap: var(--space-3); }
+    .footer-social {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s;
+    }
+    .footer-social:hover {
+      border-color: var(--gold);
+      background: var(--gold-glow);
+      transform: translateY(-2px);
+    }
+    .footer-social svg {
+      width: 18px;
+      height: 18px;
+      stroke: var(--text-muted);
+      fill: none;
+      stroke-width: 1.5;
+      transition: stroke 0.3s;
+    }
+    .footer-social:hover svg { stroke: var(--gold); }
+    @media (max-width: 768px) {
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 500px) {
+      .footer-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ===== SCROLL ANIMATIONS ===== */
+    [data-animate] {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    [data-animate="fade-up"] { transform: translateY(40px); }
+    [data-animate="fade-in"] { transform: none; }
+    [data-animate="fade-left"] { transform: translateX(40px); }
+    [data-animate="fade-right"] { transform: translateX(-40px); }
+    [data-animate="scale-up"] { transform: scale(0.92); }
+    [data-animate].visible {
+      opacity: 1;
+      transform: translateY(0) scale(1) translateX(0);
+    }
+    [data-delay="1"] { transition-delay: 0.1s; }
+    [data-delay="2"] { transition-delay: 0.2s; }
+    [data-delay="3"] { transition-delay: 0.3s; }
+    [data-delay="4"] { transition-delay: 0.4s; }
+    [data-delay="5"] { transition-delay: 0.5s; }
+    [data-delay="6"] { transition-delay: 0.6s; }
+
+    @media (prefers-reduced-motion: reduce) {
+      [data-animate] { opacity: 1; transform: none; transition: none; }
+      .hero-orb, .hero-badge-dot { animation: none; }
+      .marquee { animation: none; }
+      .parallax-break-img { background-attachment: scroll; }
+      .btn-primary::before { display: none; }
+    }
+
+    .skip-link {
+      position: absolute;
+      top: -100%;
+      left: 16px;
+      padding: 8px 16px;
+      background: var(--gold);
+      color: var(--bg-primary);
+      font-weight: 600;
+      border-radius: 6px;
+      z-index: 10000;
+      transition: top 0.2s;
+    }
+    .skip-link:focus { top: 16px; }
+
+    /* ===== 3D TILT CARDS ===== */
+    .tilt-card {
+      transform-style: preserve-3d;
+      perspective: 1000px;
+    }
+  </style>
+</head>
+<body>
+  <div class="scroll-progress" id="scrollProgress"></div>
+  <div class="cursor-glow" id="cursorGlow"></div>
+  <a href="#main" class="skip-link">Naar inhoud</a>
+
+  <!-- NAVIGATION -->
+  <nav class="navbar" id="navbar">
+    <div class="container navbar-inner">
+      <a href="#" class="nav-logo"><img src="../Content/a2b-logo.png" alt="A2B Services" height="96"></a>
+      <div class="nav-links" id="navLinks">
+        <div class="nav-links-center">
+          <a href="#services" class="nav-link" data-i18n="nav-services">Services</a>
+          <a href="#how" class="nav-link" data-i18n="nav-how">Hoe het werkt</a>
+          <a href="#fleet" class="nav-link" data-i18n="nav-fleet">Vloot</a>
+          <a href="#why" class="nav-link" data-i18n="nav-why">Waarom A2B</a>
+          <a href="#testimonials" class="nav-link" data-i18n="nav-reviews">Reviews</a>
+          <a href="#rekentool" class="nav-link">Prijsindicatie</a>
+          <a href="#faq" class="nav-link">FAQ</a>
+        </div>
+        <div class="nav-links-right">
+          <a href="#contact" class="btn-nav" data-i18n="nav-cta">Offerte aanvragen</a>
+          <div class="lang-switcher">
+            <button class="lang-btn active" id="btnNl" onclick="setLang('nl')" title="Nederlands">🇳🇱</button>
+            <button class="lang-btn" id="btnEn" onclick="setLang('en')" title="English">🇬🇧</button>
+          </div>
+        </div>
+      </div>
+      <button class="nav-hamburger" id="navToggle" aria-label="Menu openen">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <main id="main">
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-bg">
+        <div class="hero-bg-image" id="heroBgImage"></div>
+        <div class="hero-orb hero-orb-1"></div>
+        <div class="hero-orb hero-orb-2"></div>
+      </div>
+      <div class="container">
+        <div class="hero-content" data-animate="fade-up">
+          <div class="hero-badge">
+            <span class="hero-badge-dot"></span>
+            <span data-i18n="hero-badge">Premium chauffeursdiensten op maat</span>
+          </div>
+          <h1 data-i18n-html="hero-h1">Comfortabel, Discreet<br>en <span class="gold">Altijd op Tijd.</span></h1>
+          <p class="hero-sub" data-i18n="hero-sub">Van artiesten en VIP's tot voertuigtransport door heel Europa — wij regelen het vervoer dat past bij uw niveau. Persoonlijk, betrouwbaar en altijd beschikbaar.</p>
+          <div class="hero-ctas">
+            <div class="magnetic-wrap" data-magnetic>
+              <a href="#contact" class="btn-primary">
+                <span data-i18n="nav-cta">Offerte aanvragen</span>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </a>
+            </div>
+            <a href="#rekentool" class="btn-secondary">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M8 6h8M8 10h2M12 10h2M16 10h.01M8 14h2M12 14h2M16 14h2M8 18h2M12 18h2M16 18h2"/></svg>
+              Prijsindicatie berekenen
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TRUSTED BY — MARQUEE -->
+    <section class="trusted" data-animate="fade-in">
+      <div class="container">
+        <p class="trusted-label" data-i18n="trusted-label">Vertrouwd door toonaangevende organisaties en merken</p>
+      </div>
+      <div class="marquee" aria-hidden="true">
+        <div class="marquee-group">
+          <span class="marquee-item"><img src="../logo-website/Loveland_festival_logo-removebg-preview.png" alt="Loveland"></span><span class="marquee-divider"></span>
+          <span class="marquee-item"><img src="../logo-website/909_Logo-removebg-preview.png" alt="909"></span><span class="marquee-divider"></span>
+          <span class="marquee-item"><img src="../logo-website/Burst_logo-removebg-preview.png" alt="Burst"></span><span class="marquee-divider"></span>
+          <span class="marquee-item"><img src="../logo-website/Music_on_logo-removebg-preview.png" alt="Music On" class="logo-dark"></span><span class="marquee-divider"></span>
+          <span class="marquee-item"><img src="../logo-website/ADE_logo-removebg-preview.png" alt="ADE"></span><span class="marquee-divider"></span>
+          <span class="marquee-item"><img src="../logo-website/SMC_logo-removebg-preview.png" alt="SMC Creative Agency"></span><span class="marquee-divider"></span>
+          <span class="marquee-item"><img src="../logo-website/Yamaha_racing_logo-removebg-preview.png" alt="Yamaha Racing" class="logo-dark"></span><span class="marquee-divider"></span>
+          <span class="marquee-item"><img src="../logo-website/Joseph-Klibansky-announces-new-Superman-inspired-collaboration-joseph-klibansky_article-og-removebg-preview.png" alt="Joseph Klibansky" class="logo-dark"></span><span class="marquee-divider"></span>
+        </div>
+        <div class="marquee-group">
+          <span class="marquee-item"><img src="../logo-website/Loveland_festival_logo-removebg-preview.png" alt="Loveland"></span><span class="marquee-divider"></span>
+          <span class="marquee-item"><img src="../logo-website/909_Logo-removebg-preview.png" alt="909"></span><span class="marquee-divider"></span>
+          <span class="marquee-item"><img src="../logo-website/Burst_logo-removebg-preview.png" alt="Burst"></span><span class="marquee-divider"></span>
+          <span class="marquee-item"><img src="../logo-website/Music_on_logo-removebg-preview.png" alt="Music On" class="logo-dark"></span><span class="marquee-divider"></span>
+          <span class="marquee-item"><img src="../logo-website/ADE_logo-removebg-preview.png" alt="ADE"></span><span class="marquee-divider"></span>
+          <span class="marquee-item"><img src="../logo-website/SMC_logo-removebg-preview.png" alt="SMC Creative Agency"></span><span class="marquee-divider"></span>
+          <span class="marquee-item"><img src="../logo-website/Yamaha_racing_logo-removebg-preview.png" alt="Yamaha Racing" class="logo-dark"></span><span class="marquee-divider"></span>
+          <span class="marquee-item"><img src="../logo-website/Joseph-Klibansky-announces-new-Superman-inspired-collaboration-joseph-klibansky_article-og-removebg-preview.png" alt="Joseph Klibansky" class="logo-dark"></span><span class="marquee-divider"></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROBLEM -->
+    <section class="section problem" id="problem">
+      <div class="container">
+        <div class="section-header section-header-center" data-animate="fade-up">
+          <div class="section-label"><span class="section-label-line"></span> <span data-i18n="problem-label">De realiteit</span> <span class="section-label-line"></span></div>
+          <h2 class="section-title" data-i18n-html="problem-title">Waarom gewoon vervoer<br><span style="color: var(--gold)">niet volstaat</span></h2>
+          <p class="section-subtitle" data-i18n="problem-subtitle">U kiest bewust voor kwaliteit — het vervoer dat u regelt, moet daarbij passen.</p>
+        </div>
+        <div class="problem-cards" data-animate="fade-up" data-delay="1">
+          <div class="problem-card">
+            <div class="problem-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 6L6 18M6 6l12 12"/></svg></div>
+            <h4 data-i18n="p1-title">Onbetrouwbare alternatieven</h4>
+            <p data-i18n="p1-text">Reguliere taxidiensten of last-minute oplossingen bieden geen garantie op tijd, comfort of discretie. De eerste indruk is bepalend.</p>
+          </div>
+          <div class="problem-card">
+            <div class="problem-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 6L6 18M6 6l12 12"/></svg></div>
+            <h4 data-i18n="p2-title">Geen persoonlijke aandacht</h4>
+            <p data-i18n="p2-text">Standaarddiensten behandelen elke klant hetzelfde. VIP's, artiesten en zakelijke gasten verdienen een chauffeur die weet wat er van hem verwacht wordt.</p>
+          </div>
+          <div class="problem-card">
+            <div class="problem-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 6L6 18M6 6l12 12"/></svg></div>
+            <h4 data-i18n="p3-title">Vervoer dat niet bij u past</h4>
+            <p data-i18n="p3-text">Of het nu gaat om een eigen voertuig dat verplaatst moet worden of een bijzondere dag — zonder de juiste partner mist u controle, comfort en zekerheid.</p>
+          </div>
+        </div>
+        <div class="problem-solution" data-animate="fade-up" data-delay="2">
+          <span class="problem-solution-line"></span>
+          <span class="problem-solution-text" data-i18n="problem-solution">A2B regelt het — comfortabel, discreet en altijd op tijd.</span>
+          <span class="problem-solution-line"></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section class="section" id="services" style="background: var(--bg-secondary);">
+      <div class="container">
+        <div class="section-header section-header-center" data-animate="fade-up">
+          <div class="section-label"><span class="section-label-line"></span> <span data-i18n="services-label">Wat wij doen</span> <span class="section-label-line"></span></div>
+          <h2 class="section-title" data-i18n-html="services-title">Drie Diensten, Één Standaard:<br><span style="color: var(--gold)">Altijd Uitstekend</span></h2>
+          <p class="section-subtitle" data-i18n="services-subtitle">Of het nu gaat om een artiest, uw eigen voertuig of een bijzondere dag — wij leveren vervoer op het hoogste niveau.</p>
+        </div>
+        <div class="services-grid">
+          <div class="service-card tilt-card" data-animate="fade-up" data-delay="1">
+            <div class="service-card-image">
+              <img src="../Content/a2b-hero-web.jpg" alt="Festival en event vervoer" loading="lazy" width="800" height="400">
+            </div>
+            <div class="service-card-body">
+              <div class="service-icon">
+                <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+              </div>
+              <h3 data-i18n="s1-title">Festival & Event Vervoer</h3>
+              <p data-i18n="s1-text">Professioneel vervoer voor artiesten, VIP's en gasten bij evenementen en festivals. Wij rijden in de Mercedes V-Class, Vito of Range Rover — altijd punctueel, discreet en representatief.</p>
+              <span class="service-tag" data-i18n="s1-tag">Artiesten & VIP's</span>
+            </div>
+          </div>
+          <div class="service-card tilt-card" data-animate="fade-up" data-delay="2">
+            <div class="service-card-image">
+              <img src="../Content/Collage auto.JPG" alt="Voertuig transport door Europa" loading="lazy" width="800" height="400">
+            </div>
+            <div class="service-card-body">
+              <div class="service-icon">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20"/></svg>
+              </div>
+              <h3 data-i18n="s2-title">Voertuig Transport Europa</h3>
+              <p data-i18n="s2-text">Wij transporteren uw voertuig veilig en discreet naar elke bestemming in Europa. Verzekerd, professioneel en met volledige ontzorging — u hoeft er niet bij te zijn.</p>
+              <span class="service-tag" data-i18n="s2-tag">Heel Europa</span>
+            </div>
+          </div>
+          <div class="service-card tilt-card" data-animate="fade-up" data-delay="3">
+            <div class="service-card-image">
+              <img src="../Content/koffer.jpg" alt="Dagje uit en leisure chauffeur" loading="lazy" width="800" height="400">
+            </div>
+            <div class="service-card-body">
+              <div class="service-icon">
+                <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><path d="M9 22V12h6v10"/></svg>
+              </div>
+              <h3 data-i18n="s3-title">Dagje Uit & Leisure</h3>
+              <p data-i18n="s3-text">Wij rijden in uw eigen auto — u ontspant, wij sturen. Ideaal voor een citytrip, diner, of bijzondere gelegenheid waarbij u zelf achterover wilt leunen.</p>
+              <span class="service-tag" data-i18n="s3-tag">In uw eigen auto</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section class="section how" id="how">
+      <div class="container">
+        <div class="section-header section-header-center" data-animate="fade-up">
+          <div class="section-label"><span class="section-label-line"></span> <span data-i18n="how-label">Het proces</span> <span class="section-label-line"></span></div>
+          <h2 class="section-title" data-i18n="how-title">Zo werkt het — kies uw dienst</h2>
+          <p class="section-subtitle" data-i18n="how-subtitle">Selecteer een dienst en ontdek hoe wij het voor u regelen, van eerste contact tot aankomst.</p>
+        </div>
+
+        <!-- Keuze-tabs -->
+        <div class="how-selector" data-animate="fade-up">
+          <button class="how-tab active" data-target="panel-artiesten" data-i18n="tab1">Artiestenvervoer</button>
+          <button class="how-tab" data-target="panel-voertuig" data-i18n="tab2">Voertuig Transport Europa</button>
+          <button class="how-tab" data-target="panel-leisure" data-i18n="tab3">Dagje Uit &amp; Leisure</button>
+        </div>
+
+        <!-- PANEL 1: Artiestenvervoer -->
+        <div class="how-panel active" id="panel-artiesten">
+          <div class="how-steps">
+            <div class="how-step" data-animate="fade-up" data-delay="1">
+              <div class="how-number">01</div>
+              <h3 data-i18n="a1-title">Deel uw schema</h3>
+              <p data-i18n="a1-text">Stuur ons uw artiestenprogramma, vluchtgegevens en locaties. Wij brengen elke beweging in kaart.</p>
+            </div>
+            <div class="how-step" data-animate="fade-up" data-delay="2">
+              <div class="how-number">02</div>
+              <h3 data-i18n="a2-title">Wij maken het plan</h3>
+              <p data-i18n="a2-text">Ons team stelt een volledig transportschema op, wijst de juiste chauffeurs toe en bereidt zich voor op elk scenario.</p>
+            </div>
+            <div class="how-step" data-animate="fade-up" data-delay="3">
+              <div class="how-number">03</div>
+              <h3 data-i18n="a3-title">Foutloze uitvoering</h3>
+              <p data-i18n="a3-text">Onze chauffeurs regelen alles op de dag zelf. Realtime coördinatie, discreet en altijd op tijd.</p>
+            </div>
+            <div class="how-step" data-animate="fade-up" data-delay="4">
+              <div class="how-number">04</div>
+              <h3 data-i18n="a4-title">Evaluatie achteraf</h3>
+              <p data-i18n="a4-text">Volledig overzicht van alle ritten, verzamelde feedback en verbeterpunten voor uw volgende editie.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- PANEL 2: Voertuig Transport Europa -->
+        <div class="how-panel" id="panel-voertuig">
+          <div class="how-steps">
+            <div class="how-step">
+              <div class="how-number">01</div>
+              <h3 data-i18n="v1-title">Geef uw opdracht door</h3>
+              <p data-i18n="v1-text">Vertel ons waar uw voertuig staat, waar het naartoe moet en wanneer. Wij regelen de rest.</p>
+            </div>
+            <div class="how-step">
+              <div class="how-number">02</div>
+              <h3 data-i18n="v2-title">Inspectie & overdracht</h3>
+              <p data-i18n="v2-text">Wij inspecteren het voertuig bij ophalen en leggen de staat zorgvuldig vast. Volledig verzekerd transport.</p>
+            </div>
+            <div class="how-step">
+              <div class="how-number">03</div>
+              <h3 data-i18n="v3-title">Transport door Europa</h3>
+              <p data-i18n="v3-text">Een professionele chauffeur rijdt uw voertuig discreet en veilig naar de bestemming — u hoeft er niet bij te zijn.</p>
+            </div>
+            <div class="how-step">
+              <div class="how-number">04</div>
+              <h3 data-i18n="v4-title">Aflevering & bevestiging</h3>
+              <p data-i18n="v4-text">Uw voertuig wordt afgeleverd op de afgesproken locatie. U ontvangt een bevestiging inclusief eindcontrole.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- PANEL 3: Dagje Uit & Leisure -->
+        <div class="how-panel" id="panel-leisure">
+          <div class="how-steps">
+            <div class="how-step">
+              <div class="how-number">01</div>
+              <h3 data-i18n="l1-title">Plan uw dag</h3>
+              <p data-i18n="l1-text">Vertel ons uw plannen: bestemming, tijden en eventuele wensen. Wij stemmen alles op u af.</p>
+            </div>
+            <div class="how-step">
+              <div class="how-number">02</div>
+              <h3 data-i18n="l2-title">Chauffeur komt naar u toe</h3>
+              <p data-i18n="l2-text">Onze chauffeur staat op het afgesproken tijdstip voor uw deur — klaar om in uw eigen auto te rijden.</p>
+            </div>
+            <div class="how-step">
+              <div class="how-number">03</div>
+              <h3 data-i18n="l3-title">U geniet, wij rijden</h3>
+              <p data-i18n="l3-text">Leun achterover en geniet van de dag. Of het nu een etentje, citytrip of bijzondere gelegenheid is — u zit altijd goed.</p>
+            </div>
+            <div class="how-step">
+              <div class="how-number">04</div>
+              <h3 data-i18n="l4-title">Veilig thuis</h3>
+              <p data-i18n="l4-text">Wij brengen u en uw voertuig veilig terug. Geen parkeergedoe, geen stress — gewoon een perfecte dag.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- FLEET SHOWCASE -->
+    <section class="fleet" id="fleet">
+      <div class="container">
+        <div class="section-header section-header-center" data-animate="fade-up">
+          <div class="section-label"><span class="section-label-line"></span> <span data-i18n="fleet-label">De vloot</span> <span class="section-label-line"></span></div>
+          <h2 class="section-title" data-i18n-html="fleet-title">Voertuigen die Passen bij het<br><span style="color: var(--gold)">Niveau</span> van Uw Evenement</h2>
+          <p class="section-subtitle" style="margin-top: var(--space-3); color: var(--gold); font-size: var(--text-sm); letter-spacing: 0.04em;" data-i18n="fleet-note">Alle voertuigen zijn uitsluitend beschikbaar op aanvraag.</p>
+        </div>
+        <div class="fleet-grid" data-animate="scale-up" data-delay="1">
+          <div class="fleet-col">
+            <div class="fleet-item">
+              <img src="../Content/a2b-hero-web.jpg" alt="Land Rover Defender" loading="lazy" width="800" height="600" style="object-position: center 65%;">
+              <div class="fleet-gold-border"></div>
+            </div>
+            <div class="fleet-item-label">Land Rover Defender</div>
+          </div>
+          <div class="fleet-col">
+            <div class="fleet-item">
+              <img src="../Content/Vklasse .jpg" alt="Mercedes V-Klasse" loading="lazy" width="800" height="600" style="object-position: center 70%;">
+              <div class="fleet-gold-border"></div>
+            </div>
+            <div class="fleet-item-label">Mercedes V-Klasse</div>
+          </div>
+          <div class="fleet-col">
+            <div class="fleet-item">
+              <img src="../Content/koffer.jpg" alt="Dagje uit & Leisure" loading="lazy" width="800" height="600" style="object-position: 25% center;">
+              <div class="fleet-gold-border"></div>
+            </div>
+            <div class="fleet-item-label">Mercedes Vito</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- WHY A2B -->
+    <section class="section" id="why">
+      <div class="container">
+        <div class="why-grid">
+          <div>
+            <div class="section-header" data-animate="fade-up">
+              <div class="section-label"><span class="section-label-line"></span> <span data-i18n="why-label">Waarom A2B</span></div>
+              <h2 class="section-title" data-i18n-html="why-title">Wij rijden niet alleen.<br>Wij <span style="color: var(--gold)">ontzorgen</span> volledig.</h2>
+              <p class="section-subtitle" data-i18n="why-subtitle">De meeste vervoersdiensten leveren een chauffeur. Wij leveren gemoedsrust — van de eerste bevestiging tot de laatste kilometer.</p>
+            </div>
+            <div class="why-features" data-animate="fade-up" data-delay="1">
+              <div class="why-feature">
+                <div class="why-feature-icon"><svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg></div>
+                <div>
+                  <h4 data-i18n="w1-title">Professionele chauffeurs</h4>
+                  <p data-i18n="w1-text">Ervaren, representatief en altijd op tijd. Onze chauffeurs weten hoe ze zich in elke situatie moeten gedragen — discreet en attent.</p>
+                </div>
+              </div>
+              <div class="why-feature">
+                <div class="why-feature-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div>
+                <div>
+                  <h4 data-i18n="w2-title">Persoonlijke aandacht</h4>
+                  <p data-i18n="w2-text">U bent geen nummer. Wij leren uw wensen kennen en stemmen het vervoer daar volledig op af. Direct contact, geen callcenters.</p>
+                </div>
+              </div>
+              <div class="why-feature">
+                <div class="why-feature-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+                <div>
+                  <h4 data-i18n="w3-title">Discretie gegarandeerd</h4>
+                  <p data-i18n="w3-text">Of u nu een bekende persoon, zakelijke relatie of bijzondere gast vervoert — onze chauffeurs opereren altijd met de hoogste mate van vertrouwelijkheid.</p>
+                </div>
+              </div>
+              <div class="why-feature">
+                <div class="why-feature-icon"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
+                <div>
+                  <h4 data-i18n="w4-title">Flexibel en betrouwbaar</h4>
+                  <p data-i18n="w4-text">Planning gewijzigd? Wij passen ons direct aan. U heeft altijd een vaste lijn met uw contactpersoon — ook op het laatste moment.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section class="section" id="testimonials" style="background: var(--bg-secondary);">
+      <div class="container">
+        <div class="section-header section-header-center" data-animate="fade-up">
+          <div class="section-label"><span class="section-label-line"></span> <span data-i18n="test-label">Getuigenissen</span> <span class="section-label-line"></span></div>
+          <h2 class="section-title" data-i18n-html="test-title">Wat onze klanten zeggen over<br><span style="color: var(--gold)">A2B Chauffeursdiensten</span></h2>
+        </div>
+        <div class="testimonials-grid">
+          <div class="testimonial-card tilt-card" data-animate="fade-up" data-delay="1">
+            <div class="testimonial-stars">
+              <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            </div>
+            <blockquote data-i18n="t1-quote">"A2B heeft ons voertuig vlekkeloos van Nederland naar Zuid-Frankrijk gereden. Perfecte communicatie vooraf, nette overdracht en het was op de afgesproken tijd aanwezig. Geen stress, geen zorgen — precies zoals beloofd."</blockquote>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">AV</div>
+              <div>
+                <div class="testimonial-name">Aad van der Velden</div>
+                <div class="testimonial-role" data-i18n="t1-role">Particuliere klant</div>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial-card tilt-card" data-animate="fade-up" data-delay="2">
+            <div class="testimonial-stars">
+              <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            </div>
+            <blockquote data-i18n="t2-quote">"Het professionalisme van A2B is van een ander niveau. Stipt, discreet en altijd representatief. Wij zetten ze in voor het vervoer van onze belangrijkste gasten en relaties — ze maken altijd een geweldige indruk."</blockquote>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">GM</div>
+              <div>
+                <div class="testimonial-name">Govert Mos</div>
+                <div class="testimonial-role" data-i18n="t2-role">Zakelijke relatie</div>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial-card tilt-card" data-animate="fade-up" data-delay="3">
+            <div class="testimonial-stars">
+              <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            </div>
+            <blockquote data-i18n="t3-quote">"We hebben A2B ingehuurd voor een dagje uit met het hele gezin — in onze eigen auto. Wat een verschil. We konden volledig ontspannen genieten en hoefden nergens aan te denken. De chauffeur was vriendelijk, punctueel en absoluut top."</blockquote>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">SR</div>
+              <div>
+                <div class="testimonial-name">Sophie Rijnders</div>
+                <div class="testimonial-role" data-i18n="t3-role">Particuliere klant</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BLOG -->
+    <section class="section" id="blog">
+      <div class="container">
+        <div class="section-header section-header-center" data-animate="fade-up">
+          <div class="section-label"><span class="section-label-line"></span> <span data-i18n="blog-label">Uit ons blog</span> <span class="section-label-line"></span></div>
+          <h2 class="section-title" data-i18n-html="blog-title">Verhalen, tips &amp; <span style="color: var(--gold)">inzichten</span></h2>
+          <p class="section-subtitle" data-i18n="blog-subtitle">Lees meer over premium vervoer, onze diensten en het leven achter het stuur.</p>
+        </div>
+        <div class="blog-carousel-wrap" data-animate="fade-up">
+          <div class="blog-carousel" id="blogCarousel">
+
+            <div class="blog-card">
+              <div class="blog-card-body">
+                <span class="blog-card-tag">Festival &amp; evenementen</span>
+                <h3 class="blog-card-title">5 dingen die misgaan bij artiestenvervoer — en hoe je ze voorkomt</h3>
+                <p class="blog-card-excerpt">Artiestenvervoer lijkt simpel. Maar wie ooit een festival heeft georganiseerd, weet dat de realiteit een stuk grilliger is. Dit zijn de vijf fouten die we het vaakst tegenkomen.</p>
+                <div class="blog-card-footer">
+                  <span class="blog-card-date">Leestijd: ±4 minuten</span>
+                  <a href="blog-artiestenvervoer.html" class="blog-card-link" data-i18n="blog-read">Lees meer <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+                </div>
+              </div>
+            </div>
+
+            <div class="blog-card">
+              <div class="blog-card-body">
+                <span class="blog-card-tag">Voertuig transport Europa</span>
+                <h3 class="blog-card-title">Auto laten transporteren naar het buitenland: hoe werkt dat precies?</h3>
+                <p class="blog-card-excerpt">Je auto moet naar het buitenland, maar zelf rijden lukt niet altijd. Er is een derde optie die veel mensen niet kennen: een professionele chauffeur die jouw auto voor je rijdt, van deur tot deur door Europa.</p>
+                <div class="blog-card-footer">
+                  <span class="blog-card-date">Leestijd: ±4 minuten</span>
+                  <a href="blog-voertuigtransport.html" class="blog-card-link" data-i18n="blog-read">Lees meer <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+                </div>
+              </div>
+            </div>
+
+            <div class="blog-card">
+              <div class="blog-card-body">
+                <span class="blog-card-tag">Artiesten &amp; management</span>
+                <h3 class="blog-card-title">Privacy op de weg: hoe wij omgaan met vertrouwelijkheid bij bekende klanten</h3>
+                <p class="blog-card-excerpt">Als je een bekende artiest, atleet of executive vervoert, is discretie geen bijzaak. Het is de dienst. Ontdek hoe wij vertrouwelijkheid borgen bij elke rit.</p>
+                <div class="blog-card-footer">
+                  <span class="blog-card-date">Leestijd: ±3 minuten</span>
+                  <a href="blog-privacy.html" class="blog-card-link" data-i18n="blog-read">Lees meer <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+                </div>
+              </div>
+            </div>
+
+            <div class="blog-card">
+              <div class="blog-card-body">
+                <span class="blog-card-tag">Dagje uit &amp; leisure</span>
+                <h3 class="blog-card-title">Een dagje uit zonder rijden: zo werkt een leisure chauffeur</h3>
+                <p class="blog-card-excerpt">Je hebt een dag gepland waar je echt van wilt genieten. Wijnproeverij, Efteling, etentje in Amsterdam. Eén probleem: iemand moet rijden. Een leisure chauffeur lost dat op — in jouw eigen auto.</p>
+                <div class="blog-card-footer">
+                  <span class="blog-card-date">Leestijd: ±3 minuten</span>
+                  <a href="blog-leisure.html" class="blog-card-link">Lees meer <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <div class="blog-nav">
+          <button class="blog-nav-btn" id="blogPrev" aria-label="Vorige">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+          </button>
+          <button class="blog-nav-btn" id="blogNext" aria-label="Volgende">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- SOCIAL PROOF / INSTAGRAM -->
+    <section class="section" style="padding-bottom: 0;">
+      <div class="container">
+        <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: var(--space-6); background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: var(--space-8) var(--space-10);" data-animate="fade-up">
+          <div>
+            <h3 style="font-family: var(--font-heading); font-size: var(--text-2xl); font-weight: 700; margin-bottom: var(--space-1);" data-i18n="insta-title">Bekijk ons in actie</h3>
+            <p style="color: var(--text-secondary); font-size: var(--text-sm);" data-i18n="insta-text">Vlootfoto's, ritten door Europa en een kijkje achter de schermen bij A2B.</p>
+          </div>
+          <a href="https://www.instagram.com/a2bdrivers/" target="_blank" rel="noopener" class="btn-secondary" style="flex-shrink: 0;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/></svg>
+            Volg @a2bdrivers
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRIJSINDICATIE -->
+    <section class="section" id="rekentool">
+      <div class="container">
+        <div class="section-header section-header-center" data-animate="fade-up">
+          <div class="section-label"><span class="section-label-line"></span> Tarieven <span class="section-label-line"></span></div>
+          <h2 class="section-title">Wat kost het?</h2>
+          <p style="color: var(--text-secondary); max-width: 560px; margin: 16px auto 0; font-size: var(--text-base); line-height: 1.7;">Bereken direct een eerlijke schatting voor uw rit of transport. Geen verborgen kosten — u ontvangt altijd een vaste offerte vooraf.</p>
+        </div>
+      </div>
+
+      <style>
+        .rt-wrap { max-width: 720px; margin: 48px auto 0; padding: 0 24px; font-family: var(--font-body); font-weight: 300; }
+        .rt-tabs { display: grid; grid-template-columns: 1fr 1fr; background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 4px; gap: 4px; margin-bottom: 32px; }
+        .rt-tab-btn { padding: 12px; border-radius: 9px; border: none; font-family: var(--font-body); font-size: 14px; font-weight: 500; cursor: pointer; transition: all 0.3s; color: var(--text-secondary); background: transparent; letter-spacing: 0.02em; }
+        .rt-tab-btn.active { background: #131f14; color: var(--gold); border: 1px solid var(--border); }
+        .rt-tab-btn:hover:not(.active) { color: var(--text-primary); }
+        .rt-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 32px; display: none; }
+        .rt-card.active { display: block; }
+        .rt-field { margin-bottom: 24px; }
+        .rt-field label { display: block; font-size: 12px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px; }
+        .rt-field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .rt-wrap select, .rt-wrap input[type="text"] { width: 100%; background: #131f14; border: 1px solid var(--border); border-radius: 8px; padding: 12px 14px; font-family: var(--font-body); font-size: 14px; font-weight: 400; color: var(--text-primary); outline: none; transition: border-color 0.2s; -webkit-appearance: none; }
+        .rt-wrap select:focus, .rt-wrap input:focus { border-color: var(--gold); }
+        .rt-wrap select option { background: #131f14; }
+        .rt-wrap input[type="range"] { -webkit-appearance: none; appearance: none; width: 100%; height: 4px; border-radius: 2px; background: #131f14; border: 1px solid var(--border); outline: none; padding: 0; cursor: pointer; }
+        .rt-wrap input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 18px; height: 18px; border-radius: 50%; background: var(--gold); cursor: pointer; border: 2px solid var(--bg); box-shadow: 0 0 12px rgba(201,168,76,0.2); }
+        .rt-slider-labels { display: flex; justify-content: space-between; font-size: 11px; color: var(--text-muted); margin-top: 6px; }
+        .rt-slider-value { text-align: center; font-family: var(--font-heading); font-size: 1.5rem; color: var(--gold); margin-bottom: 8px; font-weight: 700; }
+        .rt-toggle-field { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+        .rt-toggle-label { font-size: 14px; color: var(--text-secondary); line-height: 1.4; }
+        .rt-toggle-track { position: relative; width: 44px; height: 24px; background: #131f14; border: 1px solid var(--border); border-radius: 12px; cursor: pointer; flex-shrink: 0; transition: background 0.2s; }
+        .rt-toggle-track input { position: absolute; opacity: 0; width: 100%; height: 100%; cursor: pointer; margin: 0; }
+        .rt-toggle-thumb { position: absolute; top: 3px; left: 3px; width: 16px; height: 16px; border-radius: 50%; background: var(--text-muted); transition: all 0.2s; pointer-events: none; }
+        .rt-toggle-track:has(input:checked) { background: #2d6a4f; border-color: #2d6a4f; }
+        .rt-toggle-track:has(input:checked) .rt-toggle-thumb { transform: translateX(20px); background: var(--gold); }
+        .rt-divider { height: 1px; background: var(--border); margin: 28px 0; }
+        .rt-result { background: #131f14; border: 1px solid var(--border); border-radius: 12px; padding: 24px; margin-top: 28px; display: none; }
+        .rt-result.show { display: block; }
+        .rt-result-label { font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 16px; }
+        .rt-result-main { display: flex; align-items: flex-end; gap: 8px; margin-bottom: 20px; }
+        .rt-result-price { font-family: var(--font-heading); font-size: clamp(2rem, 6vw, 3.5rem); font-weight: 700; color: var(--gold); line-height: 1; }
+        .rt-result-suffix { font-size: 14px; color: var(--text-secondary); padding-bottom: 6px; }
+        .rt-result-breakdown { display: flex; flex-direction: column; gap: 8px; }
+        .rt-result-row { display: flex; justify-content: space-between; align-items: center; font-size: 13px; padding-bottom: 8px; border-bottom: 1px solid rgba(201,168,76,0.06); }
+        .rt-result-row:last-child { border-bottom: none; padding-bottom: 0; }
+        .rt-result-row-label { color: var(--text-secondary); }
+        .rt-result-row-value { color: var(--text-primary); font-weight: 500; }
+        .rt-result-note { margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--border); font-size: 12px; color: var(--text-muted); line-height: 1.6; }
+        .rt-result-note span { color: var(--gold); }
+        .rt-btw-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+        .rt-btw-label { font-size: 12px; color: var(--text-muted); }
+        .rt-btw-pills { display: flex; gap: 4px; }
+        .rt-btw-pill { padding: 4px 12px; border-radius: 20px; border: 1px solid var(--border); font-size: 12px; cursor: pointer; background: transparent; font-family: var(--font-body); color: var(--text-secondary); transition: all 0.2s; }
+        .rt-btw-pill.active { background: rgba(201,168,76,0.12); color: var(--gold); border-color: var(--gold); }
+        .rt-cta { margin-top: 32px; text-align: center; padding: 24px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; }
+        .rt-cta p { font-size: 13px; color: var(--text-secondary); margin-bottom: 16px; line-height: 1.5; }
+        .rt-btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 28px; background: var(--gold); color: var(--bg); border-radius: 8px; border: none; font-family: var(--font-body); font-size: 14px; font-weight: 600; cursor: pointer; text-decoration: none; transition: all 0.3s; }
+        .rt-btn:hover { opacity: 0.85; transform: translateY(-1px); }
+        @keyframes rt-spin { to { transform: rotate(360deg); } }
+        @media (max-width: 500px) { .rt-card { padding: 20px; } .rt-field-row { grid-template-columns: 1fr; } }
+      </style>
+
+      <div class="rt-wrap">
+        <div class="rt-tabs">
+          <button class="rt-tab-btn active" onclick="rtSwitchTab('voertuig', event)">🚗 Voertuig transport Europa</button>
+          <button class="rt-tab-btn" onclick="rtSwitchTab('leisure', event)">✦ Leisure rit</button>
+        </div>
+
+        <!-- VOERTUIG TRANSPORT -->
+        <div class="rt-card active" id="rt-tab-voertuig">
+          <div class="rt-field">
+            <label>Vertreklocatie (Nederland)</label>
+            <select id="rt-v-vertrek">
+              <option value="amsterdam">Amsterdam / Randstad</option>
+              <option value="midden">Midden Nederland</option>
+              <option value="zuiden">Zuid Nederland</option>
+              <option value="noorden">Noord Nederland</option>
+            </select>
+          </div>
+          <div class="rt-field">
+            <label>Bestemming</label>
+            <select id="rt-v-bestemming" onchange="rtCalcVoertuig()">
+              <option value="">— Selecteer bestemming —</option>
+              <optgroup label="1 dag (tot 1200 km)">
+                <option value="1,280">België (Brussel ~280km)</option>
+                <option value="1,340">Luxemburg (~340km)</option>
+                <option value="1,650">Duitsland (noord/Berlijn ~650km)</option>
+                <option value="1,750">Duitsland (zuid/München ~750km)</option>
+                <option value="1,820">Zwitserland (Zürich ~820km)</option>
+                <option value="1,900">Oostenrijk (Wenen ~900km)</option>
+                <option value="1,780">Noord-Frankrijk (Parijs ~780km)</option>
+                <option value="1,1150">Noord-Italië (Milaan ~1150km)</option>
+                <option value="1,1200">Zuid-Frankrijk (Nice ~1200km)</option>
+              </optgroup>
+              <optgroup label="2 dagen (1200–2400 km)">
+                <option value="2,1600">Zuid-Italië (Rome ~1600km)</option>
+                <option value="2,1700">Spanje (noord/Barcelona ~1700km)</option>
+                <option value="2,2100">Portugal (Lissabon ~2100km)</option>
+                <option value="2,2200">Spanje (zuid/Málaga ~2200km)</option>
+              </optgroup>
+            </select>
+          </div>
+          <div class="rt-field">
+            <label>Merk van uw voertuig</label>
+            <select id="rt-v-merk" onchange="rtOnMerkChange()">
+              <option value="">— Selecteer merk —</option>
+            </select>
+          </div>
+          <div class="rt-field" id="rt-v-model-field" style="display:none">
+            <label>Model</label>
+            <select id="rt-v-model" onchange="rtOnModelChange()">
+              <option value="">— Selecteer model —</option>
+            </select>
+          </div>
+          <div class="rt-field" id="rt-v-fallback-field" style="display:none">
+            <label>Model niet gevonden? Typ het hier</label>
+            <div style="display:flex;gap:8px;align-items:center;">
+              <input type="text" id="rt-v-auto" placeholder="bijv. Porsche Cayenne, Alfa Romeo Stelvio" oninput="rtOnAutoInput()" style="flex:1">
+              <div id="rt-v-auto-spinner" style="display:none;width:18px;height:18px;border:2px solid var(--border);border-top-color:var(--gold);border-radius:50%;animation:rt-spin 0.7s linear infinite;flex-shrink:0;"></div>
+            </div>
+          </div>
+          <div id="rt-v-auto-info" style="margin-top:-12px;margin-bottom:16px;font-size:12px;color:var(--gold);min-height:18px;line-height:1.5;"></div>
+          <div class="rt-field">
+            <label>Type voertuig</label>
+            <select id="rt-v-type" onchange="rtCalcVoertuig()">
+              <option value="1">Personenauto / SUV</option>
+              <option value="1.1">Luxe / sportwagen</option>
+              <option value="1.15">Grote SUV / MPV</option>
+            </select>
+          </div>
+          <div class="rt-field">
+            <label>Gemiddeld brandstofverbruik (liter/100km)</label>
+            <div class="rt-slider-value" id="rt-v-verbruik-val">8 liter / 100km</div>
+            <input type="range" id="rt-v-verbruik" min="5" max="20" value="8" step="0.5" oninput="rtUpdateVerbruik();rtCalcVoertuig()">
+            <div class="rt-slider-labels"><span>5L (zuinig)</span><span>20L (groot)</span></div>
+          </div>
+          <div class="rt-field">
+            <label>Brandstofprijs (€ per liter)</label>
+            <div class="rt-field-row">
+              <select id="rt-v-brandstof" onchange="rtCalcVoertuig()">
+                <option value="1.75">Benzine ~ €1,75</option>
+                <option value="1.65" selected>Benzine ~ €1,65</option>
+                <option value="1.55">Diesel ~ €1,55</option>
+                <option value="1.45">Diesel ~ €1,45</option>
+                <option value="0.30">Elektrisch ~ €0,30/kWh</option>
+              </select>
+              <select id="rt-v-retour" onchange="rtCalcVoertuig()">
+                <option value="0">Chauffeur vliegt terug</option>
+                <option value="1">Alleen heenreis</option>
+              </select>
+            </div>
+          </div>
+          <div class="rt-divider"></div>
+          <div class="rt-btw-row">
+            <span class="rt-btw-label">Bedragen weergeven</span>
+            <div class="rt-btw-pills">
+              <button class="rt-btw-pill active" onclick="rtSetBtw('excl', this, 'v')">Excl. BTW</button>
+              <button class="rt-btw-pill" onclick="rtSetBtw('incl', this, 'v')">Incl. BTW (21%)</button>
+            </div>
+          </div>
+          <div class="rt-result" id="rt-result-voertuig">
+            <div class="rt-result-label">Geschatte totaalprijs</div>
+            <div class="rt-result-main">
+              <div class="rt-result-price" id="rt-v-totaal">—</div>
+              <div class="rt-result-suffix" id="rt-v-btw-label">excl. BTW</div>
+            </div>
+            <div class="rt-result-breakdown" id="rt-v-breakdown"></div>
+            <div class="rt-result-note"><span>Let op:</span> Dit is een indicatie. De exacte prijs hangt af van actuele brandstofprijzen, vliegtickets en eventuele tolkosten. Wij sturen altijd een vaste offerte vooraf.</div>
+          </div>
+        </div>
+
+        <!-- LEISURE -->
+        <div class="rt-card" id="rt-tab-leisure">
+          <div class="rt-field">
+            <label>Jouw vertrekadres</label>
+            <input type="text" id="rt-l-adres" placeholder="bijv. Keizersgracht 123, Amsterdam" oninput="rtOnAdresInput()">
+            <div id="rt-l-afstand-info" style="margin-top:6px;font-size:12px;color:var(--gold);min-height:18px;"></div>
+          </div>
+          <div class="rt-field">
+            <label>Of stel afstand handmatig in (enkele reis van Bussum)</label>
+            <div class="rt-slider-value" id="rt-l-afstand-val">25 km</div>
+            <input type="range" id="rt-l-afstand" min="0" max="150" value="25" step="5" oninput="rtUpdateAfstand();rtCalcLeisure()">
+            <div class="rt-slider-labels"><span>0 km (Bussum e.o.)</span><span>150 km</span></div>
+          </div>
+          <div class="rt-field">
+            <label>Duur van de rit / activiteit</label>
+            <div class="rt-slider-value" id="rt-l-uren-val">4 uur</div>
+            <input type="range" id="rt-l-uren" min="1" max="12" value="4" step="0.5" oninput="rtUpdateUren();rtCalcLeisure()">
+            <div class="rt-slider-labels"><span>1 uur</span><span>12 uur</span></div>
+            <div id="rt-l-minimum-notice" style="display:none;margin-top:8px;padding:8px 12px;border-radius:6px;background:rgba(201,168,76,0.08);border:1px solid rgba(201,168,76,0.25);font-size:12px;color:var(--gold);line-height:1.5;">Minimale afname is 4 uur — er wordt altijd 4 uur in rekening gebracht.</div>
+          </div>
+          <div class="rt-field">
+            <label>Tijdslot van de rit</label>
+            <select id="rt-l-tijdslot" onchange="rtCalcLeisure()">
+              <option value="dag">Overdag (07:00 – 00:00) — €25/uur</option>
+              <option value="nacht">Nacht (00:00 – 07:00) — €27,50/uur</option>
+              <option value="mix">Mix dag + nacht</option>
+            </select>
+          </div>
+          <div class="rt-field">
+            <div class="rt-toggle-field">
+              <div class="rt-toggle-label">
+                <strong>Alleen ophalen</strong><br>
+                <span style="font-size:12px;color:var(--text-muted)">Bij een ophaalklus rijdt de chauffeur het voertuig van de klant naar de bestemming. Een volgchauffeur brengt de chauffeur naar de ophaallocatie en rijdt daarna zelfstandig terug — zodat er geen auto achterblijft.</span>
+              </div>
+              <label class="rt-toggle-track">
+                <input type="checkbox" id="rt-l-volg" onchange="rtToggleVolgVelden();rtCalcLeisure()">
+                <span class="rt-toggle-thumb"></span>
+              </label>
+            </div>
+          </div>
+          <div id="rt-volg-velden" style="display:none">
+            <div class="rt-field">
+              <label>Wachttijd volgchauffeur op locatie</label>
+              <div class="rt-slider-value" id="rt-l-wacht-val">0 min</div>
+              <input type="range" id="rt-l-wacht" min="0" max="240" value="0" step="30" oninput="rtUpdateWacht();rtCalcLeisure()">
+              <div class="rt-slider-labels"><span>0 min</span><span>4 uur</span></div>
+            </div>
+            <div class="rt-field">
+              <label>Klus-kilometers volgchauffeur</label>
+              <div class="rt-slider-value" id="rt-l-volgkm-val">0 km</div>
+              <input type="range" id="rt-l-volgkm" min="0" max="300" value="0" step="5" oninput="rtUpdateVolgkm();rtCalcLeisure()">
+              <div class="rt-slider-labels"><span>0 km</span><span>300 km</span></div>
+            </div>
+          </div>
+          <div class="rt-divider"></div>
+          <div class="rt-btw-row">
+            <span class="rt-btw-label">Bedragen weergeven</span>
+            <div class="rt-btw-pills">
+              <button class="rt-btw-pill active" onclick="rtSetBtw('excl', this, 'l')">Excl. BTW</button>
+              <button class="rt-btw-pill" onclick="rtSetBtw('incl', this, 'l')">Incl. BTW (21%)</button>
+            </div>
+          </div>
+          <div class="rt-result" id="rt-result-leisure">
+            <div class="rt-result-label">Geschatte totaalprijs</div>
+            <div class="rt-result-main">
+              <div class="rt-result-price" id="rt-l-totaal">—</div>
+              <div class="rt-result-suffix" id="rt-l-btw-label">excl. BTW</div>
+            </div>
+            <div class="rt-result-breakdown" id="rt-l-breakdown"></div>
+            <div class="rt-result-note"><span>Let op:</span> Uren worden gerekend vanaf vertrek chauffeur (Bussum) tot thuiskomst. Wachttijd volgchauffeur wordt per half uur berekend à €7,50. Dit is een indicatie — de exacte prijs bespreken we altijd vooraf.</div>
+          </div>
+        </div>
+
+        <div class="rt-cta">
+          <p>Wil je een exacte offerte of heb je een specifieke situatie?<br>We denken graag met je mee — vrijblijvend en snel.</p>
+          <a href="https://wa.me/+31614683020" class="rt-btn" target="_blank" rel="noopener">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            Offerte aanvragen via WhatsApp
+          </a>
+        </div>
+      </div>
+
+      <script>
+        (function() {
+          var rtVBtw = 'excl', rtLBtw = 'excl';
+          window.rtSwitchTab = function(tab, event) {
+            document.querySelectorAll('.rt-card').forEach(function(c) { c.classList.remove('active'); });
+            document.querySelectorAll('.rt-tab-btn').forEach(function(b) { b.classList.remove('active'); });
+            document.getElementById('rt-tab-' + tab).classList.add('active');
+            event.target.classList.add('active');
+          };
+          window.rtUpdateVerbruik = function() { document.getElementById('rt-v-verbruik-val').textContent = document.getElementById('rt-v-verbruik').value + ' liter / 100km'; };
+          window.rtUpdateAfstand = function() {
+            var v = document.getElementById('rt-l-afstand').value;
+            document.getElementById('rt-l-afstand-val').textContent = v + ' km';
+            if (document.getElementById('rt-l-volg').checked) { document.getElementById('rt-l-volgkm').value = Math.min(parseFloat(v), 300); document.getElementById('rt-l-volgkm-val').textContent = v + ' km'; }
+          };
+          window.rtUpdateUren = function() { document.getElementById('rt-l-uren-val').textContent = parseFloat(document.getElementById('rt-l-uren').value) + ' uur'; };
+          window.rtUpdateWacht = function() { var v = parseInt(document.getElementById('rt-l-wacht').value); document.getElementById('rt-l-wacht-val').textContent = v === 0 ? '0 min' : v + ' min'; };
+          window.rtUpdateVolgkm = function() { document.getElementById('rt-l-volgkm-val').textContent = document.getElementById('rt-l-volgkm').value + ' km'; };
+          window.rtToggleVolgVelden = function() {
+            var on = document.getElementById('rt-l-volg').checked;
+            document.getElementById('rt-volg-velden').style.display = on ? 'block' : 'none';
+            if (on) { var a = document.getElementById('rt-l-afstand').value; document.getElementById('rt-l-volgkm').value = Math.min(parseFloat(a), 300); document.getElementById('rt-l-volgkm-val').textContent = a + ' km'; }
+          };
+          window.rtSetBtw = function(mode, btn, tab) {
+            btn.parentElement.querySelectorAll('.rt-btw-pill').forEach(function(p) { p.classList.remove('active'); });
+            btn.classList.add('active');
+            if (tab === 'v') { rtVBtw = mode; rtCalcVoertuig(); } else { rtLBtw = mode; rtCalcLeisure(); }
+          };
+          function rtFmt(n) { return '€\u202f' + Math.round(n).toLocaleString('nl-NL'); }
+          function rtApplyBtw(n, mode) { return mode === 'incl' ? n * 1.21 : n; }
+          var RT_AUTOS = {
+            'Audi': [{ m:'A3',v:6.5,t:1,b:'benzine' },{ m:'A4',v:7.0,t:1,b:'benzine' },{ m:'A4 Avant',v:7.0,t:1,b:'diesel' },{ m:'A6',v:7.5,t:1.1,b:'diesel' },{ m:'A7',v:8.0,t:1.1,b:'benzine' },{ m:'A8',v:9.5,t:1.1,b:'benzine' },{ m:'Q3',v:7.5,t:1,b:'benzine' },{ m:'Q5',v:8.5,t:1.15,b:'diesel' },{ m:'Q7',v:10.0,t:1.15,b:'diesel' },{ m:'Q8',v:11.0,t:1.15,b:'benzine' },{ m:'e-tron',v:0,t:1.15,b:'elektrisch' },{ m:'RS6 Avant',v:13.0,t:1.1,b:'benzine' }],
+            'BMW': [{ m:'1 Serie',v:6.5,t:1,b:'benzine' },{ m:'3 Serie',v:7.0,t:1,b:'benzine' },{ m:'5 Serie',v:8.0,t:1.1,b:'diesel' },{ m:'7 Serie',v:10.0,t:1.1,b:'benzine' },{ m:'X1',v:7.5,t:1,b:'benzine' },{ m:'X3',v:8.5,t:1.15,b:'diesel' },{ m:'X5',v:10.5,t:1.15,b:'diesel' },{ m:'X6',v:11.0,t:1.15,b:'benzine' },{ m:'X7',v:12.0,t:1.15,b:'benzine' },{ m:'iX',v:0,t:1.15,b:'elektrisch' },{ m:'i4',v:0,t:1,b:'elektrisch' },{ m:'M3',v:13.0,t:1.1,b:'benzine' },{ m:'M5',v:14.0,t:1.1,b:'benzine' }],
+            'Mercedes-Benz': [{ m:'A-Klasse',v:6.5,t:1,b:'benzine' },{ m:'C-Klasse',v:7.5,t:1,b:'benzine' },{ m:'E-Klasse',v:8.5,t:1.1,b:'diesel' },{ m:'S-Klasse',v:10.5,t:1.1,b:'benzine' },{ m:'GLA',v:7.5,t:1,b:'benzine' },{ m:'GLC',v:8.5,t:1.15,b:'diesel' },{ m:'GLE',v:10.5,t:1.15,b:'diesel' },{ m:'GLS',v:12.0,t:1.15,b:'benzine' },{ m:'V-Klasse',v:10.0,t:1.15,b:'diesel' },{ m:'EQS',v:0,t:1.1,b:'elektrisch' },{ m:'EQE',v:0,t:1,b:'elektrisch' },{ m:'AMG GT',v:14.0,t:1.1,b:'benzine' }],
+            'Volkswagen': [{ m:'Golf',v:6.5,t:1,b:'benzine' },{ m:'Polo',v:6.0,t:1,b:'benzine' },{ m:'Passat',v:7.5,t:1,b:'diesel' },{ m:'Tiguan',v:8.0,t:1.15,b:'benzine' },{ m:'Touareg',v:10.5,t:1.15,b:'diesel' },{ m:'ID.4',v:0,t:1.15,b:'elektrisch' },{ m:'ID.3',v:0,t:1,b:'elektrisch' },{ m:'Arteon',v:8.0,t:1.1,b:'benzine' }],
+            'Land Rover': [{ m:'Range Rover',v:13.0,t:1.15,b:'benzine' },{ m:'Range Rover Sport',v:12.0,t:1.15,b:'benzine' },{ m:'Range Rover Velar',v:10.5,t:1.15,b:'diesel' },{ m:'Range Rover Evoque',v:9.0,t:1.15,b:'diesel' },{ m:'Defender',v:11.5,t:1.15,b:'diesel' },{ m:'Discovery',v:11.0,t:1.15,b:'diesel' }],
+            'Porsche': [{ m:'Cayenne',v:12.5,t:1.15,b:'benzine' },{ m:'Macan',v:9.5,t:1.15,b:'benzine' },{ m:'Panamera',v:11.5,t:1.1,b:'benzine' },{ m:'Taycan',v:0,t:1.1,b:'elektrisch' },{ m:'911',v:12.0,t:1.1,b:'benzine' }],
+            'Tesla': [{ m:'Model 3',v:0,t:1,b:'elektrisch' },{ m:'Model S',v:0,t:1.1,b:'elektrisch' },{ m:'Model X',v:0,t:1.15,b:'elektrisch' },{ m:'Model Y',v:0,t:1.15,b:'elektrisch' }],
+            'Volvo': [{ m:'XC40',v:8.5,t:1,b:'benzine' },{ m:'XC60',v:9.5,t:1.15,b:'diesel' },{ m:'XC90',v:11.0,t:1.15,b:'benzine' },{ m:'S90',v:8.5,t:1.1,b:'diesel' },{ m:'V90',v:8.5,t:1.1,b:'diesel' },{ m:'EX90',v:0,t:1.15,b:'elektrisch' }],
+            'Lexus': [{ m:'RX',v:9.5,t:1.15,b:'benzine' },{ m:'NX',v:8.0,t:1,b:'benzine' },{ m:'LS',v:10.5,t:1.1,b:'benzine' },{ m:'ES',v:8.0,t:1.1,b:'benzine' },{ m:'LC 500',v:12.5,t:1.1,b:'benzine' }],
+            'Maserati': [{ m:'Ghibli',v:11.0,t:1.1,b:'benzine' },{ m:'Levante',v:12.5,t:1.15,b:'benzine' },{ m:'Quattroporte',v:13.0,t:1.1,b:'benzine' },{ m:'GranTurismo',v:14.0,t:1.1,b:'benzine' }],
+            'Bentley': [{ m:'Bentayga',v:15.0,t:1.15,b:'benzine' },{ m:'Continental GT',v:14.5,t:1.1,b:'benzine' },{ m:'Flying Spur',v:14.0,t:1.1,b:'benzine' }],
+            'Rolls-Royce': [{ m:'Ghost',v:15.5,t:1.1,b:'benzine' },{ m:'Cullinan',v:16.0,t:1.15,b:'benzine' },{ m:'Phantom',v:16.0,t:1.1,b:'benzine' }],
+            'Ferrari': [{ m:'Roma',v:13.5,t:1.1,b:'benzine' },{ m:'Portofino',v:13.5,t:1.1,b:'benzine' },{ m:'SF90',v:11.0,t:1.1,b:'benzine' }],
+            'Lamborghini': [{ m:'Urus',v:14.5,t:1.15,b:'benzine' },{ m:'Huracan',v:15.5,t:1.1,b:'benzine' }],
+            'Andere merk': []
+          };
+          document.addEventListener('DOMContentLoaded', function() {
+            var sel = document.getElementById('rt-v-merk');
+            Object.keys(RT_AUTOS).forEach(function(m) { var o = document.createElement('option'); o.value = m; o.textContent = m; sel.appendChild(o); });
+          });
+          window.rtOnMerkChange = function() {
+            var merk = document.getElementById('rt-v-merk').value;
+            var mf = document.getElementById('rt-v-model-field'), ff = document.getElementById('rt-v-fallback-field');
+            document.getElementById('rt-v-auto-info').textContent = '';
+            if (!merk) { mf.style.display = 'none'; ff.style.display = 'none'; return; }
+            if (merk === 'Andere merk') { mf.style.display = 'none'; ff.style.display = 'block'; return; }
+            var ms = document.getElementById('rt-v-model');
+            ms.innerHTML = '<option value="">— Selecteer model —</option>';
+            RT_AUTOS[merk].forEach(function(a, i) { var o = document.createElement('option'); o.value = i; o.textContent = a.m; ms.appendChild(o); });
+            var oth = document.createElement('option'); oth.value = 'other'; oth.textContent = 'Model niet in lijst…'; ms.appendChild(oth);
+            mf.style.display = 'block'; ff.style.display = 'none';
+          };
+          window.rtOnModelChange = function() {
+            var merk = document.getElementById('rt-v-merk').value, val = document.getElementById('rt-v-model').value;
+            var ff = document.getElementById('rt-v-fallback-field'), info = document.getElementById('rt-v-auto-info');
+            if (val === 'other') { ff.style.display = 'block'; info.textContent = ''; return; }
+            ff.style.display = 'none';
+            if (!val) { info.textContent = ''; return; }
+            var a = RT_AUTOS[merk][parseInt(val)];
+            var tm = {1:'Personenauto / SUV',1.1:'Luxe / sportwagen',1.15:'Grote SUV / MPV'}, bm = {benzine:'1.65',diesel:'1.55',elektrisch:'0.30'};
+            var vb = a.b === 'elektrisch' ? 0 : a.v;
+            document.getElementById('rt-v-verbruik').value = vb || 5;
+            document.getElementById('rt-v-verbruik-val').textContent = a.b === 'elektrisch' ? 'Elektrisch' : vb + ' liter / 100km';
+            document.getElementById('rt-v-type').value = a.t;
+            if (bm[a.b]) document.getElementById('rt-v-brandstof').value = bm[a.b];
+            info.style.color = 'var(--gold)';
+            info.textContent = '✓ ' + merk + ' ' + a.m + ' · ' + tm[a.t] + ' · ' + (a.b === 'elektrisch' ? 'elektrisch' : a.v + 'L/100km · ' + a.b) + ' — automatisch ingesteld';
+            rtCalcVoertuig();
+          };
+          var rtAutoTimer = null;
+          window.rtOnAutoInput = function() {
+            clearTimeout(rtAutoTimer);
+            var val = document.getElementById('rt-v-auto').value.trim(), info = document.getElementById('rt-v-auto-info'), sp = document.getElementById('rt-v-auto-spinner');
+            if (val.length < 3) { info.textContent = ''; return; }
+            info.textContent = ''; sp.style.display = 'block';
+            rtAutoTimer = setTimeout(function() { rtZoekAutoGegevens(val); }, 700);
+          };
+          async function rtZoekAutoGegevens(auto) {
+            var info = document.getElementById('rt-v-auto-info'), sp = document.getElementById('rt-v-auto-spinner');
+            try {
+              var merk = document.getElementById('rt-v-merk').value;
+              var zk = merk && merk !== 'Andere merk' ? merk + ' ' + auto : auto;
+              var res = await fetch('https://api.anthropic.com/v1/messages', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ model:'claude-sonnet-4-20250514', max_tokens:120, system:'Je bent een auto-expert. Geef alleen een JSON-object terug, geen uitleg, geen markdown.', messages:[{role:'user',content:'Wat is het gemiddelde brandstofverbruik in liter per 100km en het voertuigtype van een '+zk+'? Antwoord alleen met dit JSON: {"verbruik":<getal tussen 5 en 20>,"type":<"standaard" of "luxe_sport" of "grote_suv">,"brandstof":<"benzine" of "diesel" of "elektrisch">,"geldig":true} of {"geldig":false} als het voertuig niet herkenbaar is.'}] }) });
+              var data = await res.json(); sp.style.display = 'none';
+              var json = JSON.parse(data.content?.[0]?.text?.trim() || '{}');
+              if (json.geldig) {
+                var vb = Math.min(Math.max(json.verbruik, 5), 20);
+                document.getElementById('rt-v-verbruik').value = vb;
+                document.getElementById('rt-v-verbruik-val').textContent = vb + ' liter / 100km';
+                var tm = {standaard:'1',luxe_sport:'1.1',grote_suv:'1.15'}, tl = {standaard:'Personenauto / SUV',luxe_sport:'Luxe / sportwagen',grote_suv:'Grote SUV / MPV'};
+                document.getElementById('rt-v-type').value = tm[json.type] || '1';
+                var bm = {benzine:'1.65',diesel:'1.55',elektrisch:'0.30'};
+                if (bm[json.brandstof]) document.getElementById('rt-v-brandstof').value = bm[json.brandstof];
+                info.style.color = 'var(--gold)'; info.textContent = '✓ ' + tl[json.type] + ' · ~' + vb + 'L/100km · ' + json.brandstof + ' — automatisch ingesteld';
+                rtCalcVoertuig();
+              } else { info.style.color = 'var(--text-muted)'; info.textContent = 'Voertuig niet herkend — stel type en verbruik handmatig in.'; }
+            } catch(e) { sp.style.display = 'none'; info.style.color = 'var(--text-muted)'; info.textContent = 'Kon voertuig niet ophalen — stel handmatig in.'; }
+          }
+          window.rtCalcVoertuig = function() {
+            var dest = document.getElementById('rt-v-bestemming').value; if (!dest) return;
+            var p = dest.split(','), dagen = Number(p[0]), km = Number(p[1]);
+            var verbruik = parseFloat(document.getElementById('rt-v-verbruik').value);
+            var bp = parseFloat(document.getElementById('rt-v-brandstof').value);
+            var tm = parseFloat(document.getElementById('rt-v-type').value);
+            var rv = document.getElementById('rt-v-retour').value === '0';
+            var dr = 250 * tm, dk = dagen * dr, mk = dagen * 60, ok = dagen * 100, bk = (km/100)*verbruik*bp;
+            var vt = 0; if (rv) { if (km<=400) vt=80; else if (km<=900) vt=130; else if (km<=1500) vt=180; else vt=250; }
+            var tot = rtApplyBtw(dk+mk+ok+bk+vt, rtVBtw);
+            document.getElementById('rt-v-totaal').textContent = rtFmt(tot);
+            document.getElementById('rt-v-btw-label').textContent = rtVBtw === 'incl' ? 'incl. BTW' : 'excl. BTW';
+            var rows = [
+              ['Chauffeur dagvergoeding ('+dagen+' '+(dagen===1?'dag':'dagen')+' × €'+Math.round(dr)+')', rtFmt(rtApplyBtw(dk,rtVBtw))],
+              ['Maaltijdvergoeding ('+dagen+' '+(dagen===1?'dag':'dagen')+' × €60)', rtFmt(rtApplyBtw(mk,rtVBtw))],
+              ['Overnachting ('+dagen+' '+(dagen===1?'nacht':'nachten')+' × €100)', rtFmt(rtApplyBtw(ok,rtVBtw))],
+              ['Brandstof (~'+km+' km)', rtFmt(rtApplyBtw(bk,rtVBtw))],
+            ];
+            if (rv) rows.push(['Vliegticket chauffeur terug (schatting)', rtFmt(rtApplyBtw(vt,rtVBtw))]);
+            document.getElementById('rt-v-breakdown').innerHTML = rows.map(function(r){ return '<div class="rt-result-row"><span class="rt-result-row-label">'+r[0]+'</span><span class="rt-result-row-value">'+r[1]+'</span></div>'; }).join('');
+            document.getElementById('rt-result-voertuig').classList.add('show');
+          };
+          var RT_BUSSUM = {lat:52.2753,lon:5.1608}, rtAdresTimer = null;
+          window.rtOnAdresInput = function() {
+            clearTimeout(rtAdresTimer);
+            var val = document.getElementById('rt-l-adres').value.trim(), info = document.getElementById('rt-l-afstand-info');
+            if (val.length < 4) { info.textContent = ''; return; }
+            info.textContent = 'Adres opzoeken…';
+            rtAdresTimer = setTimeout(function() { rtZoekAdres(val); }, 700);
+          };
+          async function rtZoekAdres(adres) {
+            var info = document.getElementById('rt-l-afstand-info');
+            try {
+              var gr = await fetch('https://nominatim.openstreetmap.org/search?q='+encodeURIComponent(adres)+'&format=json&limit=1&countrycodes=nl,be,de,fr,es,it,pt,at,ch,lu', {headers:{'Accept-Language':'nl'}});
+              var gd = await gr.json();
+              if (!gd.length) { info.textContent = 'Adres niet gevonden — stel handmatig in.'; info.style.color = 'var(--text-muted)'; return; }
+              var or2 = await fetch('https://router.project-osrm.org/route/v1/driving/'+RT_BUSSUM.lon+','+RT_BUSSUM.lat+';'+gd[0].lon+','+gd[0].lat+'?overview=false');
+              var od = await or2.json();
+              if (od.code !== 'Ok' || !od.routes?.length) { info.textContent = 'Route kon niet berekend worden — stel handmatig in.'; info.style.color = 'var(--text-muted)'; return; }
+              var km = Math.round(od.routes[0].distance/1000), tm2 = Math.round(od.routes[0].duration/60);
+              var u = Math.floor(tm2/60), mn = tm2%60, ts = u>0 ? u+'u '+(mn>0?mn+'min':'') : mn+' min';
+              document.getElementById('rt-l-afstand').value = Math.min(km,150);
+              document.getElementById('rt-l-afstand-val').textContent = km+' km';
+              info.style.color = 'var(--gold)'; info.textContent = '📍 '+km+' km · '+ts+' rijden vanaf Bussum';
+              rtCalcLeisure();
+            } catch(e) { info.style.color = 'var(--text-muted)'; info.textContent = 'Verbindingsfout — stel de afstand handmatig in.'; }
+          }
+          window.rtCalcLeisure = function() {
+            var uren = parseFloat(document.getElementById('rt-l-uren').value);
+            var afstand = parseFloat(document.getElementById('rt-l-afstand').value);
+            var ts = document.getElementById('rt-l-tijdslot').value;
+            var volg = document.getElementById('rt-l-volg').checked;
+            var ut = ts==='nacht'?27.50:ts==='mix'?26.25:25;
+            var rtu = (afstand*2)/70, rtm = Math.round(rtu*60), fu = Math.max(uren,4), totu = fu+rtu;
+            var mn2 = document.getElementById('rt-l-minimum-notice');
+            if (mn2) mn2.style.display = uren<4?'block':'none';
+            var kk = volg?0:afstand*2*0.23, rk = totu*ut;
+            var vs=0,vw=0,vk=0;
+            if (volg) {
+              vs = ts==='nacht'?30:25;
+              var wm = parseInt(document.getElementById('rt-l-wacht').value); vw = Math.floor(wm/30)*7.50;
+              var kkm = parseFloat(document.getElementById('rt-l-volgkm').value); vk = (kkm*2)*0.35;
+            }
+            var tot = rtApplyBtw(rk+kk+vs+vw+vk, rtLBtw);
+            document.getElementById('rt-l-totaal').textContent = rtFmt(tot);
+            document.getElementById('rt-l-btw-label').textContent = rtLBtw==='incl'?'incl. BTW':'excl. BTW';
+            var rows = [['Chauffeur ('+(fu<4?'4u min.':fu+'u')+' + '+rtm+' min reistijd = '+(Math.round(totu*10)/10)+'u)', rtFmt(rtApplyBtw(rk,rtLBtw))]];
+            if (!volg) { rows.push(['Kilometervergoeding Bussum → locatie ('+(afstand*2)+' km × €0,23)', rtFmt(rtApplyBtw(kk,rtLBtw))]); }
+            else {
+              rows.push(['Kilometervergoeding vervalt — volgchauffeur neemt km over','€ 0']);
+              rows.push(['Volgchauffeur startvergoeding ('+(ts==='nacht'?'nacht':'dag')+')', rtFmt(rtApplyBtw(vs,rtLBtw))]);
+              if (vw>0) { var wm2=parseInt(document.getElementById('rt-l-wacht').value); rows.push(['Wachttijd volgchauffeur ('+wm2+' min × €7,50/halfuur)', rtFmt(rtApplyBtw(vw,rtLBtw))]); }
+              if (vk>0) { var kkm2=parseFloat(document.getElementById('rt-l-volgkm').value); rows.push(['Klus-km volgchauffeur ('+kkm2+' km heen + terug = '+(kkm2*2)+' km × €0,35)', rtFmt(rtApplyBtw(vk,rtLBtw))]); }
+            }
+            document.getElementById('rt-l-breakdown').innerHTML = rows.map(function(r){ return '<div class="rt-result-row"><span class="rt-result-row-label">'+r[0]+'</span><span class="rt-result-row-value">'+r[1]+'</span></div>'; }).join('');
+            document.getElementById('rt-result-leisure').classList.add('show');
+          };
+        })();
+      </script>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section" id="contact">
+      <div class="cta-bg"></div>
+      <div class="cta-bg-image"></div>
+      <div class="container cta-content">
+        <div class="section-label"><span class="section-label-line"></span> <span data-i18n="cta-label">Laten we praten</span> <span class="section-label-line"></span></div>
+        <h2 class="section-title" data-animate="fade-up" data-i18n-html="cta-title">Klaar voor vervoer op<br><span style="color: var(--gold)">uw niveau?</span></h2>
+        <p class="section-subtitle" data-animate="fade-up" data-delay="1" data-i18n="cta-subtitle">Vertel ons wat u nodig heeft en wij sturen u binnen 48 uur een vrijblijvende offerte op maat. Geen verplichtingen, geen druk.</p>
+        <div class="cta-buttons" data-animate="fade-up" data-delay="2">
+          <div class="magnetic-wrap" data-magnetic>
+            <a href="https://wa.me/+31614683020?text=Hallo%20A2B,%20ik%20wil%20graag%20een%20offerte%20aanvragen." class="btn-primary" target="_blank" rel="noopener">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+              WhatsApp ons
+            </a>
+          </div>
+          <a href="mailto:info@a2b-services.nl?subject=Offerte%20aanvraag" class="btn-secondary">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><path d="M22 6l-10 7L2 6"/></svg>
+            Stuur een e-mail
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section faq" id="faq">
+      <div class="container">
+        <div class="section-header section-header-center" data-animate="fade-up">
+          <div class="section-label"><span class="section-label-line"></span> FAQ <span class="section-label-line"></span></div>
+          <h2 class="section-title" data-i18n="faq-title">Veelgestelde vragen</h2>
+        </div>
+        <div class="faq-list" data-animate="fade-up" data-delay="1">
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false"><span data-i18n="faq1-q">Welke diensten bieden jullie aan?</span><svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+            <div class="faq-answer"><div class="faq-answer-inner" data-i18n="faq1-a">Wij bieden drie diensten aan: artiestenvervoer en VIP-transport voor evenementen, voertuigtransport door heel Europa waarbij wij uw auto naar de bestemming rijden, en een dagje uit & leisure waarbij een chauffeur in uw eigen auto rijdt zodat u volledig kunt ontspannen.</div></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false"><span data-i18n="faq2-q">Hoe gaan jullie om met last-minute wijzigingen?</span><svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+            <div class="faq-answer"><div class="faq-answer-inner" data-i18n="faq2-a">Flexibiliteit zit in ons DNA. Of het nu gaat om een gewijzigde vertrektijd, een aangepaste route of een extra stop — wij passen ons direct aan. U heeft altijd een directe lijn met uw vaste contactpersoon.</div></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false"><span data-i18n="faq3-q">Welke voertuigen heeft uw vloot?</span><svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+            <div class="faq-answer"><div class="faq-answer-inner" data-i18n="faq3-a">Onze eigen vloot bestaat uit een Land Rover Defender, Mercedes Vito en Mercedes V-Klasse — allemaal representatief en uitstekend onderhouden. Voor de Dagje Uit & Leisure dienst rijden wij in uw eigen voertuig.</div></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false"><span data-i18n="faq4-q">Rijden jullie ook buiten Nederland?</span><svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+            <div class="faq-answer"><div class="faq-answer-inner" data-i18n="faq4-a">Ja. Voor voertuigtransport rijden wij door heel Europa. Voor chauffeursdiensten zijn wij primair actief in Nederland, maar voor specifieke ritten naar het buitenland zijn wij open voor overleg.</div></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false"><span data-i18n="faq5-q">Hoe ver van tevoren moet ik boeken?</span><svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+            <div class="faq-answer"><div class="faq-answer-inner" data-i18n="faq5-a">Hoe eerder, hoe beter — zeker voor drukkere periodes. In veel gevallen kunnen wij ook op kortere termijn helpen. Neem vrijblijvend contact op en wij kijken samen wat mogelijk is.</div></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false"><span data-i18n="faq6-q">Hoe zit het met discretie en privacy?</span><svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+            <div class="faq-answer"><div class="faq-answer-inner" data-i18n="faq6-a">Discretie is voor ons vanzelfsprekend. Onze chauffeurs zijn professioneel, terughoudend en respecteren te allen tijde de privacy van onze klanten. Op verzoek werken wij ook met een vertrouwelijkheidsovereenkomst.</div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="#" class="nav-logo"><img src="../Content/a2b-logo.png" alt="A2B Services" height="96"></a>
+          <p data-i18n="footer-desc">Premium chauffeursdiensten voor particulieren en bedrijven. Comfortabel, discreet en altijd op tijd — van de eerste rit tot de laatste kilometer.</p>
+        </div>
+        <div class="footer-col">
+          <h4 data-i18n="footer-col1">Services</h4>
+          <ul class="footer-links">
+            <li><a href="#services" data-i18n="s1-title">Artiestenvervoer</a></li>
+            <li><a href="#services" data-i18n="s2-title">Voertuig Transport Europa</a></li>
+            <li><a href="#services" data-i18n="s3-title">Dagje Uit &amp; Leisure</a></li>
+            <li><a href="#fleet" data-i18n="footer-fleet">Onze vloot</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4 data-i18n="footer-col2">Bedrijf</h4>
+          <ul class="footer-links">
+            <li><a href="#why" data-i18n="footer-about">Over A2B</a></li>
+            <li><a href="#testimonials" data-i18n="nav-reviews">Reviews</a></li>
+            <li><a href="#faq">FAQ</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4 data-i18n="footer-col3">Contact</h4>
+
+          <ul class="footer-links">
+            <li><a href="https://wa.me/+31614683020" target="_blank" rel="noopener">WhatsApp</a></li>
+            <li><a href="tel:+31614683020">+31 6 1468 3020</a></li>
+            <li><a href="mailto:info@a2b-services.nl">info@a2b-services.nl</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 A2B Services. Alle rechten voorbehouden.</p>
+        <div class="footer-socials">
+          <a href="https://instagram.com/a2bdrivers" target="_blank" rel="noopener" class="footer-social" aria-label="Instagram">
+            <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5"/></svg>
+          </a>
+          <a href="https://wa.me/+31614683020" target="_blank" rel="noopener" class="footer-social" aria-label="WhatsApp">
+            <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg>
+          </a>
+          <a href="mailto:info@a2b-services.nl" class="footer-social" aria-label="Email">
+            <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><path d="M22 6l-10 7L2 6"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // ===== LANGUAGE SWITCHER =====
+    const translations = {
+      nl: {
+        'nav-services': 'Services',
+        'nav-how': 'Hoe het werkt',
+        'nav-fleet': 'Vloot',
+        'nav-why': 'Waarom A2B',
+        'nav-reviews': 'Reviews',
+        'nav-cta': 'Offerte aanvragen',
+        'hero-badge': 'Premium chauffeursdiensten op maat',
+        'hero-h1': 'Comfortabel, Discreet<br>en <span class="gold">Altijd op Tijd.</span>',
+        'hero-sub': 'Van artiesten en VIP\'s tot voertuigtransport door heel Europa — wij regelen het vervoer dat past bij uw niveau. Persoonlijk, betrouwbaar en altijd beschikbaar.',
+        'hero-cta2': 'Zo werkt het',
+        'trusted-label': 'Vertrouwd door toonaangevende organisaties en merken',
+        'problem-label': 'De realiteit',
+        'problem-title': 'Waarom gewoon vervoer<br><span style="color: var(--gold)">niet volstaat</span>',
+        'problem-subtitle': 'U kiest bewust voor kwaliteit — het vervoer dat u regelt, moet daarbij passen.',
+        'p1-title': 'Onbetrouwbare alternatieven',
+        'p1-text': 'Reguliere taxidiensten of last-minute oplossingen bieden geen garantie op tijd, comfort of discretie. De eerste indruk is bepalend.',
+        'p2-title': 'Geen persoonlijke aandacht',
+        'p2-text': 'Standaarddiensten behandelen elke klant hetzelfde. VIP\'s, artiesten en zakelijke gasten verdienen een chauffeur die weet wat er van hem verwacht wordt.',
+        'p3-title': 'Vervoer dat niet bij u past',
+        'p3-text': 'Of het nu gaat om een eigen voertuig dat verplaatst moet worden of een bijzondere dag — zonder de juiste partner mist u controle, comfort en zekerheid.',
+        'problem-solution': 'A2B regelt het — comfortabel, discreet en altijd op tijd.',
+        'services-label': 'Wat wij doen',
+        'services-title': 'Drie Diensten, Één Standaard:<br><span style="color: var(--gold)">Altijd Uitstekend</span>',
+        'services-subtitle': 'Of het nu gaat om een artiest, uw eigen voertuig of een bijzondere dag — wij leveren vervoer op het hoogste niveau.',
+        's1-title': 'Festival & Event Vervoer',
+        's1-text': 'Professioneel vervoer voor artiesten, VIP\'s en gasten bij evenementen en festivals. Wij rijden in de Mercedes V-Class, Vito of Range Rover — altijd punctueel, discreet en representatief.',
+        's1-tag': 'Artiesten & VIP\'s',
+        's2-title': 'Voertuig Transport Europa',
+        's2-text': 'Wij transporteren uw voertuig veilig en discreet naar elke bestemming in Europa. Verzekerd, professioneel en met volledige ontzorging — u hoeft er niet bij te zijn.',
+        's2-tag': 'Heel Europa',
+        's3-title': 'Dagje Uit & Leisure',
+        's3-text': 'Wij rijden in uw eigen auto — u ontspant, wij sturen. Ideaal voor een citytrip, diner, of bijzondere gelegenheid waarbij u zelf achterover wilt leunen.',
+        's3-tag': 'In uw eigen auto',
+        'how-label': 'Het proces',
+        'how-title': 'Zo werkt het — kies uw dienst',
+        'how-subtitle': 'Selecteer een dienst en ontdek hoe wij het voor u regelen, van eerste contact tot aankomst.',
+        'tab1': 'Artiestenvervoer',
+        'tab2': 'Voertuig Transport Europa',
+        'tab3': 'Dagje Uit & Leisure',
+        'a1-title': 'Deel uw schema', 'a1-text': 'Stuur ons uw artiestenprogramma, vluchtgegevens en locaties. Wij brengen elke beweging in kaart.',
+        'a2-title': 'Wij maken het plan', 'a2-text': 'Ons team stelt een volledig transportschema op, wijst de juiste chauffeurs toe en bereidt zich voor op elk scenario.',
+        'a3-title': 'Foutloze uitvoering', 'a3-text': 'Onze chauffeurs regelen alles op de dag zelf. Realtime coördinatie, discreet en altijd op tijd.',
+        'a4-title': 'Evaluatie achteraf', 'a4-text': 'Volledig overzicht van alle ritten, verzamelde feedback en verbeterpunten voor uw volgende editie.',
+        'v1-title': 'Geef uw opdracht door', 'v1-text': 'Vertel ons waar uw voertuig staat, waar het naartoe moet en wanneer. Wij regelen de rest.',
+        'v2-title': 'Inspectie & overdracht', 'v2-text': 'Wij inspecteren het voertuig bij ophalen en leggen de staat zorgvuldig vast. Volledig verzekerd transport.',
+        'v3-title': 'Transport door Europa', 'v3-text': 'Een professionele chauffeur rijdt uw voertuig discreet en veilig naar de bestemming — u hoeft er niet bij te zijn.',
+        'v4-title': 'Aflevering & bevestiging', 'v4-text': 'Uw voertuig wordt afgeleverd op de afgesproken locatie. U ontvangt een bevestiging inclusief eindcontrole.',
+        'l1-title': 'Plan uw dag', 'l1-text': 'Vertel ons uw plannen: bestemming, tijden en eventuele wensen. Wij stemmen alles op u af.',
+        'l2-title': 'Chauffeur komt naar u toe', 'l2-text': 'Onze chauffeur staat op het afgesproken tijdstip voor uw deur — klaar om in uw eigen auto te rijden.',
+        'l3-title': 'U geniet, wij rijden', 'l3-text': 'Leun achterover en geniet van de dag. Of het nu een etentje, citytrip of bijzondere gelegenheid is — u zit altijd goed.',
+        'l4-title': 'Veilig thuis', 'l4-text': 'Wij brengen u en uw voertuig veilig terug. Geen parkeergedoe, geen stress — gewoon een perfecte dag.',
+        'fleet-label': 'De vloot',
+        'fleet-title': 'Voertuigen die Passen bij het<br><span style="color: var(--gold)">Niveau</span> van Uw Evenement',
+        'fleet-subtitle': 'Van executive sedans tot VIP-crewbussen, elke rit weerspiegelt de reputatie van uw evenement.',
+        'fleet-note': 'Alle voertuigen zijn uitsluitend beschikbaar op aanvraag.',
+        'f1-sub': 'Festival & event vervoer',
+        'f2-sub': 'VIP & groepsvervoer',
+        'f3-sub': 'Dagje uit & leisure',
+        'par-title': 'Vervoer op het <span style="color: var(--gold)">hoogste niveau</span>',
+        'par-text': 'Of het nu gaat om een artiest, uw eigen voertuig of een bijzondere dag — wij regelen het met precisie, discretie en persoonlijke aandacht.',
+        'stat1': 'Jaar ervaring', 'stat2': 'Tevreden klanten', 'stat3': 'Op-tijd-score', 'stat4': 'Beschikbaar',
+        'why-label': 'Waarom A2B',
+        'why-title': 'Wij rijden niet alleen.<br>Wij <span style="color: var(--gold)">ontzorgen</span> volledig.',
+        'why-subtitle': 'De meeste vervoersdiensten leveren een chauffeur. Wij leveren gemoedsrust — van de eerste bevestiging tot de laatste kilometer.',
+        'w1-title': 'Professionele chauffeurs', 'w1-text': 'Ervaren, representatief en altijd op tijd. Onze chauffeurs weten hoe ze zich in elke situatie moeten gedragen — discreet en attent.',
+        'w2-title': 'Persoonlijke aandacht', 'w2-text': 'U bent geen nummer. Wij leren uw wensen kennen en stemmen het vervoer daar volledig op af. Direct contact, geen callcenters.',
+        'w3-title': 'Discretie gegarandeerd', 'w3-text': 'Of u nu een bekende persoon, zakelijke relatie of bijzondere gast vervoert — onze chauffeurs opereren altijd met de hoogste mate van vertrouwelijkheid.',
+        'w4-title': 'Flexibel en betrouwbaar', 'w4-text': 'Planning gewijzigd? Wij passen ons direct aan. U heeft altijd een vaste lijn met uw contactpersoon — ook op het laatste moment.',
+        'test-label': 'Getuigenissen',
+        'test-title': 'Wat onze klanten zeggen over<br><span style="color: var(--gold)">A2B Chauffeursdiensten</span>',
+        't1-quote': '"A2B heeft ons voertuig vlekkeloos van Nederland naar Zuid-Frankrijk gereden. Perfecte communicatie vooraf, nette overdracht en het was op de afgesproken tijd aanwezig. Geen stress, geen zorgen — precies zoals beloofd."',
+        't1-role': 'Particuliere klant',
+        't2-quote': '"Het professionalisme van A2B is van een ander niveau. Stipt, discreet en altijd representatief. Wij zetten ze in voor het vervoer van onze belangrijkste gasten en relaties — ze maken altijd een geweldige indruk."',
+        't2-role': 'Zakelijke relatie',
+        't3-quote': '"We hebben A2B ingehuurd voor een dagje uit met het hele gezin — in onze eigen auto. Wat een verschil. We konden volledig ontspannen genieten en hoefden nergens aan te denken. De chauffeur was vriendelijk, punctueel en absoluut top."',
+        't3-role': 'Particuliere klant',
+        'insta-title': 'Bekijk ons in actie',
+        'insta-text': 'Vlootfoto\'s, ritten door Europa en een kijkje achter de schermen bij A2B.',
+        'cta-label': 'Laten we praten',
+        'cta-title': 'Klaar voor vervoer op<br><span style="color: var(--gold)">uw niveau?</span>',
+        'cta-subtitle': 'Vertel ons wat u nodig heeft en wij sturen u binnen 48 uur een vrijblijvende offerte op maat. Geen verplichtingen, geen druk.',
+        'faq-title': 'Veelgestelde vragen',
+        'faq1-q': 'Welke diensten bieden jullie aan?', 'faq1-a': 'Wij bieden drie diensten aan: artiestenvervoer en VIP-transport voor evenementen, voertuigtransport door heel Europa waarbij wij uw auto naar de bestemming rijden, en een dagje uit & leisure waarbij een chauffeur in uw eigen auto rijdt zodat u volledig kunt ontspannen.',
+        'faq2-q': 'Hoe gaan jullie om met last-minute wijzigingen?', 'faq2-a': 'Flexibiliteit zit in ons DNA. Of het nu gaat om een gewijzigde vertrektijd, een aangepaste route of een extra stop — wij passen ons direct aan. U heeft altijd een directe lijn met uw vaste contactpersoon.',
+        'faq3-q': 'Welke voertuigen heeft uw vloot?', 'faq3-a': 'Onze eigen vloot bestaat uit een Land Rover Defender, Mercedes Vito en Mercedes V-Klasse — allemaal representatief en uitstekend onderhouden. Voor de Dagje Uit & Leisure dienst rijden wij in uw eigen voertuig.',
+        'faq4-q': 'Rijden jullie ook buiten Nederland?', 'faq4-a': 'Ja. Voor voertuigtransport rijden wij door heel Europa. Voor chauffeursdiensten zijn wij primair actief in Nederland, maar voor specifieke ritten naar het buitenland zijn wij open voor overleg.',
+        'faq5-q': 'Hoe ver van tevoren moet ik boeken?', 'faq5-a': 'Hoe eerder, hoe beter — zeker voor drukkere periodes. In veel gevallen kunnen wij ook op kortere termijn helpen. Neem vrijblijvend contact op en wij kijken samen wat mogelijk is.',
+        'faq6-q': 'Hoe zit het met discretie en privacy?', 'faq6-a': 'Discretie is voor ons vanzelfsprekend. Onze chauffeurs zijn professioneel, terughoudend en respecteren te allen tijde de privacy van onze klanten. Op verzoek werken wij ook met een vertrouwelijkheidsovereenkomst.',
+        'footer-desc': 'Premium chauffeursdiensten voor particulieren en bedrijven. Comfortabel, discreet en altijd op tijd — van de eerste rit tot de laatste kilometer.',
+        'footer-col1': 'Services', 'footer-col2': 'Bedrijf', 'footer-col3': 'Contact',
+        'footer-fleet': 'Onze vloot', 'footer-about': 'Over A2B',
+      },
+      en: {
+        'nav-services': 'Services',
+        'nav-how': 'How it works',
+        'nav-fleet': 'Fleet',
+        'nav-why': 'Why A2B',
+        'nav-reviews': 'Reviews',
+        'nav-cta': 'Request a quote',
+        'hero-badge': 'Premium chauffeur services on demand',
+        'hero-h1': 'Comfortable, Discreet<br>and <span class="gold">Always on Time.</span>',
+        'hero-sub': 'From artists and VIPs to vehicle transport across Europe — we arrange transport that matches your standards. Personal, reliable and always available.',
+        'hero-cta2': 'How it works',
+        'trusted-label': 'Trusted by leading organisations and brands',
+        'problem-label': 'The reality',
+        'problem-title': 'Why ordinary transport<br><span style="color: var(--gold)">falls short</span>',
+        'problem-subtitle': 'You deliberately choose quality — the transport you arrange must reflect that.',
+        'p1-title': 'Unreliable alternatives',
+        'p1-text': 'Regular taxi services or last-minute solutions offer no guarantee of punctuality, comfort or discretion. First impressions matter.',
+        'p2-title': 'No personal attention',
+        'p2-text': 'Standard services treat every client the same. VIPs, artists and business guests deserve a chauffeur who knows exactly what is expected.',
+        'p3-title': 'Transport that doesn\'t fit',
+        'p3-text': 'Whether it\'s a vehicle that needs relocating or a special day out — without the right partner you lose control, comfort and certainty.',
+        'problem-solution': 'A2B takes care of it — comfortable, discreet and always on time.',
+        'services-label': 'What we do',
+        'services-title': 'Three Services, One Standard:<br><span style="color: var(--gold)">Always Excellent</span>',
+        'services-subtitle': 'Whether it\'s an artist, your own vehicle or a special day — we deliver transport at the highest level.',
+        's1-title': 'Festival & Event Transport',
+        's1-text': 'Professional transport for artists, VIPs and guests at events and festivals. We drive the Mercedes V-Class, Vito or Range Rover — always punctual, discreet and presentable.',
+        's1-tag': 'Artists & VIPs',
+        's2-title': 'Vehicle Transport Europe',
+        's2-text': 'We transport your vehicle safely and discreetly to any destination in Europe. Insured, professional and fully managed — you don\'t need to be there.',
+        's2-tag': 'All of Europe',
+        's3-title': 'Day Out & Leisure',
+        's3-text': 'We drive your own car — you relax, we steer. Perfect for a city trip, dinner, or special occasion where you simply want to sit back.',
+        's3-tag': 'In your own car',
+        'how-label': 'The process',
+        'how-title': 'How it works — choose your service',
+        'how-subtitle': 'Select a service and discover how we arrange everything, from first contact to arrival.',
+        'tab1': 'Artist transport',
+        'tab2': 'Vehicle Transport Europe',
+        'tab3': 'Day Out & Leisure',
+        'a1-title': 'Share your schedule', 'a1-text': 'Send us your artist schedule, flight details and locations. We map out every movement.',
+        'a2-title': 'We create the plan', 'a2-text': 'Our team draws up a full transport schedule, assigns the right chauffeurs and prepares for every scenario.',
+        'a3-title': 'Flawless execution', 'a3-text': 'Our chauffeurs handle everything on the day. Real-time coordination, discreet and always on time.',
+        'a4-title': 'Post-event review', 'a4-text': 'Full overview of all rides, collected feedback and improvements for your next edition.',
+        'v1-title': 'Submit your request', 'v1-text': 'Tell us where your vehicle is, where it needs to go and when. We handle the rest.',
+        'v2-title': 'Inspection & handover', 'v2-text': 'We inspect the vehicle on collection and carefully document its condition. Fully insured transport.',
+        'v3-title': 'Transport across Europe', 'v3-text': 'A professional chauffeur drives your vehicle discreetly and safely to its destination — you don\'t need to be there.',
+        'v4-title': 'Delivery & confirmation', 'v4-text': 'Your vehicle is delivered to the agreed location. You receive a confirmation including a final inspection report.',
+        'l1-title': 'Plan your day', 'l1-text': 'Tell us your plans: destination, times and any preferences. We align everything to suit you.',
+        'l2-title': 'Chauffeur comes to you', 'l2-text': 'Our chauffeur is at your door at the agreed time — ready to drive your own car.',
+        'l3-title': 'You enjoy, we drive', 'l3-text': 'Sit back and enjoy the day. Whether it\'s dinner, a city trip or a special occasion — you\'re always in good hands.',
+        'l4-title': 'Safely home', 'l4-text': 'We bring you and your vehicle home safely. No parking stress, no worries — just a perfect day.',
+        'fleet-label': 'Our fleet',
+        'fleet-title': 'Vehicles that Match the<br><span style="color: var(--gold)">Level</span> of Your Event',
+        'fleet-subtitle': 'From executive saloons to VIP crew vans, every ride reflects the reputation of your event.',
+        'fleet-note': 'All vehicles are available on request only.',
+        'f1-sub': 'Festival & event transport',
+        'f2-sub': 'VIP & group transport',
+        'f3-sub': 'Day out & leisure',
+        'par-title': 'Transport at the <span style="color: var(--gold)">highest level</span>',
+        'par-text': 'Whether it\'s an artist, your own vehicle or a special day — we arrange it with precision, discretion and personal attention.',
+        'stat1': 'Years of experience', 'stat2': 'Satisfied clients', 'stat3': 'On-time score', 'stat4': 'Available',
+        'why-label': 'Why A2B',
+        'why-title': 'We don\'t just drive.<br>We take care of <span style="color: var(--gold)">everything.</span>',
+        'why-subtitle': 'Most transport services deliver a chauffeur. We deliver peace of mind — from the first confirmation to the final kilometre.',
+        'w1-title': 'Professional chauffeurs', 'w1-text': 'Experienced, presentable and always on time. Our chauffeurs know how to conduct themselves in every situation — discreet and attentive.',
+        'w2-title': 'Personal attention', 'w2-text': 'You are not a number. We get to know your wishes and tailor transport entirely to your needs. Direct contact, no call centres.',
+        'w3-title': 'Discretion guaranteed', 'w3-text': 'Whether you\'re transporting a public figure, business associate or special guest — our chauffeurs always operate with the highest level of confidentiality.',
+        'w4-title': 'Flexible and reliable', 'w4-text': 'Plans changed? We adapt immediately. You always have a direct line to your contact person — even at the last minute.',
+        'test-label': 'Testimonials',
+        'test-title': 'What our clients say about<br><span style="color: var(--gold)">A2B Chauffeur Services</span>',
+        't1-quote': '"A2B transported our vehicle flawlessly from the Netherlands to the South of France. Perfect communication beforehand, a smooth handover and it arrived exactly on time. No stress, no worries — exactly as promised."',
+        't1-role': 'Private client',
+        't2-quote': '"The professionalism of A2B is on another level. Punctual, discreet and always presentable. We use them for transporting our most important guests and relations — they always make a great impression."',
+        't2-role': 'Business client',
+        't3-quote': '"We hired A2B for a day out with the whole family — in our own car. What a difference. We could fully relax and didn\'t have to think about anything. The chauffeur was friendly, punctual and absolutely outstanding."',
+        't3-role': 'Private client',
+        'insta-title': 'See us in action',
+        'insta-text': 'Fleet photos, drives across Europe and a behind-the-scenes look at A2B.',
+        'cta-label': 'Let\'s talk',
+        'cta-title': 'Ready for transport at<br><span style="color: var(--gold)">your level?</span>',
+        'cta-subtitle': 'Tell us what you need and we\'ll send you a no-obligation custom quote within 48 hours. No commitments, no pressure.',
+        'faq-title': 'Frequently asked questions',
+        'faq1-q': 'What services do you offer?', 'faq1-a': 'We offer three services: artist and VIP transport for events, vehicle transport across Europe where we drive your car to the destination, and a day out & leisure service where a chauffeur drives your own car so you can fully relax.',
+        'faq2-q': 'How do you handle last-minute changes?', 'faq2-a': 'Flexibility is in our DNA. Whether it\'s a changed departure time, an adjusted route or an extra stop — we adapt immediately. You always have a direct line with your dedicated contact person.',
+        'faq3-q': 'What vehicles are in your fleet?', 'faq3-a': 'Our own fleet includes a Land Rover Defender, Mercedes Vito and Mercedes V-Class — all presentable and impeccably maintained. For the Day Out & Leisure service we drive your own vehicle.',
+        'faq4-q': 'Do you operate outside the Netherlands?', 'faq4-a': 'Yes. For vehicle transport we drive throughout Europe. For chauffeur services we are primarily active in the Netherlands, but for specific trips abroad we are open to discussion.',
+        'faq5-q': 'How far in advance should I book?', 'faq5-a': 'The sooner the better — especially during busy periods. In many cases we can also help on shorter notice. Feel free to get in touch and we\'ll see what\'s possible together.',
+        'faq6-q': 'What about discretion and privacy?', 'faq6-a': 'Discretion is a matter of course for us. Our chauffeurs are professional, reserved and always respect the privacy of our clients. Upon request we also work with a non-disclosure agreement.',
+        'footer-desc': 'Premium chauffeur services for private and business clients. Comfortable, discreet and always on time — from the first ride to the last kilometre.',
+        'footer-col1': 'Services', 'footer-col2': 'Company', 'footer-col3': 'Contact',
+        'footer-fleet': 'Our fleet', 'footer-about': 'About A2B',
+      }
+    };
+
+    let currentLang = 'nl';
+
+    function setLang(lang) {
+      currentLang = lang;
+      const t = translations[lang];
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.dataset.i18n;
+        if (t[key] !== undefined) el.textContent = t[key];
+      });
+      document.querySelectorAll('[data-i18n-html]').forEach(el => {
+        const key = el.dataset.i18nHtml;
+        if (t[key] !== undefined) el.innerHTML = t[key];
+      });
+      document.getElementById('btnNl').classList.toggle('active', lang === 'nl');
+      document.getElementById('btnEn').classList.toggle('active', lang === 'en');
+      document.documentElement.lang = lang;
+    }
+
+    // ===== BLOG CAROUSEL =====
+    const blogCarousel = document.getElementById('blogCarousel');
+    const blogPrev = document.getElementById('blogPrev');
+    const blogNext = document.getElementById('blogNext');
+    let blogIndex = 0;
+
+    function updateBlogCarousel() {
+      const card = blogCarousel.querySelector('.blog-card');
+      const cardWidth = card.offsetWidth + 24; // 24 = gap (var --space-6)
+      const maxIndex = blogCarousel.children.length - 3;
+      blogIndex = Math.max(0, Math.min(blogIndex, maxIndex));
+      blogCarousel.style.transform = `translateX(-${blogIndex * cardWidth}px)`;
+      blogPrev.style.opacity = blogIndex === 0 ? '0.3' : '1';
+      blogNext.style.opacity = blogIndex >= maxIndex ? '0.3' : '1';
+    }
+
+    blogPrev.addEventListener('click', () => { blogIndex--; updateBlogCarousel(); });
+    blogNext.addEventListener('click', () => { blogIndex++; updateBlogCarousel(); });
+    updateBlogCarousel();
+
+    // ===== SCROLL PROGRESS BAR =====
+    const scrollProgress = document.getElementById('scrollProgress');
+    function updateProgress() {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      scrollProgress.style.width = progress + '%';
+    }
+
+    // ===== NAVBAR =====
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 50);
+      updateProgress();
+    }, { passive: true });
+
+    // ===== MOBILE MENU =====
+    const navToggle = document.getElementById('navToggle');
+    const navLinks = document.getElementById('navLinks');
+    navToggle.addEventListener('click', () => {
+      navToggle.classList.toggle('active');
+      navLinks.classList.toggle('open');
+      document.body.style.overflow = navLinks.classList.contains('open') ? 'hidden' : '';
+    });
+    navLinks.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        navToggle.classList.remove('active');
+        navLinks.classList.remove('open');
+        document.body.style.overflow = '';
+      });
+    });
+
+    // ===== CURSOR GLOW (desktop only) =====
+    const cursorGlow = document.getElementById('cursorGlow');
+    if (window.matchMedia('(pointer: fine)').matches) {
+      let glowX = 0, glowY = 0, currentX = 0, currentY = 0;
+      document.addEventListener('mousemove', (e) => {
+        glowX = e.clientX;
+        glowY = e.clientY;
+        cursorGlow.classList.add('active');
+      });
+      document.addEventListener('mouseleave', () => {
+        cursorGlow.classList.remove('active');
+      });
+      function animateGlow() {
+        currentX += (glowX - currentX) * 0.08;
+        currentY += (glowY - currentY) * 0.08;
+        cursorGlow.style.left = currentX + 'px';
+        cursorGlow.style.top = currentY + 'px';
+        requestAnimationFrame(animateGlow);
+      }
+      animateGlow();
+    }
+
+    // ===== MAGNETIC BUTTONS =====
+    document.querySelectorAll('[data-magnetic]').forEach(wrap => {
+      const btn = wrap.querySelector('a, button');
+      if (!btn || !window.matchMedia('(pointer: fine)').matches) return;
+
+      wrap.addEventListener('mousemove', (e) => {
+        const rect = wrap.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+        btn.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
+      });
+      wrap.addEventListener('mouseleave', () => {
+        btn.style.transform = '';
+        btn.style.transition = 'transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)';
+        setTimeout(() => { btn.style.transition = ''; }, 400);
+      });
+    });
+
+    // ===== 3D TILT CARDS =====
+    document.querySelectorAll('.tilt-card').forEach(card => {
+      if (!window.matchMedia('(pointer: fine)').matches) return;
+
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width - 0.5;
+        const y = (e.clientY - rect.top) / rect.height - 0.5;
+        card.style.transform = `perspective(800px) rotateY(${x * 8}deg) rotateX(${-y * 8}deg) translateY(-6px)`;
+      });
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = '';
+        card.style.transition = 'transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)';
+        setTimeout(() => { card.style.transition = 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)'; }, 600);
+      });
+      card.addEventListener('mouseenter', () => {
+        card.style.transition = 'box-shadow 0.4s, border-color 0.4s';
+      });
+    });
+
+    // ===== ANIMATED COUNTERS =====
+    function animateCounter(el) {
+      const target = parseInt(el.getAttribute('data-counter'));
+      const suffix = el.getAttribute('data-suffix') || '';
+      if (target === 0) { el.textContent = '0' + suffix; return; }
+      const duration = 2000;
+      const start = performance.now();
+
+      function tick(now) {
+        const elapsed = now - start;
+        const progress = Math.min(elapsed / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3); // ease-out cubic
+        const current = Math.round(eased * target);
+        el.textContent = current.toLocaleString() + suffix;
+        if (progress < 1) requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    }
+
+    const counterObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.querySelectorAll('[data-counter]').forEach(animateCounter);
+          counterObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.3 });
+
+    document.querySelectorAll('.hero-proof, .stats-grid').forEach(el => counterObserver.observe(el));
+
+    // ===== SCROLL REVEAL ANIMATIONS =====
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+    document.querySelectorAll('[data-animate]').forEach(el => observer.observe(el));
+
+    // ===== HERO PARALLAX =====
+    const heroBgImage = document.getElementById('heroBgImage');
+    window.addEventListener('scroll', () => {
+      if (heroBgImage && window.scrollY < window.innerHeight) {
+        heroBgImage.style.transform = `translateY(${window.scrollY * 0.3}px) scale(1.1)`;
+      }
+    }, { passive: true });
+
+    // ===== HOW IT WORKS — DIENST TABS =====
+    document.querySelectorAll('.how-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        // Tabs
+        document.querySelectorAll('.how-tab').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        // Panels
+        document.querySelectorAll('.how-panel').forEach(p => p.classList.remove('active'));
+        document.getElementById(tab.dataset.target).classList.add('active');
+      });
+    });
+
+    // ===== FAQ ACCORDION =====
+    document.querySelectorAll('.faq-question').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const item = btn.parentElement;
+        const answer = item.querySelector('.faq-answer');
+        const isOpen = item.classList.contains('open');
+
+        document.querySelectorAll('.faq-item.open').forEach(openItem => {
+          openItem.classList.remove('open');
+          openItem.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
+          openItem.querySelector('.faq-answer').style.maxHeight = '0';
+        });
+
+        if (!isOpen) {
+          item.classList.add('open');
+          btn.setAttribute('aria-expanded', 'true');
+          answer.style.maxHeight = answer.scrollHeight + 'px';
+        }
+      });
+    });
+
+    // ===== SMOOTH SCROLL =====
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', (e) => {
+        const target = document.querySelector(anchor.getAttribute('href'));
+        if (target) {
+          e.preventDefault();
+          const offset = 80;
+          const top = target.getBoundingClientRect().top + window.pageYOffset - offset;
+          window.scrollTo({ top, behavior: 'smooth' });
+        }
+      });
+    });
+  </script>
+</body>
+</html>

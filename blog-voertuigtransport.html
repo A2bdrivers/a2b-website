@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Auto laten transporteren naar het buitenland — A2B Chauffeursdiensten</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --gold: #c9a84c;
+      --bg: #080f09;
+      --bg-card: #0f1a10;
+      --border: rgba(201,168,76,0.12);
+      --text: #f0ede8;
+      --text-secondary: rgba(240,237,232,0.65);
+      --text-muted: rgba(240,237,232,0.35);
+      --font-heading: 'Cormorant Garamond', serif;
+      --font-body: 'Jost', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-weight: 300;
+      line-height: 1.7;
+      font-size: 17px;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* NAV */
+    .nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 20px 0;
+      background: rgba(8,15,9,0.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo img { height: 48px; width: auto; }
+    .nav-back {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      color: var(--text-secondary);
+      transition: color 0.2s;
+    }
+    .nav-back:hover { color: var(--gold); }
+    .nav-back svg { width: 16px; height: 16px; }
+
+    /* HERO */
+    .article-hero {
+      padding: 140px 24px 60px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .article-tag {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 20px;
+      padding: 6px 14px;
+      border: 1px solid rgba(201,168,76,0.3);
+      border-radius: 20px;
+    }
+    .article-title {
+      font-family: var(--font-heading);
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 24px;
+    }
+    .article-intro {
+      font-size: 19px;
+      color: var(--text-secondary);
+      line-height: 1.75;
+      margin-bottom: 32px;
+      font-style: italic;
+    }
+    .article-meta {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      font-size: 13px;
+      color: var(--text-muted);
+      padding-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+    }
+    .article-meta-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--text-muted); }
+
+    /* CONTENT */
+    .article-content {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 24px 80px;
+    }
+    .article-content h2 {
+      font-family: var(--font-heading);
+      font-size: clamp(1.4rem, 3vw, 1.9rem);
+      font-weight: 700;
+      margin: 52px 0 16px;
+      color: var(--text);
+      padding-left: 16px;
+      border-left: 3px solid var(--gold);
+    }
+    .article-content p {
+      margin-bottom: 20px;
+      color: var(--text-secondary);
+      line-height: 1.8;
+    }
+    .article-content strong {
+      color: var(--text);
+      font-weight: 500;
+    }
+    .article-content hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 48px 0;
+    }
+    .article-content ul {
+      list-style: none;
+      margin: 0 0 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .article-content ul li {
+      color: var(--text-secondary);
+      padding-left: 20px;
+      position: relative;
+      line-height: 1.7;
+    }
+    .article-content ul li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 11px;
+      width: 6px;
+      height: 1px;
+      background: var(--gold);
+    }
+    .article-tip {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--gold);
+      border-radius: 0 12px 12px 0;
+      padding: 20px 24px;
+      margin: 24px 0;
+    }
+    .article-tip p { margin: 0; font-size: 15px; }
+    .step-list {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+    .step {
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+    }
+    .step-num {
+      flex-shrink: 0;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      font-size: 13px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 2px;
+    }
+    .step-body h4 {
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+    .step-body p { margin: 0; font-size: 15px; }
+    .article-closing {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 40px;
+      margin-top: 56px;
+      text-align: center;
+    }
+    .article-closing h3 {
+      font-family: var(--font-heading);
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+    .article-closing p { color: var(--text-secondary); margin-bottom: 28px; }
+    .btn-gold {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 32px;
+      background: var(--gold);
+      color: #080f09;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      transition: opacity 0.2s;
+      margin: 0 8px 8px;
+    }
+    .btn-gold:hover { opacity: 0.85; }
+    .btn-outline-gold {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 13px 32px;
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      transition: background 0.2s;
+      margin: 0 8px 8px;
+    }
+    .btn-outline-gold:hover { background: rgba(201,168,76,0.08); }
+
+    /* FOOTER */
+    .article-footer {
+      border-top: 1px solid var(--border);
+      padding: 32px 24px;
+      text-align: center;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+    .article-footer a { color: var(--gold); }
+  </style>
+</head>
+<body>
+
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="a2b.html" class="nav-logo">
+        <img src="../Content/a2b-logo.png" alt="A2B Chauffeursdiensten" />
+      </a>
+      <a href="a2b.html#blog" class="nav-back">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+        Terug naar blog
+      </a>
+    </div>
+  </nav>
+
+  <article>
+    <header class="article-hero">
+      <span class="article-tag">Voertuig transport Europa</span>
+      <h1 class="article-title">Auto laten transporteren naar het buitenland: hoe werkt dat precies?</h1>
+      <p class="article-intro">Je auto moet naar het buitenland. Misschien verhuis je tijdelijk naar een ander land, ga je een paar weken op vakantie en wil je je eigen auto ter plekke hebben, of heb je een voertuig gekocht in een ander Europees land dat opgehaald moet worden. Wat dan? Zelf rijden lukt niet altijd. Een transportbedrijf met een autotransporter klinkt overdreven. En toch moet die auto er komen.</p>
+      <div class="article-meta">
+        <span>A2B Chauffeursdiensten</span>
+        <div class="article-meta-dot"></div>
+        <span>Leestijd: ±4 minuten</span>
+        <div class="article-meta-dot"></div>
+        <span>Voertuig transport Europa</span>
+      </div>
+    </header>
+
+    <div class="article-content">
+
+      <p>Er is een derde optie die veel mensen niet kennen: een professionele chauffeur die jouw auto voor je rijdt. Geen oplegger, geen trailer — gewoon jouw auto, bestuurd door een ervaren chauffeur, van deur tot deur door Europa. In dit artikel leggen we uit hoe dat precies werkt, wat je kunt verwachten en waar je op moet letten.</p>
+
+      <hr>
+
+      <h2>Wat is voertuigtransport met een chauffeur?</h2>
+      <p>Bij voertuigtransport met een chauffeur geef je de sleutels van je auto aan een professionele bestuurder. Die rijdt jouw voertuig naar de gewenste bestemming in Europa — terwijl jij zelf vliegt, de trein neemt of gewoon thuis blijft.</p>
+      <p>Dit is anders dan een autotransporter, waarbij je auto op een oplegger wordt geladen en vervoerd. Bij chauffeursdiensten rijdt de auto op eigen wielen, wat voor veel voertuigen — denk aan luxe auto's, klassiekers of leaseauto's — de voorkeur verdient.</p>
+
+      <h2>Voor wie is dit geschikt?</h2>
+      <p><strong>Vakantiegangers</strong> die hun eigen auto willen hebben in Zuid-Europa — Spanje, Frankrijk, Italië, Portugal — zonder zelf de lange rit te maken. Je vliegt erheen, je auto staat er al.</p>
+      <p><strong>Expats en tijdelijke buitenlanders</strong> die voor werk of privé een periode in het buitenland verblijven en hun eigen auto willen meenemen zonder zelf te rijden.</p>
+      <p><strong>Kopers van occasion- of importauto's</strong> die een voertuig hebben gekocht in Duitsland, België of elders in Europa en het opgehaald willen hebben.</p>
+      <p><strong>Bedrijven</strong> die bedrijfsvoertuigen of leaseauto's naar een andere locatie of aftakking moeten verplaatsen.</p>
+
+      <h2>Hoe verloopt het proces?</h2>
+      <div class="step-list">
+        <div class="step">
+          <div class="step-num">01</div>
+          <div class="step-body">
+            <h4>Aanvraag en offerte</h4>
+            <p>Je geeft aan waar de auto vandaan komt, waar hij naartoe moet en wanneer. Op basis daarvan ontvang je een offerte. Bij A2B werken we altijd met vaste, transparante prijzen — geen verrassingen achteraf.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">02</div>
+          <div class="step-body">
+            <h4>Planning en briefing</h4>
+            <p>We bespreken de route, de gewenste aankomsttijd en eventuele bijzonderheden over het voertuig. Heeft de auto speciale eisen, bijzondere afmetingen of gaat het om een waardevolle of klassieke auto? Dan houden we daar rekening mee.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">03</div>
+          <div class="step-body">
+            <h4>Overdracht van het voertuig</h4>
+            <p>Op de afgesproken dag en locatie wordt de auto overgedragen aan onze chauffeur. We doen altijd een gezamenlijke inspectie en leggen de staat van het voertuig vast voordat we vertrekken.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">04</div>
+          <div class="step-body">
+            <h4>Transport</h4>
+            <p>De chauffeur rijdt de auto naar de bestemming. Je kunt altijd contact opnemen voor een update over de voortgang.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">05</div>
+          <div class="step-body">
+            <h4>Aflevering</h4>
+            <p>De auto wordt afgeleverd op het afgesproken adres. Na aflevering ontvang je een bevestiging.</p>
+          </div>
+        </div>
+      </div>
+
+      <h2>Is mijn auto verzekerd onderweg?</h2>
+      <p>Dit is de vraag die de meeste mensen als eerste stellen — en terecht. Bij professioneel voertuigtransport via een chauffeursdienst rijdt de chauffeur in jouw auto met jouw kenteken. Dit betekent dat de reguliere autoverzekering van het voertuig van toepassing blijft.</p>
+      <div class="article-tip">
+        <p><strong>Belangrijk om te checken:</strong> of jouw verzekering dekking biedt in het buitenland en of het toegestaan is dat een derde het voertuig bestuurt. De meeste all-risk en WA+ verzekeringen dekken dit, maar het is verstandig dit vooraf te bevestigen bij je verzekeraar.</p>
+      </div>
+
+      <h2>Wat zijn de voordelen ten opzichte van een autotransporter?</h2>
+      <p>Een autotransporter is geschikt voor grote aantallen voertuigen of voor situaties waar de auto echt niet rijklaar is. Maar voor de meeste particuliere situaties heeft transport via een chauffeur duidelijke voordelen:</p>
+      <ul>
+        <li>Je auto wordt niet geladen en gelost van een oplegger, wat krasrisico's vermindert</li>
+        <li>De auto arriveert rijklaar — geen laadschade, geen losse onderdelen</li>
+        <li>Deur-tot-deur service, ook op adressen waar een grote oplegger niet kan komen</li>
+        <li>Persoonlijk contact met de chauffeur gedurende het transport</li>
+        <li>Flexibeler in planning en route</li>
+      </ul>
+
+      <h2>Welke landen rijden jullie?</h2>
+      <p>Wij transporteren voertuigen door heel Europa. Populaire bestemmingen zijn Spanje, Frankrijk, Portugal, Italië, Duitsland, Oostenrijk en Zwitserland. Ook voor kortere ritten binnen de Benelux of naar het Verenigd Koninkrijk zijn we beschikbaar.</p>
+
+      <h2>Wanneer boek je het beste?</h2>
+      <p>Zo vroeg mogelijk. Zeker in de zomermaanden — wanneer veel mensen hun auto naar vakantiebestemmingen in Zuid-Europa willen hebben — is de planning snel vol. Boek bij voorkeur twee tot vier weken van tevoren, zodat we de juiste chauffeur en planning kunnen regelen.</p>
+
+      <hr>
+
+      <div class="article-closing">
+        <h3>Interesse in voertuigtransport?</h3>
+        <p>Wil je weten wat voertuigtransport voor jouw situatie kost of hoe het precies in zijn werk gaat? Neem vrijblijvend contact met ons op — we denken graag met je mee.</p>
+        <a href="https://wa.me/+31614683020?text=Hallo%20A2B,%20ik%20wil%20graag%20meer%20weten%20over%20voertuigtransport." class="btn-gold" target="_blank" rel="noopener">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          WhatsApp ons
+        </a>
+        <a href="mailto:info@a2b-services.nl?subject=Voertuigtransport%20offerte" class="btn-outline-gold">
+          Stuur een e-mail
+        </a>
+      </div>
+
+    </div>
+  </article>
+
+  <footer class="article-footer">
+    <p>&copy; 2026 <a href="a2b.html">A2B Chauffeursdiensten</a> — Alle rechten voorbehouden</p>
+  </footer>
+
+</body>
+</html>

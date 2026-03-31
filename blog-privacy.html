@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacy op de weg: hoe wij omgaan met vertrouwelijkheid — A2B Chauffeursdiensten</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --gold: #c9a84c;
+      --bg: #080f09;
+      --bg-card: #0f1a10;
+      --border: rgba(201,168,76,0.12);
+      --text: #f0ede8;
+      --text-secondary: rgba(240,237,232,0.65);
+      --text-muted: rgba(240,237,232,0.35);
+      --font-heading: 'Cormorant Garamond', serif;
+      --font-body: 'Jost', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-weight: 300;
+      line-height: 1.7;
+      font-size: 17px;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 20px 0;
+      background: rgba(8,15,9,0.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo img { height: 48px; width: auto; }
+    .nav-back {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      color: var(--text-secondary);
+      transition: color 0.2s;
+    }
+    .nav-back:hover { color: var(--gold); }
+    .nav-back svg { width: 16px; height: 16px; }
+
+    .article-hero {
+      padding: 140px 24px 60px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .article-tag {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 20px;
+      padding: 6px 14px;
+      border: 1px solid rgba(201,168,76,0.3);
+      border-radius: 20px;
+    }
+    .article-title {
+      font-family: var(--font-heading);
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 24px;
+    }
+    .article-intro {
+      font-size: 19px;
+      color: var(--text-secondary);
+      line-height: 1.75;
+      margin-bottom: 32px;
+      font-style: italic;
+    }
+    .article-meta {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      font-size: 13px;
+      color: var(--text-muted);
+      padding-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+    }
+    .article-meta-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--text-muted); }
+
+    .article-content {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 24px 80px;
+    }
+    .article-content h2 {
+      font-family: var(--font-heading);
+      font-size: clamp(1.4rem, 3vw, 1.9rem);
+      font-weight: 700;
+      margin: 52px 0 16px;
+      color: var(--text);
+      padding-left: 16px;
+      border-left: 3px solid var(--gold);
+    }
+    .article-content p {
+      margin-bottom: 20px;
+      color: var(--text-secondary);
+      line-height: 1.8;
+    }
+    .article-content strong {
+      color: var(--text);
+      font-weight: 500;
+    }
+    .article-content hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 48px 0;
+    }
+    .article-content ul {
+      list-style: none;
+      margin: 0 0 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .article-content ul li {
+      color: var(--text-secondary);
+      padding-left: 20px;
+      position: relative;
+      line-height: 1.7;
+    }
+    .article-content ul li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 11px;
+      width: 6px;
+      height: 1px;
+      background: var(--gold);
+    }
+    .rule-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+    .rule-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px 24px;
+    }
+    .rule-item h4 {
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .rule-item h4::before {
+      content: '';
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--gold);
+      flex-shrink: 0;
+    }
+    .rule-item p {
+      margin: 0;
+      font-size: 15px;
+    }
+    .article-closing {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 40px;
+      margin-top: 56px;
+      text-align: center;
+    }
+    .article-closing h3 {
+      font-family: var(--font-heading);
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+    .article-closing p { color: var(--text-secondary); margin-bottom: 28px; }
+    .btn-gold {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 32px;
+      background: var(--gold);
+      color: #080f09;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      transition: opacity 0.2s;
+      margin: 0 8px 8px;
+    }
+    .btn-gold:hover { opacity: 0.85; }
+    .btn-outline-gold {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 13px 32px;
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      transition: background 0.2s;
+      margin: 0 8px 8px;
+    }
+    .btn-outline-gold:hover { background: rgba(201,168,76,0.08); }
+
+    .article-footer {
+      border-top: 1px solid var(--border);
+      padding: 32px 24px;
+      text-align: center;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+    .article-footer a { color: var(--gold); }
+  </style>
+</head>
+<body>
+
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="a2b.html" class="nav-logo">
+        <img src="../Content/a2b-logo.png" alt="A2B Chauffeursdiensten" />
+      </a>
+      <a href="a2b.html#blog" class="nav-back">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+        Terug naar blog
+      </a>
+    </div>
+  </nav>
+
+  <article>
+    <header class="article-hero">
+      <span class="article-tag">Artiesten &amp; management</span>
+      <h1 class="article-title">Privacy op de weg: hoe wij omgaan met vertrouwelijkheid bij bekende klanten</h1>
+      <p class="article-intro">Als je een bekende artiest, atleet of executive vervoert, is discretie geen bijzaak. Het is de dienst. Wie in de auto zit, waar naartoe, met wie — dat is informatie die niet naar buiten hoort. En toch zijn er genoeg verhalen over chauffeurs die foto's maken, namen droppen of gesprekken doorvertellen.</p>
+      <div class="article-meta">
+        <span>A2B Chauffeursdiensten</span>
+        <div class="article-meta-dot"></div>
+        <span>Leestijd: ±3 minuten</span>
+        <div class="article-meta-dot"></div>
+        <span>Artiesten &amp; management</span>
+      </div>
+    </header>
+
+    <div class="article-content">
+
+      <p>Bij A2B Chauffeursdiensten is vertrouwelijkheid geen regel die we hebben opgeschreven omdat het er goed uitziet. Het is de manier waarop we werken. In dit artikel leggen we uit wat dat in de praktijk betekent.</p>
+
+      <h2>Waarom privacy zo belangrijk is in dit vak</h2>
+      <p>Een chauffeur bevindt zich in een unieke positie. Hij hoort gesprekken, ziet wie er in- en uitstapt, weet welk hotel iemand gebruikt en kent de planning van de dag. Voor een gewone rit maakt dat weinig uit. Maar voor artiesten, sporters en zakelijke executives is die informatie gevoelig.</p>
+      <p>Een gelekt schema kan voor veiligheidsproblemen zorgen. Een foto op social media verstoort de privacy van iemand die bewust uit de spotlights wil blijven. Een losgelaten opmerking in de verkeerde kring kan relaties of reputaties schaden.</p>
+      <p>Onze klanten vertrouwen ons niet alleen hun vervoer toe. Ze vertrouwen ons hun rust toe.</p>
+
+      <h2>Wat wij concreet doen</h2>
+      <div class="rule-list">
+        <div class="rule-item">
+          <h4>Geen foto's, nooit</h4>
+          <p>Onze chauffeurs maken geen foto's van passagiers, voertuigen of locaties tijdens een opdracht. Niet voor eigen gebruik, niet voor social media, niet als aandenken. Dit is een harde afspraak, geen aanbeveling.</p>
+        </div>
+        <div class="rule-item">
+          <h4>Geen namen naar buiten</h4>
+          <p>Wie wij vervoerd hebben, is niet onze informatie om te delen. We noemen geen namen van klanten — niet in gesprekken, niet online, niet als referentie — tenzij de klant daar zelf expliciet toestemming voor geeft.</p>
+        </div>
+        <div class="rule-item">
+          <h4>Gesprekken blijven in de auto</h4>
+          <p>Wat er in de auto besproken wordt, blijft in de auto. Onze chauffeurs zijn getraind om professioneel aanwezig te zijn zonder zich te mengen in gesprekken of informatie op te slaan die niet voor hen bedoeld is.</p>
+        </div>
+        <div class="rule-item">
+          <h4>Geen social media tijdens de opdracht</h4>
+          <p>Tijdens een rit is de telefoon van de chauffeur voor navigatie en communicatie met de opdrachtgever — niet voor persoonlijk gebruik.</p>
+        </div>
+      </div>
+
+      <h2>Hoe we onze chauffeurs selecteren</h2>
+      <p>Discretie is niet iets wat je iemand volledig kunt aanleren. Het zit in de houding, de instelling en het karakter van een persoon. Daarom selecteren we chauffeurs niet alleen op rijervaring en kennis van de weg, maar ook op professioneel gedrag en het vermogen om te werken in een omgeving waar vertrouwelijkheid essentieel is.</p>
+      <p>We werken met een vaste groep vertrouwde chauffeurs. Geen wisselende pool van onbekenden, maar mensen die wij kennen en die weten wat er van hen verwacht wordt.</p>
+
+      <h2>Voor opdrachtgevers: wat kun je van ons verwachten?</h2>
+      <p>Als je een evenement organiseert of vervoer regelt voor bekende gasten, mag je van ons verwachten dat:</p>
+      <ul>
+        <li>We proactief vragen naar de gewenste mate van discretie</li>
+        <li>We nooit uit onszelf informatie delen over wie we vervoeren</li>
+        <li>We bij twijfel altijd in het voordeel van de klant handelen</li>
+      </ul>
+
+      <hr>
+
+      <h2>De beste chauffeur is de chauffeur die je vergeet</h2>
+      <p>Niet omdat hij er niet was — maar omdat alles zo soepel verliep dat er niets te vertellen viel. Geen incident, geen ongemak, geen moment waarop de passagier zich bewust werd van een grens die overschreden werd.</p>
+      <p>Dat is waar wij naar streven bij elke rit. Professioneel, discreet en betrouwbaar — van A naar B.</p>
+
+      <div class="article-closing">
+        <h3>Bekende gasten te vervoeren?</h3>
+        <p>Vervoer je bekende gasten of werk je met artiesten waarbij privacy een vereiste is? Neem contact op en we bespreken wat we voor je kunnen betekenen.</p>
+        <a href="https://wa.me/+31614683020?text=Hallo%20A2B,%20ik%20wil%20graag%20meer%20weten%20over%20discreet%20vervoer." class="btn-gold" target="_blank" rel="noopener">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          WhatsApp ons
+        </a>
+        <a href="mailto:info@a2b-services.nl?subject=Discreet%20vervoer" class="btn-outline-gold">
+          Stuur een e-mail
+        </a>
+      </div>
+
+    </div>
+  </article>
+
+  <footer class="article-footer">
+    <p>&copy; 2026 <a href="a2b.html">A2B Chauffeursdiensten</a> — Alle rechten voorbehouden</p>
+  </footer>
+
+</body>
+</html>

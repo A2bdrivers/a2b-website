@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>5 dingen die misgaan bij artiestenvervoer — A2B Chauffeursdiensten</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --gold: #c9a84c;
+      --bg: #080f09;
+      --bg-card: #0f1a10;
+      --border: rgba(201,168,76,0.12);
+      --text: #f0ede8;
+      --text-secondary: rgba(240,237,232,0.65);
+      --text-muted: rgba(240,237,232,0.35);
+      --font-heading: 'Cormorant Garamond', serif;
+      --font-body: 'Jost', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-weight: 300;
+      line-height: 1.7;
+      font-size: 17px;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* NAV */
+    .nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 20px 0;
+      background: rgba(8,15,9,0.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo img { height: 48px; width: auto; }
+    .nav-back {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      color: var(--text-secondary);
+      transition: color 0.2s;
+    }
+    .nav-back:hover { color: var(--gold); }
+    .nav-back svg { width: 16px; height: 16px; }
+
+    /* HERO */
+    .article-hero {
+      padding: 140px 24px 60px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .article-tag {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 20px;
+      padding: 6px 14px;
+      border: 1px solid rgba(201,168,76,0.3);
+      border-radius: 20px;
+    }
+    .article-title {
+      font-family: var(--font-heading);
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 24px;
+    }
+    .article-intro {
+      font-size: 19px;
+      color: var(--text-secondary);
+      line-height: 1.75;
+      margin-bottom: 32px;
+      font-style: italic;
+    }
+    .article-meta {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      font-size: 13px;
+      color: var(--text-muted);
+      padding-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+    }
+    .article-meta-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--text-muted); }
+
+    /* CONTENT */
+    .article-content {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 24px 80px;
+    }
+    .article-content h2 {
+      font-family: var(--font-heading);
+      font-size: clamp(1.4rem, 3vw, 1.9rem);
+      font-weight: 700;
+      margin: 52px 0 16px;
+      color: var(--text);
+      padding-left: 16px;
+      border-left: 3px solid var(--gold);
+    }
+    .article-content p {
+      margin-bottom: 20px;
+      color: var(--text-secondary);
+      line-height: 1.8;
+    }
+    .article-content strong {
+      color: var(--text);
+      font-weight: 500;
+    }
+    .article-content hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 48px 0;
+    }
+    .article-tip {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--gold);
+      border-radius: 0 12px 12px 0;
+      padding: 20px 24px;
+      margin: 24px 0;
+    }
+    .article-tip p {
+      margin: 0;
+      font-size: 15px;
+    }
+    .article-closing {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 40px;
+      margin-top: 56px;
+      text-align: center;
+    }
+    .article-closing h3 {
+      font-family: var(--font-heading);
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+    .article-closing p {
+      color: var(--text-secondary);
+      margin-bottom: 28px;
+    }
+    .btn-gold {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 32px;
+      background: var(--gold);
+      color: #080f09;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      transition: opacity 0.2s;
+      margin: 0 8px 8px;
+    }
+    .btn-gold:hover { opacity: 0.85; }
+    .btn-outline-gold {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 13px 32px;
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      transition: background 0.2s;
+      margin: 0 8px 8px;
+    }
+    .btn-outline-gold:hover { background: rgba(201,168,76,0.08); }
+
+    /* FOOTER */
+    .article-footer {
+      border-top: 1px solid var(--border);
+      padding: 32px 24px;
+      text-align: center;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+    .article-footer a { color: var(--gold); }
+  </style>
+</head>
+<body>
+
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="a2b.html" class="nav-logo">
+        <img src="../Content/a2b-logo.png" alt="A2B Chauffeursdiensten" />
+      </a>
+      <a href="a2b.html#blog" class="nav-back">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+        Terug naar blog
+      </a>
+    </div>
+  </nav>
+
+  <article>
+    <header class="article-hero">
+      <span class="article-tag">Festival &amp; evenementen</span>
+      <h1 class="article-title">5 dingen die misgaan bij artiestenvervoer — en hoe je ze voorkomt</h1>
+      <p class="article-intro">Artiestenvervoer lijkt simpel. Een chauffeur, een auto, een adres. Maar wie ooit een festival of evenement heeft georganiseerd, weet dat de realiteit een stuk grilliger is. Eén fout in de logistiek en je headliner staat op het verkeerde station, je support act mist de soundcheck, en jij staat met een koptelefoon en een walkie-talkie de schade te beperken.</p>
+      <div class="article-meta">
+        <span>A2B Chauffeursdiensten</span>
+        <div class="article-meta-dot"></div>
+        <span>Leestijd: ±4 minuten</span>
+        <div class="article-meta-dot"></div>
+        <span>Festival &amp; evenementen</span>
+      </div>
+    </header>
+
+    <div class="article-content">
+
+      <p>Wij rijden al twee jaar voor artiesten, festivalorganisatoren en evenementenbureaus. Dit zijn de vijf fouten die we het vaakst tegenkomen — en hoe je ze voorkomt.</p>
+
+      <hr>
+
+      <h2>1. De chauffeur kent het festivalterrein niet</h2>
+      <p>Een reguliere taxichauffeur kent de stad. Maar een festivalterrein is een andere wereld. Aparte toegangswegen voor crew, afgesloten publieksgebieden, backstage ingangen die op de dag zelf van locatie wisselen — het is een doolhof voor wie er niet bekend mee is.</p>
+      <p>Het gevolg? De chauffeur rijdt rond, belt de artiest, de artiest belt de productie, de productie belt security. Intussen loopt de tijd weg.</p>
+      <div class="article-tip">
+        <p><strong>Hoe je dit voorkomt:</strong> Werk met een chauffeur die van tevoren gebrieft wordt op de locatie. Een goede chauffeursdienst vraagt proactief naar plattegronden, backstage protocollen en contactpersonen op het terrein. Vraag hier altijd naar bij je eerste gesprek.</p>
+      </div>
+
+      <h2>2. Er is geen back-upplan bij vluchtwijzigingen</h2>
+      <p>Artiesten vliegen. Vluchten worden vertraagd, omgeboekt of geannuleerd. Wie alleen een chauffeur heeft geboekt voor een vaste aankomsttijd, staat bij de minste afwijking met lege handen.</p>
+      <p>Dit is één van de meest voorkomende stressmomenten in artiestenlogistiek. De vlucht schuift twee uur op, de chauffeur is al weg, en niemand weet wie nu de artiest ophaalt.</p>
+      <div class="article-tip">
+        <p><strong>Hoe je dit voorkomt:</strong> Zorg dat je chauffeursdienst vluchten monitort en zelfstandig reageert op wijzigingen — zonder dat jij daar tussen hoeft te zitten. Bij A2B houden we vluchtinformatie bij en passen we de planning aan zonder dat de organisator ook maar één appje hoeft te sturen.</p>
+      </div>
+
+      <h2>3. Geen rekening gehouden met de entourage</h2>
+      <p>Een artiest reist zelden alleen. Tourmanager, stylist, geluidstechnicus, soms een complete band. Wie alleen een sedan boekt voor "de artiest", staat er bij aankomst op Schiphol achter dat er zes mensen en negen koffers zijn.</p>
+      <div class="article-tip">
+        <p><strong>Hoe je dit voorkomt:</strong> Vraag bij elke boeking expliciet naar het aantal personen én de hoeveelheid bagage. Een goede chauffeursdienst denkt hierin mee en stelt de juiste voertuigkeuze voor — van een Mercedes Vito tot een V-Class voor grotere groepen.</p>
+      </div>
+
+      <h2>4. Communicatie loopt via te veel schakels</h2>
+      <p>Organisator belt tourmanager, tourmanager belt artiest, artiest belt chauffeur. Bij vier schakels in de communicatieketen gaat er bijna altijd iets mis. Tijden worden verkeerd doorgegeven, adressen raken kwijt, en niemand weet meer wie de eindverantwoordelijkheid heeft.</p>
+      <div class="article-tip">
+        <p><strong>Hoe je dit voorkomt:</strong> Zorg voor één directe lijn tussen chauffeur en de juiste contactpersoon — meestal de tourmanager of productiecoördinator. Wij werken standaard via WhatsApp met een vaste contactpersoon per boeking, zodat er nooit onduidelijkheid is.</p>
+      </div>
+
+      <h2>5. Te laat geboekt</h2>
+      <p>Dit is misschien wel de meest gemaakte fout. Artiestenvervoer wordt gezien als iets wat je "even regelt" in de week voor het festival. Maar professionele chauffeursdiensten — zeker in het hoogseizoen — zijn weken van tevoren volgeboekt.</p>
+      <p>Het resultaat: je valt terug op een reguliere taxidienst of een chauffeur die het festival niet kent. En dan ben je terug bij punt één.</p>
+      <div class="article-tip">
+        <p><strong>Hoe je dit voorkomt:</strong> Plan je vervoer op hetzelfde moment als je de artiesten boekt. Hoe eerder je boekt, hoe beter we kunnen plannen, de juiste voertuigen kunnen reserveren en een persoonlijke briefing kunnen voorbereiden.</p>
+      </div>
+
+      <hr>
+
+      <h2>Goed artiestenvervoer is onzichtbaar</h2>
+      <p>De beste rit is de rit waar niemand over praat. De artiest arriveert op tijd, voelt zich op zijn gemak, en staat relaxed op het podium. De organisator heeft geen enkele stress gehad over de logistiek. Dat is het doel.</p>
+      <p>Bij A2B Chauffeursdiensten werken we uitsluitend met geplande, gestructureerde opdrachten. Geen last-minute paniek, geen onbekende chauffeurs, geen verrassingen. Alleen rustig, professioneel vervoer van A naar B.</p>
+
+      <div class="article-closing">
+        <h3>Vervoer voor jouw evenement goed geregeld?</h3>
+        <p>Neem contact op voor een vrijblijvende offerte. Wij denken graag met je mee over de logistiek.</p>
+        <a href="https://wa.me/+31614683020?text=Hallo%20A2B,%20ik%20wil%20graag%20meer%20weten%20over%20artiestenvervoer." class="btn-gold" target="_blank" rel="noopener">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          WhatsApp ons
+        </a>
+        <a href="mailto:info@a2b-services.nl?subject=Artiestenvervoer%20offerte" class="btn-outline-gold">
+          Stuur een e-mail
+        </a>
+      </div>
+
+    </div>
+  </article>
+
+  <footer class="article-footer">
+    <p>&copy; 2026 <a href="a2b.html">A2B Chauffeursdiensten</a> — Alle rechten voorbehouden</p>
+  </footer>
+
+</body>
+</html>
