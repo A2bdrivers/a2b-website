@@ -121,8 +121,8 @@
       backdrop-filter: blur(24px);
       -webkit-backdrop-filter: blur(24px);
       padding: 14px 0;
-      border-bottom: 1px solid var(--border);
     }
+    .navbar.menu-open { z-index: 9000; }
     .navbar-inner {
       display: flex;
       align-items: center;
@@ -1543,6 +1543,7 @@
       .blog-card { flex: 0 0 calc(100vw - 80px); }
       .blog-carousel-wrap { overflow: visible; }
       .blog-nav-btn { width: 40px; height: 40px; }
+      .scroll-progress { display: none; }
       .testimonial-card { padding: var(--space-6); }
       .cta-section .container { padding: 0 16px; }
       .cta-buttons { flex-direction: column; align-items: center; }
@@ -2903,17 +2904,24 @@
     // ===== MOBILE MENU =====
     const navToggle = document.getElementById('navToggle');
     const navLinks = document.getElementById('navLinks');
+    const navbar = navToggle.closest('.navbar');
+    function openMenu() {
+      navToggle.classList.add('active');
+      navLinks.classList.add('open');
+      navbar.classList.add('menu-open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeMenu() {
+      navToggle.classList.remove('active');
+      navLinks.classList.remove('open');
+      navbar.classList.remove('menu-open');
+      document.body.style.overflow = '';
+    }
     navToggle.addEventListener('click', () => {
-      navToggle.classList.toggle('active');
-      navLinks.classList.toggle('open');
-      document.body.style.overflow = navLinks.classList.contains('open') ? 'hidden' : '';
+      navLinks.classList.contains('open') ? closeMenu() : openMenu();
     });
     navLinks.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', () => {
-        navToggle.classList.remove('active');
-        navLinks.classList.remove('open');
-        document.body.style.overflow = '';
-      });
+      link.addEventListener('click', closeMenu);
     });
 
     // ===== CURSOR GLOW (desktop only) =====
