@@ -240,8 +240,17 @@
     .nav-hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(6px, -6px); }
 
     /* Mobile overlay — staat BUITEN <nav>, eigen stapellaag */
-    .mobile-menu-overlay {
-      display: none; /* verborgen op desktop */
+    .mobile-menu-overlay { display: none; }
+    .mobile-menu-close {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: none;
+      border: none;
+      color: var(--text-primary);
+      cursor: pointer;
+      padding: 8px;
+      line-height: 1;
     }
     .mobile-menu-links {
       display: flex;
@@ -277,13 +286,10 @@
         pointer-events: all;
       }
 
-      /* Navbar altijd zichtbaar en afgesloten bovenaan */
-      .navbar {
-        background: rgba(8, 15, 11, 0.95);
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
-        overflow: hidden;
-      }
+      /* Navbar op mobiel compact houden */
+      .navbar { padding: 12px 0; }
+      .navbar.scrolled { padding: 10px 0; }
+      .nav-logo img { height: 48px !important; }
     }
 
     /* ===== HERO ===== */
@@ -1609,6 +1615,9 @@
   </nav>
   <!-- MOBILE MENU OVERLAY — buiten <nav> zodat z-index onafhankelijk werkt -->
   <div class="mobile-menu-overlay" id="mobileMenuOverlay">
+    <button class="mobile-menu-close" id="mobileMenuClose" aria-label="Menu sluiten">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
     <div class="mobile-menu-links">
       <a href="#services" class="nav-link" data-i18n="nav-services">Services</a>
       <a href="#how" class="nav-link" data-i18n="nav-how">Hoe het werkt</a>
@@ -2943,6 +2952,7 @@
     // ===== MOBILE MENU =====
     const navToggle = document.getElementById('navToggle');
     const mobileOverlay = document.getElementById('mobileMenuOverlay');
+    const mobileMenuClose = document.getElementById('mobileMenuClose');
     function openMenu() {
       navToggle.classList.add('active');
       mobileOverlay.classList.add('open');
@@ -2956,6 +2966,7 @@
     navToggle.addEventListener('click', () => {
       mobileOverlay.classList.contains('open') ? closeMenu() : openMenu();
     });
+    mobileMenuClose.addEventListener('click', closeMenu);
     mobileOverlay.querySelectorAll('a').forEach(link => {
       link.addEventListener('click', closeMenu);
     });
