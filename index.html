@@ -244,6 +244,7 @@
       .nav-links {
         position: fixed;
         inset: 0;
+        z-index: 1000;
         background: rgba(8, 15, 11, 0.98);
         backdrop-filter: blur(30px);
         flex-direction: column;
@@ -1536,8 +1537,10 @@
       .service-card { padding: var(--space-6); }
       .fleet-card { border-radius: 12px; }
       .fleet-img { height: 200px; }
-      .faq-question { font-size: var(--text-sm); padding: var(--space-4) var(--space-4); }
-      .faq-answer { padding: 0 var(--space-4) var(--space-4); }
+      .faq-question { font-size: var(--text-sm); padding: var(--space-4); }
+      .faq-answer-inner { padding: 0 var(--space-4) var(--space-4); }
+      .blog-card { flex: 0 0 85vw; }
+      .blog-carousel-wrap { margin-left: -16px; margin-right: -16px; padding: 0 16px; }
       .testimonial-card { padding: var(--space-6); }
       .cta-section .container { padding: 0 16px; }
       .cta-buttons { flex-direction: column; align-items: center; }
