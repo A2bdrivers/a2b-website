@@ -8,7 +8,7 @@
   <meta property="og:title" content="A2B Services | Artiestenvervoer & Festivallogistiek">
   <meta property="og:description" content="Premium artiestenvervoer voor Europa's grootste muziekfestivals.">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚘</text></svg>">
-  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:wght@400;500;600;700;800;900&family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
   <style>
     /* ===== RESET & BASE ===== */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -31,8 +31,8 @@
       --green-dark: #1b4332;
       --border: rgba(201, 168, 76, 0.1);
       --border-hover: rgba(201, 168, 76, 0.25);
-      --font-heading: 'Bodoni Moda', Georgia, serif;
-      --font-body: 'Jost', -apple-system, sans-serif;
+      --font-heading: 'Syne', sans-serif;
+      --font-body: 'DM Sans', -apple-system, sans-serif;
       --text-xs: clamp(0.75rem, 1vw, 0.875rem);
       --text-sm: clamp(0.875rem, 1.2vw, 1rem);
       --text-base: clamp(1rem, 1.3vw, 1.125rem);
@@ -1519,6 +1519,32 @@
       transform-style: preserve-3d;
       perspective: 1000px;
     }
+
+    /* ===== MOBILE OPTIMISATION ===== */
+    @media (max-width: 480px) {
+      .container { padding: 0 16px; }
+      .hero { padding: var(--space-24) 0 var(--space-16); }
+      .hero-ctas { flex-direction: column; align-items: flex-start; }
+      .hero-ctas .btn-primary, .hero-ctas .btn-secondary { width: 100%; justify-content: center; }
+      .btn-primary, .btn-secondary { padding: 14px 24px; font-size: 15px; }
+      .section-title { font-size: clamp(1.6rem, 6vw, 2.4rem); }
+      .section-subtitle { font-size: clamp(0.95rem, 3.5vw, 1.05rem); }
+      .hero-badge { font-size: 11px; padding: 8px 14px; }
+      .hero-sub { font-size: clamp(1rem, 4vw, 1.15rem); }
+      .stats-grid { grid-template-columns: 1fr 1fr; gap: var(--space-4); }
+      .stat-number { font-size: clamp(2rem, 8vw, 3rem); }
+      .service-card { padding: var(--space-6); }
+      .fleet-card { border-radius: 12px; }
+      .fleet-img { height: 200px; }
+      .faq-question { font-size: var(--text-sm); padding: var(--space-4) var(--space-4); }
+      .faq-answer { padding: 0 var(--space-4) var(--space-4); }
+      .testimonial-card { padding: var(--space-6); }
+      .cta-section .container { padding: 0 16px; }
+      .cta-buttons { flex-direction: column; align-items: center; }
+      .cta-buttons .btn-primary, .cta-buttons .btn-secondary { width: 100%; justify-content: center; }
+      .footer-grid { grid-template-columns: 1fr; gap: var(--space-8); }
+      .marquee-item { font-size: 13px; }
+    }
   </style>
 </head>
 <body>
@@ -1593,24 +1619,24 @@
       </div>
       <div class="marquee" aria-hidden="true">
         <div class="marquee-group">
-          <span class="marquee-item"><img src="../logo-website/Loveland_festival_logo-removebg-preview.png" alt="Loveland"></span><span class="marquee-divider"></span>
-          <span class="marquee-item"><img src="../logo-website/909_Logo-removebg-preview.png" alt="909"></span><span class="marquee-divider"></span>
-          <span class="marquee-item"><img src="../logo-website/Burst_logo-removebg-preview.png" alt="Burst"></span><span class="marquee-divider"></span>
-          <span class="marquee-item"><img src="../logo-website/Music_on_logo-removebg-preview.png" alt="Music On" class="logo-dark"></span><span class="marquee-divider"></span>
-          <span class="marquee-item"><img src="../logo-website/ADE_logo-removebg-preview.png" alt="ADE"></span><span class="marquee-divider"></span>
-          <span class="marquee-item"><img src="../logo-website/SMC_logo-removebg-preview.png" alt="SMC Creative Agency"></span><span class="marquee-divider"></span>
-          <span class="marquee-item"><img src="../logo-website/Yamaha_racing_logo-removebg-preview.png" alt="Yamaha Racing" class="logo-dark"></span><span class="marquee-divider"></span>
-          <span class="marquee-item"><img src="../logo-website/Joseph-Klibansky-announces-new-Superman-inspired-collaboration-joseph-klibansky_article-og-removebg-preview.png" alt="Joseph Klibansky" class="logo-dark"></span><span class="marquee-divider"></span>
+          <span class="marquee-item"><img src="logo-website/Loveland_festival_logo-removebg-preview.png" alt="Loveland"></span><span class="marquee-divider"></span>
+          <span class="marquee-item"><img src="logo-website/909_Logo-removebg-preview.png" alt="909"></span><span class="marquee-divider"></span>
+          <span class="marquee-item"><img src="logo-website/Burst_logo-removebg-preview.png" alt="Burst"></span><span class="marquee-divider"></span>
+          <span class="marquee-item"><img src="logo-website/Music_on_logo-removebg-preview.png" alt="Music On" class="logo-dark"></span><span class="marquee-divider"></span>
+          <span class="marquee-item"><img src="logo-website/ADE_logo-removebg-preview.png" alt="ADE"></span><span class="marquee-divider"></span>
+          <span class="marquee-item"><img src="logo-website/SMC_logo-removebg-preview.png" alt="SMC Creative Agency"></span><span class="marquee-divider"></span>
+          <span class="marquee-item"><img src="logo-website/Yamaha_racing_logo-removebg-preview.png" alt="Yamaha Racing" class="logo-dark"></span><span class="marquee-divider"></span>
+          <span class="marquee-item"><img src="logo-website/Joseph-Klibansky-announces-new-Superman-inspired-collaboration-joseph-klibansky_article-og-removebg-preview.png" alt="Joseph Klibansky" class="logo-dark"></span><span class="marquee-divider"></span>
         </div>
         <div class="marquee-group">
-          <span class="marquee-item"><img src="../logo-website/Loveland_festival_logo-removebg-preview.png" alt="Loveland"></span><span class="marquee-divider"></span>
-          <span class="marquee-item"><img src="../logo-website/909_Logo-removebg-preview.png" alt="909"></span><span class="marquee-divider"></span>
-          <span class="marquee-item"><img src="../logo-website/Burst_logo-removebg-preview.png" alt="Burst"></span><span class="marquee-divider"></span>
-          <span class="marquee-item"><img src="../logo-website/Music_on_logo-removebg-preview.png" alt="Music On" class="logo-dark"></span><span class="marquee-divider"></span>
-          <span class="marquee-item"><img src="../logo-website/ADE_logo-removebg-preview.png" alt="ADE"></span><span class="marquee-divider"></span>
-          <span class="marquee-item"><img src="../logo-website/SMC_logo-removebg-preview.png" alt="SMC Creative Agency"></span><span class="marquee-divider"></span>
-          <span class="marquee-item"><img src="../logo-website/Yamaha_racing_logo-removebg-preview.png" alt="Yamaha Racing" class="logo-dark"></span><span class="marquee-divider"></span>
-          <span class="marquee-item"><img src="../logo-website/Joseph-Klibansky-announces-new-Superman-inspired-collaboration-joseph-klibansky_article-og-removebg-preview.png" alt="Joseph Klibansky" class="logo-dark"></span><span class="marquee-divider"></span>
+          <span class="marquee-item"><img src="logo-website/Loveland_festival_logo-removebg-preview.png" alt="Loveland"></span><span class="marquee-divider"></span>
+          <span class="marquee-item"><img src="logo-website/909_Logo-removebg-preview.png" alt="909"></span><span class="marquee-divider"></span>
+          <span class="marquee-item"><img src="logo-website/Burst_logo-removebg-preview.png" alt="Burst"></span><span class="marquee-divider"></span>
+          <span class="marquee-item"><img src="logo-website/Music_on_logo-removebg-preview.png" alt="Music On" class="logo-dark"></span><span class="marquee-divider"></span>
+          <span class="marquee-item"><img src="logo-website/ADE_logo-removebg-preview.png" alt="ADE"></span><span class="marquee-divider"></span>
+          <span class="marquee-item"><img src="logo-website/SMC_logo-removebg-preview.png" alt="SMC Creative Agency"></span><span class="marquee-divider"></span>
+          <span class="marquee-item"><img src="logo-website/Yamaha_racing_logo-removebg-preview.png" alt="Yamaha Racing" class="logo-dark"></span><span class="marquee-divider"></span>
+          <span class="marquee-item"><img src="logo-website/Joseph-Klibansky-announces-new-Superman-inspired-collaboration-joseph-klibansky_article-og-removebg-preview.png" alt="Joseph Klibansky" class="logo-dark"></span><span class="marquee-divider"></span>
         </div>
       </div>
     </section>
@@ -1672,7 +1698,7 @@
           </div>
           <div class="service-card tilt-card" data-animate="fade-up" data-delay="2">
             <div class="service-card-image">
-              <img src="Content/Collage auto.JPG" alt="Voertuig transport door Europa" loading="lazy" width="800" height="400">
+              <img src="Content/urus.JPG" alt="Voertuig transport door Europa" loading="lazy" width="800" height="400" style="object-position: center center;">
             </div>
             <div class="service-card-body">
               <div class="service-icon">
@@ -1822,7 +1848,7 @@
           </div>
           <div class="fleet-col">
             <div class="fleet-item">
-              <img src="Content/koffer.jpg" alt="Dagje uit & Leisure" loading="lazy" width="800" height="600" style="object-position: 25% center;">
+              <img src="Content/vito.jpg" alt="Mercedes Vito" loading="lazy" width="800" height="600" style="object-position: center center;">
               <div class="fleet-gold-border"></div>
             </div>
             <div class="fleet-item-label">Mercedes Vito</div>
@@ -2098,8 +2124,8 @@
         <!-- VOERTUIG TRANSPORT -->
         <div class="rt-card active" id="rt-tab-voertuig">
           <div class="rt-field">
-            <label>Vertreklocatie (Nederland)</label>
-            <select id="rt-v-vertrek">
+            <label>Ophaaladres (stad of regio in Nederland)</label>
+            <select id="rt-v-vertrek" onchange="rtOnVertrekChange()">
               <option value="amsterdam">Amsterdam / Randstad</option>
               <option value="midden">Midden Nederland</option>
               <option value="zuiden">Zuid Nederland</option>
@@ -2107,27 +2133,9 @@
             </select>
           </div>
           <div class="rt-field">
-            <label>Bestemming</label>
-            <select id="rt-v-bestemming" onchange="rtCalcVoertuig()">
-              <option value="">— Selecteer bestemming —</option>
-              <optgroup label="1 dag (tot 1200 km)">
-                <option value="1,280">België (Brussel ~280km)</option>
-                <option value="1,340">Luxemburg (~340km)</option>
-                <option value="1,650">Duitsland (noord/Berlijn ~650km)</option>
-                <option value="1,750">Duitsland (zuid/München ~750km)</option>
-                <option value="1,820">Zwitserland (Zürich ~820km)</option>
-                <option value="1,900">Oostenrijk (Wenen ~900km)</option>
-                <option value="1,780">Noord-Frankrijk (Parijs ~780km)</option>
-                <option value="1,1150">Noord-Italië (Milaan ~1150km)</option>
-                <option value="1,1200">Zuid-Frankrijk (Nice ~1200km)</option>
-              </optgroup>
-              <optgroup label="2 dagen (1200–2400 km)">
-                <option value="2,1600">Zuid-Italië (Rome ~1600km)</option>
-                <option value="2,1700">Spanje (noord/Barcelona ~1700km)</option>
-                <option value="2,2100">Portugal (Lissabon ~2100km)</option>
-                <option value="2,2200">Spanje (zuid/Málaga ~2200km)</option>
-              </optgroup>
-            </select>
+            <label>Bestemming (stad, adres of regio in Europa)</label>
+            <input type="text" id="rt-v-dest-input" placeholder="bijv. Parijs, Villa Clara Marbella, Palma de Mallorca" oninput="rtOnDestInput()">
+            <div id="rt-v-dest-info" style="margin-top:6px;font-size:12px;color:var(--gold);min-height:18px;line-height:1.5;"></div>
           </div>
           <div class="rt-field">
             <label>Merk van uw voertuig</label>
@@ -2158,26 +2166,11 @@
             </select>
           </div>
           <div class="rt-field">
-            <label>Gemiddeld brandstofverbruik (liter/100km)</label>
-            <div class="rt-slider-value" id="rt-v-verbruik-val">8 liter / 100km</div>
-            <input type="range" id="rt-v-verbruik" min="5" max="20" value="8" step="0.5" oninput="rtUpdateVerbruik();rtCalcVoertuig()">
-            <div class="rt-slider-labels"><span>5L (zuinig)</span><span>20L (groot)</span></div>
-          </div>
-          <div class="rt-field">
-            <label>Brandstofprijs (€ per liter)</label>
-            <div class="rt-field-row">
-              <select id="rt-v-brandstof" onchange="rtCalcVoertuig()">
-                <option value="1.75">Benzine ~ €1,75</option>
-                <option value="1.65" selected>Benzine ~ €1,65</option>
-                <option value="1.55">Diesel ~ €1,55</option>
-                <option value="1.45">Diesel ~ €1,45</option>
-                <option value="0.30">Elektrisch ~ €0,30/kWh</option>
-              </select>
-              <select id="rt-v-retour" onchange="rtCalcVoertuig()">
-                <option value="0">Chauffeur vliegt terug</option>
-                <option value="1">Alleen heenreis</option>
-              </select>
-            </div>
+            <label>Terugrit chauffeur</label>
+            <select id="rt-v-retour" onchange="rtCalcVoertuig()">
+              <option value="0">Chauffeur vliegt terug</option>
+              <option value="1">Alleen heenreis</option>
+            </select>
           </div>
           <div class="rt-divider"></div>
           <div class="rt-btw-row">
@@ -2194,7 +2187,7 @@
               <div class="rt-result-suffix" id="rt-v-btw-label">excl. BTW</div>
             </div>
             <div class="rt-result-breakdown" id="rt-v-breakdown"></div>
-            <div class="rt-result-note"><span>Let op:</span> Dit is een indicatie. De exacte prijs hangt af van actuele brandstofprijzen, vliegtickets en eventuele tolkosten. Wij sturen altijd een vaste offerte vooraf.</div>
+            <div class="rt-result-note"><span>Let op:</span> Dit is een indicatie exclusief brandstofkosten — die worden na oplevering apart afgerekend op basis van werkelijk verbruik. De overnachtingskosten zijn een schatting; wij doen ons uiterste best om passende en nette accommodatie voor de chauffeur te regelen binnen dit bedrag. U ontvangt altijd een vaste offerte vooraf.</div>
           </div>
         </div>
 
@@ -2252,6 +2245,24 @@
               <div class="rt-slider-labels"><span>0 km</span><span>300 km</span></div>
             </div>
           </div>
+          <div class="rt-field">
+            <div class="rt-toggle-field">
+              <div class="rt-toggle-label">
+                <strong>Betaald parkeren</strong><br>
+                <span style="font-size:12px;color:var(--text-muted)">Voeg parkeerkosten toe aan de indicatie (op basis van het aantal uur activiteit).</span>
+              </div>
+              <label class="rt-toggle-track">
+                <input type="checkbox" id="rt-l-parking" onchange="rtToggleParking();rtCalcLeisure()">
+                <span class="rt-toggle-thumb"></span>
+              </label>
+            </div>
+          </div>
+          <div id="rt-parking-veld" style="display:none">
+            <div class="rt-field">
+              <label>Parkeertarief (€ per uur)</label>
+              <input type="number" id="rt-l-parkeertarief" min="0" max="20" step="0.50" value="3.00" placeholder="bijv. 3.00" oninput="rtCalcLeisure()" style="max-width:160px">
+            </div>
+          </div>
           <div class="rt-divider"></div>
           <div class="rt-btw-row">
             <span class="rt-btw-label">Bedragen weergeven</span>
@@ -2289,7 +2300,6 @@
             document.getElementById('rt-tab-' + tab).classList.add('active');
             event.target.classList.add('active');
           };
-          window.rtUpdateVerbruik = function() { document.getElementById('rt-v-verbruik-val').textContent = document.getElementById('rt-v-verbruik').value + ' liter / 100km'; };
           window.rtUpdateAfstand = function() {
             var v = document.getElementById('rt-l-afstand').value;
             document.getElementById('rt-l-afstand-val').textContent = v + ' km';
@@ -2302,6 +2312,10 @@
             var on = document.getElementById('rt-l-volg').checked;
             document.getElementById('rt-volg-velden').style.display = on ? 'block' : 'none';
             if (on) { var a = document.getElementById('rt-l-afstand').value; document.getElementById('rt-l-volgkm').value = Math.min(parseFloat(a), 300); document.getElementById('rt-l-volgkm-val').textContent = a + ' km'; }
+          };
+          window.rtToggleParking = function() {
+            var on = document.getElementById('rt-l-parking').checked;
+            document.getElementById('rt-parking-veld').style.display = on ? 'block' : 'none';
           };
           window.rtSetBtw = function(mode, btn, tab) {
             btn.parentElement.querySelectorAll('.rt-btw-pill').forEach(function(p) { p.classList.remove('active'); });
@@ -2350,14 +2364,10 @@
             ff.style.display = 'none';
             if (!val) { info.textContent = ''; return; }
             var a = RT_AUTOS[merk][parseInt(val)];
-            var tm = {1:'Personenauto / SUV',1.1:'Luxe / sportwagen',1.15:'Grote SUV / MPV'}, bm = {benzine:'1.65',diesel:'1.55',elektrisch:'0.30'};
-            var vb = a.b === 'elektrisch' ? 0 : a.v;
-            document.getElementById('rt-v-verbruik').value = vb || 5;
-            document.getElementById('rt-v-verbruik-val').textContent = a.b === 'elektrisch' ? 'Elektrisch' : vb + ' liter / 100km';
+            var tm = {1:'Personenauto / SUV',1.1:'Luxe / sportwagen',1.15:'Grote SUV / MPV'};
             document.getElementById('rt-v-type').value = a.t;
-            if (bm[a.b]) document.getElementById('rt-v-brandstof').value = bm[a.b];
             info.style.color = 'var(--gold)';
-            info.textContent = '✓ ' + merk + ' ' + a.m + ' · ' + tm[a.t] + ' · ' + (a.b === 'elektrisch' ? 'elektrisch' : a.v + 'L/100km · ' + a.b) + ' — automatisch ingesteld';
+            info.textContent = '✓ ' + merk + ' ' + a.m + ' · ' + tm[a.t] + ' — type automatisch ingesteld';
             rtCalcVoertuig();
           };
           var rtAutoTimer = null;
@@ -2368,49 +2378,92 @@
             info.textContent = ''; sp.style.display = 'block';
             rtAutoTimer = setTimeout(function() { rtZoekAutoGegevens(val); }, 700);
           };
-          async function rtZoekAutoGegevens(auto) {
+          function rtZoekAutoGegevens(auto) {
             var info = document.getElementById('rt-v-auto-info'), sp = document.getElementById('rt-v-auto-spinner');
-            try {
-              var merk = document.getElementById('rt-v-merk').value;
-              var zk = merk && merk !== 'Andere merk' ? merk + ' ' + auto : auto;
-              var res = await fetch('https://api.anthropic.com/v1/messages', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ model:'claude-sonnet-4-20250514', max_tokens:120, system:'Je bent een auto-expert. Geef alleen een JSON-object terug, geen uitleg, geen markdown.', messages:[{role:'user',content:'Wat is het gemiddelde brandstofverbruik in liter per 100km en het voertuigtype van een '+zk+'? Antwoord alleen met dit JSON: {"verbruik":<getal tussen 5 en 20>,"type":<"standaard" of "luxe_sport" of "grote_suv">,"brandstof":<"benzine" of "diesel" of "elektrisch">,"geldig":true} of {"geldig":false} als het voertuig niet herkenbaar is.'}] }) });
-              var data = await res.json(); sp.style.display = 'none';
-              var json = JSON.parse(data.content?.[0]?.text?.trim() || '{}');
-              if (json.geldig) {
-                var vb = Math.min(Math.max(json.verbruik, 5), 20);
-                document.getElementById('rt-v-verbruik').value = vb;
-                document.getElementById('rt-v-verbruik-val').textContent = vb + ' liter / 100km';
-                var tm = {standaard:'1',luxe_sport:'1.1',grote_suv:'1.15'}, tl = {standaard:'Personenauto / SUV',luxe_sport:'Luxe / sportwagen',grote_suv:'Grote SUV / MPV'};
-                document.getElementById('rt-v-type').value = tm[json.type] || '1';
-                var bm = {benzine:'1.65',diesel:'1.55',elektrisch:'0.30'};
-                if (bm[json.brandstof]) document.getElementById('rt-v-brandstof').value = bm[json.brandstof];
-                info.style.color = 'var(--gold)'; info.textContent = '✓ ' + tl[json.type] + ' · ~' + vb + 'L/100km · ' + json.brandstof + ' — automatisch ingesteld';
-                rtCalcVoertuig();
-              } else { info.style.color = 'var(--text-muted)'; info.textContent = 'Voertuig niet herkend — stel type en verbruik handmatig in.'; }
-            } catch(e) { sp.style.display = 'none'; info.style.color = 'var(--text-muted)'; info.textContent = 'Kon voertuig niet ophalen — stel handmatig in.'; }
+            sp.style.display = 'none';
+            var invoer = auto.toLowerCase();
+            var grootSUV = ['cullinan','cayenne','urus','x7','gls','xc90','escalade','navigator','g-klasse','g klasse','g class','touareg','discovery','range rover','defender','x5','gls','q7','q8','kodiaq','3008'];
+            var luxe = ['911','panamera','taycan','m3','m4','m5','amg','rs','porsche','maserati','bentley','ferrari','lamborghini','aston','ghost','phantom','flying spur','continental','ghibli','levante','quattroporte'];
+            var type, label;
+            if (grootSUV.some(function(k){ return invoer.includes(k); })) {
+              type = '1.15'; label = 'Grote SUV / MPV';
+            } else if (luxe.some(function(k){ return invoer.includes(k); })) {
+              type = '1.1'; label = 'Luxe / sportwagen';
+            } else {
+              type = '1'; label = 'Personenauto / SUV';
+            }
+            document.getElementById('rt-v-type').value = type;
+            info.style.color = 'var(--gold)';
+            info.textContent = '✓ Ingesteld als ' + label + ' — pas aan indien nodig';
+            rtCalcVoertuig();
           }
+          var rtVKm = 0, rtVDagen = 0;
           window.rtCalcVoertuig = function() {
-            var dest = document.getElementById('rt-v-bestemming').value; if (!dest) return;
-            var p = dest.split(','), dagen = Number(p[0]), km = Number(p[1]);
-            var verbruik = parseFloat(document.getElementById('rt-v-verbruik').value);
-            var bp = parseFloat(document.getElementById('rt-v-brandstof').value);
+            if (!rtVKm || !rtVDagen) return;
+            var km = rtVKm, dagen = rtVDagen;
             var tm = parseFloat(document.getElementById('rt-v-type').value);
             var rv = document.getElementById('rt-v-retour').value === '0';
-            var dr = 250 * tm, dk = dagen * dr, mk = dagen * 60, ok = dagen * 100, bk = (km/100)*verbruik*bp;
+            var dr = 350 * tm, dk = dagen * dr;
+            var mk = dagen * 60, ok = dagen * 130;
+            var rk = rv ? 175 : 0;
             var vt = 0; if (rv) { if (km<=400) vt=80; else if (km<=900) vt=130; else if (km<=1500) vt=180; else vt=250; }
-            var tot = rtApplyBtw(dk+mk+ok+bk+vt, rtVBtw);
+            var tot = rtApplyBtw(dk+mk+ok+rk+vt, rtVBtw);
             document.getElementById('rt-v-totaal').textContent = rtFmt(tot);
             document.getElementById('rt-v-btw-label').textContent = rtVBtw === 'incl' ? 'incl. BTW' : 'excl. BTW';
             var rows = [
-              ['Chauffeur dagvergoeding ('+dagen+' '+(dagen===1?'dag':'dagen')+' × €'+Math.round(dr)+')', rtFmt(rtApplyBtw(dk,rtVBtw))],
+              ['Chauffeur dagvergoeding ('+dagen+' '+(dagen===1?'rijdag':'rijdagen')+' × €'+Math.round(dr)+')', rtFmt(rtApplyBtw(dk,rtVBtw))],
               ['Maaltijdvergoeding ('+dagen+' '+(dagen===1?'dag':'dagen')+' × €60)', rtFmt(rtApplyBtw(mk,rtVBtw))],
-              ['Overnachting ('+dagen+' '+(dagen===1?'nacht':'nachten')+' × €100)', rtFmt(rtApplyBtw(ok,rtVBtw))],
-              ['Brandstof (~'+km+' km)', rtFmt(rtApplyBtw(bk,rtVBtw))],
+              ['Overnachting ('+dagen+' '+(dagen===1?'nacht':'nachten')+' × €130 schatting)', rtFmt(rtApplyBtw(ok,rtVBtw))],
             ];
-            if (rv) rows.push(['Vliegticket chauffeur terug (schatting)', rtFmt(rtApplyBtw(vt,rtVBtw))]);
+            if (rv) {
+              rows.push(['Terugvluchtdag chauffeur (vaste vergoeding)', rtFmt(rtApplyBtw(rk,rtVBtw))]);
+              rows.push(['Vliegticket chauffeur terug (schatting)', rtFmt(rtApplyBtw(vt,rtVBtw))]);
+            }
+            rows.push(['Brandstofkosten', 'excl. — apart af te rekenen']);
             document.getElementById('rt-v-breakdown').innerHTML = rows.map(function(r){ return '<div class="rt-result-row"><span class="rt-result-row-label">'+r[0]+'</span><span class="rt-result-row-value">'+r[1]+'</span></div>'; }).join('');
             document.getElementById('rt-result-voertuig').classList.add('show');
           };
+          var RT_VERTREK_COORDS = {
+            amsterdam: {lat:52.3676,lon:4.9041},
+            midden:    {lat:52.0907,lon:5.1214},
+            zuiden:    {lat:51.4416,lon:5.4697},
+            noorden:   {lat:53.2194,lon:6.5665}
+          };
+          var rtDestTimer = null;
+          window.rtOnDestInput = function() {
+            clearTimeout(rtDestTimer);
+            var val = document.getElementById('rt-v-dest-input').value.trim();
+            var info = document.getElementById('rt-v-dest-info');
+            if (val.length < 3) { info.textContent = ''; rtVKm = 0; rtVDagen = 0; return; }
+            info.style.color = 'var(--text-muted)'; info.textContent = 'Bestemming opzoeken…';
+            rtDestTimer = setTimeout(function() { rtZoekBestemming(val); }, 700);
+          };
+          window.rtOnVertrekChange = function() {
+            var val = document.getElementById('rt-v-dest-input').value.trim();
+            if (val.length >= 3) rtZoekBestemming(val);
+          };
+          async function rtZoekBestemming(dest) {
+            var info = document.getElementById('rt-v-dest-info');
+            try {
+              var vertrek = document.getElementById('rt-v-vertrek').value;
+              var vc = RT_VERTREK_COORDS[vertrek] || RT_VERTREK_COORDS.amsterdam;
+              var gr = await fetch('https://nominatim.openstreetmap.org/search?q='+encodeURIComponent(dest)+'&format=json&limit=1&featuretype=settlement,country,addr', {headers:{'Accept-Language':'nl','User-Agent':'A2B-Services-Rekentool/1.0'}});
+              var gd = await gr.json();
+              if (!gd.length) { info.style.color = 'var(--text-muted)'; info.textContent = 'Bestemming niet gevonden — probeer een stad of regio.'; return; }
+              var or2 = await fetch('https://router.project-osrm.org/route/v1/driving/'+vc.lon+','+vc.lat+';'+gd[0].lon+','+gd[0].lat+'?overview=false');
+              var od = await or2.json();
+              if (od.code !== 'Ok' || !od.routes?.length) { info.style.color = 'var(--text-muted)'; info.textContent = 'Route kon niet berekend worden — probeer een grotere stad in de buurt.'; return; }
+              var km = Math.round(od.routes[0].distance / 1000);
+              var durSec = od.routes[0].duration;
+              var u = Math.floor(durSec/3600), mn = Math.round((durSec%3600)/60);
+              var duurTxt = u+'u'+(mn>0?' '+mn+'min':'');
+              rtVKm = km;
+              rtVDagen = durSec > 32400 ? 2 : 1;
+              info.style.color = 'var(--gold)';
+              info.textContent = '📍 '+gd[0].display_name.split(',').slice(0,2).join(', ')+' — '+km+' km · '+duurTxt+' rijden · '+rtVDagen+(rtVDagen===1?' rijdag':' rijdagen');
+              rtCalcVoertuig();
+            } catch(e) { info.style.color = 'var(--text-muted)'; info.textContent = 'Verbindingsfout — controleer je internet en probeer opnieuw.'; }
+          }
           var RT_BUSSUM = {lat:52.2753,lon:5.1608}, rtAdresTimer = null;
           window.rtOnAdresInput = function() {
             clearTimeout(rtAdresTimer);
@@ -2441,8 +2494,11 @@
             var afstand = parseFloat(document.getElementById('rt-l-afstand').value);
             var ts = document.getElementById('rt-l-tijdslot').value;
             var volg = document.getElementById('rt-l-volg').checked;
+            var parking = document.getElementById('rt-l-parking').checked;
             var ut = ts==='nacht'?27.50:ts==='mix'?26.25:25;
-            var rtu = (afstand*2)/70, rtm = Math.round(rtu*60), fu = Math.max(uren,4), totu = fu+rtu;
+            var rtu = (afstand*2)/70, rtm = Math.round(rtu*60);
+            var totu = Math.max(uren + rtu, 4);
+            var fu = Math.max(uren, 4);
             var mn2 = document.getElementById('rt-l-minimum-notice');
             if (mn2) mn2.style.display = uren<4?'block':'none';
             var kk = volg?0:afstand*2*0.23, rk = totu*ut;
@@ -2452,10 +2508,17 @@
               var wm = parseInt(document.getElementById('rt-l-wacht').value); vw = Math.floor(wm/30)*7.50;
               var kkm = parseFloat(document.getElementById('rt-l-volgkm').value); vk = (kkm*2)*0.35;
             }
-            var tot = rtApplyBtw(rk+kk+vs+vw+vk, rtLBtw);
+            var pk = 0;
+            if (parking) {
+              var pt = parseFloat(document.getElementById('rt-l-parkeertarief').value) || 0;
+              pk = pt * fu;
+            }
+            var tot = rtApplyBtw(rk+kk+vs+vw+vk+pk, rtLBtw);
             document.getElementById('rt-l-totaal').textContent = rtFmt(tot);
             document.getElementById('rt-l-btw-label').textContent = rtLBtw==='incl'?'incl. BTW':'excl. BTW';
-            var rows = [['Chauffeur ('+(fu<4?'4u min.':fu+'u')+' + '+rtm+' min reistijd = '+(Math.round(totu*10)/10)+'u)', rtFmt(rtApplyBtw(rk,rtLBtw))]];
+            var totuLabel = Math.round(totu*10)/10;
+            var chLabel = totu <= 4 ? '4u (min.)' : fu+'u + '+rtm+' min reistijd = '+totuLabel+'u';
+            var rows = [['Chauffeur ('+chLabel+')', rtFmt(rtApplyBtw(rk,rtLBtw))]];
             if (!volg) { rows.push(['Kilometervergoeding Bussum → locatie ('+(afstand*2)+' km × €0,23)', rtFmt(rtApplyBtw(kk,rtLBtw))]); }
             else {
               rows.push(['Kilometervergoeding vervalt — volgchauffeur neemt km over','€ 0']);
@@ -2463,6 +2526,7 @@
               if (vw>0) { var wm2=parseInt(document.getElementById('rt-l-wacht').value); rows.push(['Wachttijd volgchauffeur ('+wm2+' min × €7,50/halfuur)', rtFmt(rtApplyBtw(vw,rtLBtw))]); }
               if (vk>0) { var kkm2=parseFloat(document.getElementById('rt-l-volgkm').value); rows.push(['Klus-km volgchauffeur ('+kkm2+' km heen + terug = '+(kkm2*2)+' km × €0,35)', rtFmt(rtApplyBtw(vk,rtLBtw))]); }
             }
+            if (parking && pk>0) { rows.push(['Parkeerkosten ('+fu+'u × €'+(parseFloat(document.getElementById('rt-l-parkeertarief').value)||0).toFixed(2)+'/uur)', rtFmt(rtApplyBtw(pk,rtLBtw))]); }
             document.getElementById('rt-l-breakdown').innerHTML = rows.map(function(r){ return '<div class="rt-result-row"><span class="rt-result-row-label">'+r[0]+'</span><span class="rt-result-row-value">'+r[1]+'</span></div>'; }).join('');
             document.getElementById('rt-result-leisure').classList.add('show');
           };
@@ -2674,6 +2738,7 @@
         'faq4-q': 'Rijden jullie ook buiten Nederland?', 'faq4-a': 'Ja. Voor voertuigtransport rijden wij door heel Europa. Voor chauffeursdiensten zijn wij primair actief in Nederland, maar voor specifieke ritten naar het buitenland zijn wij open voor overleg.',
         'faq5-q': 'Hoe ver van tevoren moet ik boeken?', 'faq5-a': 'Hoe eerder, hoe beter — zeker voor drukkere periodes. In veel gevallen kunnen wij ook op kortere termijn helpen. Neem vrijblijvend contact op en wij kijken samen wat mogelijk is.',
         'faq6-q': 'Hoe zit het met discretie en privacy?', 'faq6-a': 'Discretie is voor ons vanzelfsprekend. Onze chauffeurs zijn professioneel, terughoudend en respecteren te allen tijde de privacy van onze klanten. Op verzoek werken wij ook met een vertrouwelijkheidsovereenkomst.',
+        'blog-label': 'Uit ons blog', 'blog-title': 'Verhalen, tips &amp; <span style="color: var(--gold)">inzichten</span>', 'blog-subtitle': 'Lees meer over premium vervoer, onze diensten en het leven achter het stuur.', 'blog-read': 'Lees meer <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><path d="M5 12h14M12 5l7 7-7 7"/></svg>',
         'footer-desc': 'Premium chauffeursdiensten voor particulieren en bedrijven. Comfortabel, discreet en altijd op tijd — van de eerste rit tot de laatste kilometer.',
         'footer-col1': 'Services', 'footer-col2': 'Bedrijf', 'footer-col3': 'Contact',
         'footer-fleet': 'Onze vloot', 'footer-about': 'Over A2B',
@@ -2767,6 +2832,7 @@
         'faq4-q': 'Do you operate outside the Netherlands?', 'faq4-a': 'Yes. For vehicle transport we drive throughout Europe. For chauffeur services we are primarily active in the Netherlands, but for specific trips abroad we are open to discussion.',
         'faq5-q': 'How far in advance should I book?', 'faq5-a': 'The sooner the better — especially during busy periods. In many cases we can also help on shorter notice. Feel free to get in touch and we\'ll see what\'s possible together.',
         'faq6-q': 'What about discretion and privacy?', 'faq6-a': 'Discretion is a matter of course for us. Our chauffeurs are professional, reserved and always respect the privacy of our clients. Upon request we also work with a non-disclosure agreement.',
+        'blog-label': 'From our blog', 'blog-title': 'Stories, tips &amp; <span style="color: var(--gold)">insights</span>', 'blog-subtitle': 'Read more about premium transport, our services and life behind the wheel.', 'blog-read': 'Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><path d="M5 12h14M12 5l7 7-7 7"/></svg>',
         'footer-desc': 'Premium chauffeur services for private and business clients. Comfortable, discreet and always on time — from the first ride to the last kilometre.',
         'footer-col1': 'Services', 'footer-col2': 'Company', 'footer-col3': 'Contact',
         'footer-fleet': 'Our fleet', 'footer-about': 'About A2B',
