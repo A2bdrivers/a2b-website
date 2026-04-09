@@ -122,7 +122,6 @@
       -webkit-backdrop-filter: blur(24px);
       padding: 14px 0;
     }
-    .navbar.menu-open { z-index: 9000; }
     .navbar-inner {
       display: flex;
       align-items: center;
@@ -240,27 +239,51 @@
     .nav-hamburger.active span:nth-child(2) { opacity: 0; }
     .nav-hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(6px, -6px); }
 
+    /* Mobile overlay — staat BUITEN <nav>, eigen stapellaag */
+    .mobile-menu-overlay {
+      display: none; /* verborgen op desktop */
+    }
+    .mobile-menu-links {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 32px;
+    }
+    .mobile-menu-links .nav-link { font-size: 1.4rem; font-weight: 500; }
+
     @media (max-width: 768px) {
       .nav-hamburger { display: flex; }
-      .nav-links {
+      /* Desktop nav-links verbergen op mobiel */
+      .nav-links { display: none; }
+
+      /* Overlay eigen onafhankelijke laag */
+      .mobile-menu-overlay {
         position: fixed;
         inset: 0;
         z-index: 9000;
-        background: rgba(8, 15, 11, 0.98);
-        backdrop-filter: blur(30px);
+        display: flex;
         flex-direction: column;
         justify-content: center;
-        margin-left: 0;
-        gap: var(--space-6);
+        align-items: center;
+        background: rgba(8, 15, 11, 0.98);
+        backdrop-filter: blur(30px);
+        -webkit-backdrop-filter: blur(30px);
         opacity: 0;
         pointer-events: none;
-        transition: opacity 0.4s;
+        transition: opacity 0.35s;
       }
-      .nav-links.open { opacity: 1; pointer-events: all; }
-      .nav-links-center { flex-direction: column; gap: var(--space-8); }
-      .nav-links-right { flex-direction: column; gap: var(--space-4); }
-      .nav-link { font-size: var(--text-xl); }
-      .btn-nav { font-size: var(--text-lg); padding: 14px 36px; }
+      .mobile-menu-overlay.open {
+        opacity: 1;
+        pointer-events: all;
+      }
+
+      /* Navbar altijd zichtbaar en afgesloten bovenaan */
+      .navbar {
+        background: rgba(8, 15, 11, 0.95);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        overflow: hidden;
+      }
     }
 
     /* ===== HERO ===== */
@@ -1584,6 +1607,23 @@
       </button>
     </div>
   </nav>
+  <!-- MOBILE MENU OVERLAY — buiten <nav> zodat z-index onafhankelijk werkt -->
+  <div class="mobile-menu-overlay" id="mobileMenuOverlay">
+    <div class="mobile-menu-links">
+      <a href="#services" class="nav-link" data-i18n="nav-services">Services</a>
+      <a href="#how" class="nav-link" data-i18n="nav-how">Hoe het werkt</a>
+      <a href="#fleet" class="nav-link" data-i18n="nav-fleet">Vloot</a>
+      <a href="#why" class="nav-link" data-i18n="nav-why">Waarom A2B</a>
+      <a href="#testimonials" class="nav-link" data-i18n="nav-reviews">Reviews</a>
+      <a href="#rekentool" class="nav-link">Prijsindicatie</a>
+      <a href="#faq" class="nav-link">FAQ</a>
+      <a href="#contact" class="btn-nav" data-i18n="nav-cta" style="margin-top:8px;text-align:center;">Offerte aanvragen</a>
+      <div class="lang-switcher" style="justify-content:center;margin-top:16px;">
+        <button class="lang-btn active" onclick="setLang('nl')" title="Nederlands">🇳🇱</button>
+        <button class="lang-btn" onclick="setLang('en')" title="English">🇬🇧</button>
+      </div>
+    </div>
+  </div>
 
   <main id="main">
     <!-- HERO -->
@@ -2902,23 +2942,21 @@
 
     // ===== MOBILE MENU =====
     const navToggle = document.getElementById('navToggle');
-    const navLinks = document.getElementById('navLinks');
+    const mobileOverlay = document.getElementById('mobileMenuOverlay');
     function openMenu() {
       navToggle.classList.add('active');
-      navLinks.classList.add('open');
-      navbar.classList.add('menu-open');
+      mobileOverlay.classList.add('open');
       document.body.style.overflow = 'hidden';
     }
     function closeMenu() {
       navToggle.classList.remove('active');
-      navLinks.classList.remove('open');
-      navbar.classList.remove('menu-open');
+      mobileOverlay.classList.remove('open');
       document.body.style.overflow = '';
     }
     navToggle.addEventListener('click', () => {
-      navLinks.classList.contains('open') ? closeMenu() : openMenu();
+      mobileOverlay.classList.contains('open') ? closeMenu() : openMenu();
     });
-    navLinks.querySelectorAll('a').forEach(link => {
+    mobileOverlay.querySelectorAll('a').forEach(link => {
       link.addEventListener('click', closeMenu);
     });
 
